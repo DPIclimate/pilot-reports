@@ -5,3 +5,5 @@
 *.*.swp
 .*.*.swp
 .env
+clientsecret.json
+tokencache.json

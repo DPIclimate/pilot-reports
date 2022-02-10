@@ -45,6 +45,8 @@ pub struct ShortDevice {
 
 #[tokio::main]
 pub async fn get(id: &device::Identifier, token: &String) -> Result<Variables, Box<dyn Error>> {
+    // Gets all the variables of a device (using the device id)
+    // This method isn't really nessessary but may be used in the future
     let url = match id {
         device::Identifier::ApiLabel(l) => {
             format!("https://industrial.api.ubidots.com/api/v2.0/devices/~{}/variables", l)

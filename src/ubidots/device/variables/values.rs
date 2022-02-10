@@ -18,6 +18,9 @@ pub struct PostId {
 #[tokio::main]
 pub async fn get(id: &device::Identifier, token: &String, 
     email: &String, (start, end): &(i64, i64)) -> Result<Status, Box<dyn Error>> {
+    // Get all device values between a date range
+    // TODO: This method could be encorperated into the export module as it
+    // is basically handling all of the export method (triggering emails to be sent)
 
     let url = match id {
         device::Identifier::ApiLabel(l) => {

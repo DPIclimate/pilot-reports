@@ -30,6 +30,8 @@ pub struct Device {
 
 #[tokio::main]
 pub async fn get(id: &Identifier, token: &String) -> Result<Device, Box<dyn Error>> {
+    // Get a device from ubidots using either the api label or the id
+    // Returns a Device or an Error
     let url = match id {
         Identifier::ApiLabel(l) => {
             format!("https://industrial.api.ubidots.com/api/v2.0/devices/~{}", l)
@@ -63,6 +65,8 @@ pub struct Devices {
 
 #[tokio::main]
 pub async fn get_all(token: &String) -> Result<Devices, Box<dyn Error>> {
+    // Get all devices within a organisation 
+    // Returns a Devices struct containg a vector of devices
     let url = String::from("https://industrial.api.ubidots.com/api/v2.0/devices/");
 
     let client = reqwest::Client::new();
