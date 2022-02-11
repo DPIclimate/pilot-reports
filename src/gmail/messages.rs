@@ -1,4 +1,3 @@
-extern crate base64;
 use yup_oauth2::AccessToken;
 use serde::Deserialize;
 use std::error::Error;

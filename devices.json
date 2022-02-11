@@ -1,0 +1,54 @@
+{
+	"buoys": [
+		{
+			"name": "clyde-salinity20c",
+			"location": "Wray Street",
+			"buoy_number": "1"
+		},
+		{
+			"name": "clyde-salinity501",
+			"location": "Moonlight",
+			"buoy_number": "3"
+		},
+		{
+			"name": "clyde-salinity90d",
+			"location": "Budd Island North",
+			"buoy_number": "4"
+		},
+		{
+			"name": "clyde-salinity90e",
+			"location": "Snapper Point",
+			"buoy_number": "5"
+		},
+		{
+			"name": "clyde-salinity20b",
+			"location": "Rocky Point",
+			"buoy_number": "Fixed"
+		},
+		{
+			"name": "clyde-salinity802",
+			"location": "Chinamans Point",
+			"buoy_number": "9"
+		},
+		{
+			"name": "clyde-salinity90g",
+			"location": "Waterfall Creek",
+			"buoy_number": "10"
+		},
+		{
+			"name": "clyde-salinity90a",
+			"location": "Buckenbowra Creek",
+			"buoy_number": "11"
+		},
+		{
+			"name": "clyde-salinity90b",
+			"location": "Big Island West",
+			"buoy_number": "12"
+		},
+		{
+			"name": "clyde-salinity507",
+			"location": "Double Bay",
+			"buoy_number": "13"
+		}
+	]
+}

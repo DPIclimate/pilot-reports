@@ -2,8 +2,6 @@
 use serde::Deserialize;
 use std::error::Error;
 
-pub mod variables;
-
 pub enum Identifier {
     ApiLabel(String),
     Id(String),
