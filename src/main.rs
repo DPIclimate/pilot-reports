@@ -1,4 +1,5 @@
 extern crate dotenv;
+use std::{thread, time};
 use chrono::Local;
 use std::env;
 
@@ -20,7 +21,6 @@ fn main() {
         .map_err(|err| println!("{:#?}", err))
         .ok();
 
-
     let org_token = env::var("ORG_KEY").expect("Organisation key not found");
     
     // Specify start and end times
@@ -37,33 +37,49 @@ fn main() {
         .map_err(|err| println!("Email error: {}", err))
         .ok().unwrap();
 
-//    loop {
-//        let list_messages = gmail::messages::list(&access, &email)
-//            .map_err(|err| println!("{:#?}", err))
-//            .ok().unwrap();
-//    }
-//
-//
-//    println!("Auth-Token: {}", &access.as_str());
-//
-//
-//    if list_messages.result_size_estimate != 0 as i64 {
-//        for msg in &list_messages.messages {
-//
-//            println!("Msg id: {}", &msg.id);
-//
-//            let message = gmail::messages::read_message(&access, &email, &msg.id)
-//                .map_err(|err| println!("Read msg: {}", err))
-//                .ok().unwrap();
-//
-//            let url = gmail::messages::extract_url(&message);
-//
-//            println!("Url: {}", url);
-//            
-//            let fname = data::download::csv(&url).expect("Error creating file");
-//        }
-//    }
+    // Wait until all messages are accounted for in the gmail inbox
+    let mut n_retries = 0;
+    loop {
+        n_retries += 1;
+        let list_messages = gmail::messages::list(&access, &email)
+            .map_err(|err| println!("{:#?}", err))
+            .ok().unwrap();
+        
+        // Wait a few seconds and query the number of items in the inbox again
+        let retry_time = time::Duration::from_secs(5);
+        thread::sleep(retry_time);
 
-    // Dotenv setup
-//
+        if n_retries > 240 { // 20 minutes
+            panic!("Error: number of retries excceeded when parsing emails.");
+        }
+        
+        // Check if messages list equals the expected number of messages
+        if &res == &list_messages.result_size_estimate {
+            println!("Expected messages are present");
+            break;
+        }
+
+        println!("Waiting for emails to appear in inbox of {}", &email);
+    }
+
+    let list_messages = gmail::messages::list(&access, &email)
+        .map_err(|err| println!("{:#?}", err))
+        .ok().unwrap();
+
+    // Loop throught emails and download csv files containing dataset
+    for msg in &list_messages.messages {
+
+        let message = gmail::messages::read_message(&access, &email, &msg.id)
+            .map_err(|err| println!("Read msg: {}", err))
+            .ok().unwrap();
+
+        // message.snippet contains the body (atleast in short emails)
+        let url = gmail::messages::extract_url(&message.snippet);
+        let device_name = gmail::messages::extract_device_name(&message.snippet);
+
+        let fname = data::download::csv(&url, &device_name)
+            .map_err(|err| println!("Error downloading file: {}", err))
+            .ok().unwrap();
+    }
+
 }

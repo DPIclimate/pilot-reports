@@ -47,7 +47,7 @@ pub async fn clear_inbox(access: &AccessToken,
     // This method is used to clear the gmail inbox BEFORE requesting new data
     // This way when the list() method is called it only gets emails sent in the current batch
 
-    println!("Clearing inbox to trash");
+    println!("Clearing inbox to trash for account {}", email);
 
     for msg in &msg_list.messages{
         let url = format!("https://gmail.googleapis.com/gmail/v1/users/{}/messages/{}/trash", 
@@ -115,18 +115,34 @@ pub async fn read_message(access: &AccessToken, email: &String,
     Ok(res)
 }
 
-pub fn extract_url(message: &Message) -> String {
+pub fn extract_url(message_text: &String) -> String {
     // Extract url from message body (snippet)
     // TODO: Can this be improved?
     // Returns a string containing the url
-    let split_body = message.snippet.split(" ");
+    let split_body = message_text.split(" ");
 
     for item in split_body{
         if item.contains(".csv"){
             return item.to_string();
         }
     }
-    return String::from("")
+    String::from("")
+}
+
+pub fn extract_device_name(message_text: &String) -> String {
+    // Extract the device name from the email body to be used as the output
+    // filename.
+    // Basically searching for "device-name" with quotes hence the use of
+    // &quot; as the delimiter.
+    let delim  = "&quot;".to_string();
+
+    let start_pnt = message_text.find(&delim).unwrap_or(0) + delim.len();
+
+    let msg_part_two = message_text[start_pnt..message_text.len()].to_string();
+
+    let end_pnt = msg_part_two.find(&delim).unwrap_or(msg_part_two.len()) + start_pnt;
+
+    message_text[start_pnt..end_pnt].to_string()
 }
 
 

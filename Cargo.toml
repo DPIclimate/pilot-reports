@@ -10,7 +10,7 @@ reqwest = { version = "0.11", features = ["blocking", "json"]  }
 tokio = { version = "1", features = ["full"]  }
 serde = { version = "1.0", features = ["derive"]  }
 serde_json = "1.0"
-csv = "1.1"
+csv = "^1.1"
 dotenv = "0.14"
 chrono = "0.4"
 oauth2 = "4.1"
@@ -18,3 +18,4 @@ url = "^2.2"
 yup-oauth2 = "^6.2"
 tempdir = "^0.3"
 tempfile = "^3.3"
+polars = { git = "https://github.com/pola-rs/polars" }

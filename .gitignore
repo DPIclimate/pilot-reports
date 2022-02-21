@@ -7,3 +7,4 @@
 .env
 clientsecret.json
 tokencache.json
+*.csv

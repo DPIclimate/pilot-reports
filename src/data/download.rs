@@ -1,38 +1,36 @@
 use std::io::copy;
-use std::fs::File;
-use tempfile::Builder;
+use std::fs::{File, DirBuilder};
 use std::error::Error;
 
 #[tokio::main]
-pub async fn csv(url: &String) -> Result<String, Box<dyn Error>> {
-    // Downloads a .csv file to a temporary directory (deletes on program exit)
-    // On MacOS this this is /var/folders/../../filename.csv
-    // Returns string containing directory of file
+pub async fn csv(url: &String, fname: &String) -> Result<(), Box<dyn Error>> {
+    // Downloads a .csv file to a directory from a url
 
     // Specify output dir
-    let tmp_dir = Builder::new().prefix("tmp-data").tempdir()?;
+    // recursive(true) means the directory will be overwritten 
+    let path = "data/"; // Ouput folder
+    let dir = DirBuilder::new()
+        .recursive(true)
+        .create(path)?;
 
-    // Get file
-    let response = reqwest::get(url).await?;
+    // Create the file to write into
+    let mut file = {
+        let name = format!("{}.csv", fname);
+        let output_dir = format!("{}{}", path.to_string(), name);
 
-    let mut output_dir = String::new();
+        println!("New file located at: {:?}", output_dir);
 
-    let mut dest = {
-        let fname = response
-            .url()
-            .path_segments()
-            .and_then(|segments| segments.last())
-            .and_then(|name| if name.is_empty() { None } else { Some(name) })
-            .unwrap_or("tmp.bin");
-        println!("File to download: {}", fname);
-        let fname = tmp_dir.path().join(fname);
-        println!("Located at: {:?}", fname);
-        output_dir = String::from(fname.to_string_lossy());
-        File::create(fname)?
+        File::create(&output_dir)?
     };
 
-    let content = response.text().await?;
-    copy(&mut content.as_bytes(), &mut dest)?;
+    // Get file from url
+    let content = reqwest::get(url)
+        .await?
+        .text()
+        .await?;
 
-    Ok(output_dir)
+    // Insert the response contents into the file
+    copy(&mut content.as_bytes(), &mut file)?;
+
+    Ok(())
 }
