@@ -17,3 +17,11 @@ pub fn to_summary() -> Result<DataFrame>{
         .finish()
 }
 
+pub fn get_column_max_f64(df: &DataFrame, column: &String) -> f64 {
+    // Get max value of a column containing f64 values
+    match df.column(column).unwrap().max::<f64>() {
+        Some(v) => v,
+        None => 0.0
+    }
+}
+

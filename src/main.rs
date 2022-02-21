@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
 extern crate dotenv;
 use std::{thread, time};
 use chrono::Local;

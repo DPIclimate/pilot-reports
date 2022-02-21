@@ -35,10 +35,28 @@ mod tests {
     fn test_data_modify(){
         let df = data::transform::to_summary().unwrap();
     
-        let sal_iter = &df["salinity"].f64().unwrap().into_iter()
-            .for_each(|opt_v| println!("{:?}", opt_v));
+        // This transforms sal_iter into a ChunkedArray
+        let sal_iter = &df["salinity"].f64().unwrap();
+            
+        // Iterate through ChunkArray
+        let lp = &sal_iter.into_iter().for_each(|value| {
+                match value {
+                    Some(v) => println!("{}", v),
+                    None => println!("Nonetype value"),
+                };
+        });
+
+        // Get columns as a Series (also gets column names)
+        let cols = &df.get_columns();
+        for col in cols.iter() {
+            println!("{}", col.name());
+        }
 
 
+        let col_name = "salinity".to_string();
+        let max_sal = data::transform::get_column_max_f64(&df, &col_name);
+
+        println!("{:?}", max_sal);
 
     }
 }
