@@ -4,7 +4,6 @@ use std::error::Error;
 
 pub enum Identifier {
     ApiLabel(String),
-    Id(String),
 }
 
 #[derive(Deserialize)]
@@ -25,33 +24,6 @@ pub struct Device {
     pub variables: String,
     pub variables_count: i64, 
 }
-
-#[tokio::main]
-pub async fn get(id: &Identifier, token: &String) -> Result<Device, Box<dyn Error>> {
-    // Get a device from ubidots using either the api label or the id
-    // Returns a Device or an Error
-    let url = match id {
-        Identifier::ApiLabel(l) => {
-            format!("https://industrial.api.ubidots.com/api/v2.0/devices/~{}", l)
-        },
-        Identifier::Id(i) => {
-            format!("https://industrial.api.ubidots.com/api/v2.0/devices/{}", i)
-        }
-    };
-
-    let client = reqwest::Client::new();
-    let response = client
-        .get(url)
-        .header("X-Auth-Token", token)
-        .header("Content-Type", "application/json")
-        .send()
-        .await?
-        .json::<Device>()
-        .await?;
-
-    Ok(response)
-}
-
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]

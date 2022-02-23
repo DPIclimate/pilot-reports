@@ -8,3 +8,4 @@
 clientsecret.json
 tokencache.json
 *.csv
+*.ipynb

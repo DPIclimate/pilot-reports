@@ -18,4 +18,4 @@ url = "^2.2"
 yup-oauth2 = "^6.2"
 tempdir = "^0.3"
 tempfile = "^3.3"
-polars = { git = "https://github.com/pola-rs/polars" }
+pyo3 = "0.15.1"

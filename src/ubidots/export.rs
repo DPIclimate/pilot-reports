@@ -41,9 +41,6 @@ pub async fn data_to_email(token: &String, email: &String, devices: &device::Dev
             let url = match api_label {
                 device::Identifier::ApiLabel(l) => {
                     format!("https://industrial.api.ubidots.com/api/v2.0/devices/~{}/_/values/export/?email={}&startDate={}&endDate={}&timezone=Australia/Sydney", l, email, start, end)
-                },
-                device::Identifier::Id(i) => {
-                    format!("https://industrial.api.ubidots.com/api/v2.0/devices/~{}/_/values/export/?email={}&startDate={}&endDate={}&timezone=Australia/Sydney", i, email, start, end)
                 }
             };
             
@@ -91,5 +88,4 @@ fn get_selected_buoys() -> Result<Buoys, Box<dyn Error>> {
 
     Ok(devices)
 }
-
 

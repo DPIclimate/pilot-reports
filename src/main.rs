@@ -1,13 +1,11 @@
-#![allow(dead_code)]
-#![allow(unused_variables)]
 extern crate dotenv;
 use std::{thread, time};
-use chrono::Local;
 use std::env;
 
 mod ubidots;
 mod gmail;
 mod data;
+mod datawrapper;
 
 fn main() {
     dotenv::dotenv().expect("Failed to read .env file");
@@ -25,9 +23,9 @@ fn main() {
 
     let org_token = env::var("ORG_KEY").expect("Organisation key not found");
     
-    // Specify start and end times
-    let end_date = Local::now().timestamp() * 1000;
-    let start_date = &end_date - 604800000; // One week ago
+    // Temp set these a fixed
+    let end_date = 1645361999000;
+    let start_date = 1644152400000;
     let date_range = (start_date, end_date);
 
     let devices = ubidots::device::get_all(&org_token)
@@ -79,9 +77,25 @@ fn main() {
         let url = gmail::messages::extract_url(&message.snippet);
         let device_name = gmail::messages::extract_device_name(&message.snippet);
 
-        let fname = data::download::csv(&url, &device_name)
+        data::download::csv(&url, &device_name)
             .map_err(|err| println!("Error downloading file: {}", err))
             .ok().unwrap();
     }
+
+    // Takes the captured datasets and transforms them into a summary .csv
+    // file that can be uploaded to datawrapper (this method runs transform.py)
+    data::transform::to_csv();
+
+    // Upload chart data and publish chart to datawrapper
+    let chart_id = env::var("CHART_ID").expect("Chart ID not found");
+    let dw_key = env::var("DW_KEY").expect("Datawapper key not found");
+
+    datawrapper::export::upload_dataset(&chart_id, &dw_key)
+        .map_err(|err| println!("{}", err))
+        .ok();
+
+    datawrapper::export::publish_chart(&chart_id, &dw_key)
+        .map_err(|err| println!("{}", err))
+        .ok();
 
 }

@@ -9,7 +9,7 @@ pub async fn csv(url: &String, fname: &String) -> Result<(), Box<dyn Error>> {
     // Specify output dir
     // recursive(true) means the directory will be overwritten 
     let path = "data/"; // Ouput folder
-    let dir = DirBuilder::new()
+    let _dir = DirBuilder::new()
         .recursive(true)
         .create(path)?;
 
