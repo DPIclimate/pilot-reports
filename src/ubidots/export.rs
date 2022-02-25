@@ -5,6 +5,7 @@ use std::fs::File;
 use std::io::BufReader;
 use crate::ubidots::device;
 
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Status {
@@ -16,6 +17,7 @@ pub struct Status {
 pub struct PostId {
     pub id: String,
 }
+
 
 #[tokio::main]
 pub async fn data_to_email(token: &String, email: &String, devices: &device::Devices,
@@ -61,6 +63,7 @@ pub async fn data_to_email(token: &String, email: &String, devices: &device::Dev
     Ok(ok_responses)
 }
 
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Buoys {
@@ -75,6 +78,7 @@ pub struct Buoy {
     #[serde(rename = "buoy_number")]
     pub buoy_number: String,
 }
+
 
 fn get_selected_buoys() -> Result<Buoys, Box<dyn Error>> {
     // Gets a list of buoys for which should be included in 

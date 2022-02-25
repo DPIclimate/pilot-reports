@@ -9,7 +9,7 @@ use std::fs::File;
 use std::io::Read;
 
 #[tokio::main]
-pub async fn upload_dataset(chart_id: &String, 
+pub async fn upload_dataset(file_path: &String, chart_id: &String, 
     datawrapper_key: &String) -> Result<(), Box<dyn Error>> {
     // Takes the transform.csv data set and sends it to datawrapper using a specific 
     // chart id.
@@ -18,15 +18,14 @@ pub async fn upload_dataset(chart_id: &String,
     println!("Exporting data to datawrapper.de");
 
     // Read in the file as a raw string
-    let filename = "data/transformed/transformed.csv";
-    let body = match File::open(filename) {
+    let body = match File::open(file_path) {
         Ok(mut file) => {
             let mut b = String::new();
             file.read_to_string(&mut b).expect("Error reading file.");
             b 
         },
         Err(e) => {
-            panic!("Error opening file {}: {}", filename, e);
+            panic!("Error opening file {}: {}", file_path, e);
         }
     };
 
@@ -67,5 +66,5 @@ pub async fn publish_chart(chart_id: &String,
     println!("Response: {}", &response.status());
 
     Ok(())
-
 }
+

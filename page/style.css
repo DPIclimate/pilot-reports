@@ -4,6 +4,9 @@ body {
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
 	padding: 0;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .header{
@@ -30,13 +33,24 @@ body {
 	padding: 1rem;
 }
 
+.precip-chart {
+	padding: 1rem;
+	width: 47%;
+}
+
+@media screen and (max-width: 992px){
+	.precip-chart{
+		width: 95%;
+	}
+}
+
 .footer {
 	display: flex;
 	justify-content: space-evenly;
 	flex-direction: row;
-	position: absolute;
 	background: #1D3D59;
 	width: 100vw;
+	margin-top: auto;
 	height: 60px;
 	bottom: 0;
 }

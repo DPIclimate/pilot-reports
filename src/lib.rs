@@ -1,5 +1,6 @@
 // use cargo run -- --nocapture to see println! statements
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -10,6 +11,8 @@ mod tests {
     mod gmail;
     mod data;
     mod datawrapper;
+    mod utils;
+
 
     #[test]
     fn test_download_csv() {
@@ -44,9 +47,35 @@ mod tests {
         // Test the process of uploading .csv dataset to datawrapper and 
         // publishing the chart
         dotenv::dotenv().expect("Failed to read .env file");
-        let chart_id = env::var("CHART_ID").expect("Chart ID not found");
+        let table_id = env::var("TABLE_ID").expect("Table ID not found");
         let dw_key = env::var("DW_KEY").expect("Datawapper key not found");
-        datawrapper::export::upload_dataset(&chart_id, &dw_key)
+        let dataset_path = String::from("data/transformed/transformed.csv");
+        datawrapper::export::upload_dataset(&dataset_path, &table_id, &dw_key)
+            .map_err(|err| println!("{}", err))
+            .ok();
+
+        datawrapper::export::publish_chart(&table_id, &dw_key)
+            .map_err(|err| println!("{}", err))
+            .ok();
+    }
+
+    #[test]
+    fn test_precipitation_chart_create() {
+        dotenv::dotenv().expect("Failed to read .env file");
+        
+        // Get the data from the AWS and publish it to datawrapper
+        let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+        let dw_key = env::var("DW_KEY").expect("Datawapper key not found");
+
+        let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
+            .map_err(|err| println!("{}", err))
+            .ok().expect("Precipitation parse error.");
+
+        datawrapper::chart::json_to_csv(&aws);
+
+        let aws_path = String::from("data/precipitation/precipitation.csv");
+        let chart_id = env::var("CHART_ID").expect("Chart ID not found");
+        datawrapper::export::upload_dataset(&aws_path, &chart_id, &dw_key)
             .map_err(|err| println!("{}", err))
             .ok();
 
@@ -55,3 +84,5 @@ mod tests {
             .ok();
     }
 }
+
+
