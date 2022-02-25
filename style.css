@@ -34,15 +34,41 @@ body {
 }
 
 .precip-chart {
+	flex: 49%;
 	padding: 1rem;
-	width: 47%;
 }
 
-@media screen and (max-width: 992px){
-	.precip-chart{
-		width: 95%;
-	}
+
+.precip-and-table {
+	display: flex;
+	flex-wrap: wrap;
 }
+
+.fieldwork-table {
+	flex: 49%;
+	padding: 1rem;
+}
+
+.fieldwork-table tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+.fieldwork-table tr:hover {
+	background: #d3d3d3;
+}
+
+.fieldwork-table th {
+	padding: 10px;
+	background: #1D3D59;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.fieldwork-table td {
+	padding: 0.5rem;
+}
+
 
 .footer {
 	display: flex;
@@ -50,7 +76,7 @@ body {
 	flex-direction: row;
 	background: #1D3D59;
 	width: 100vw;
-	margin-top: auto;
+	margin-top: 4rem;
 	height: 60px;
 	bottom: 0;
 }
