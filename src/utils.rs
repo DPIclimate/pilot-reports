@@ -11,6 +11,7 @@ pub mod time {
         DateTime::<Local>::from(datetime_ts)
     }
 
+
     pub fn one_week() -> (i64, i64) {
         // Get the time a week ago and the current time in UNIX timestamp
         let time_now = Utc::now().timestamp() * 1000;
@@ -23,6 +24,19 @@ pub mod time {
         let time_now = Utc::now().timestamp() * 1000;
         let last_week = time_now - 1209600000;
         (last_week, time_now)
+    }
+
+    pub fn weekly_column_names() -> Vec<String> {
+        let mut unix_time = (Utc::now().timestamp() * 1000) - 604800000;
+        let mut col_names: Vec<String> = Vec::new();
+        for _ in 0..7 { 
+            let local_day = unix_to_local(&unix_time)
+                .date()
+                .format("%A");
+            col_names.push(local_day.to_string());
+            unix_time += 86400000;
+        }
+        col_names
     }
 }
 
@@ -38,7 +52,8 @@ pub mod config {
     #[serde(rename_all = "camelCase")]
     pub struct Config {
         pub devices: Vec<Device>,
-        pub variables: Vec<Variable>,
+        pub variables: Vec<String>,
+        pub files: Vec<FileConfig>,
     }
 
     #[derive(Deserialize)]
@@ -52,19 +67,10 @@ pub mod config {
 
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
-    pub struct Variable {
+    pub struct FileConfig {
         pub name: String,
-    }
-
-    impl Config {
-        pub fn list_variable_names(&self) -> Vec<String> {
-            // Returns a vector of strings containing variable names
-            let mut variables = Vec::new();
-            for variable in &self.variables {
-                variables.push(variable.name.to_owned());
-            }
-            variables
-        }
+        pub dynamic: bool,
+        pub columns: Vec<String>,
     }
 
     pub fn get_config() -> Result<Config, Box<dyn Error>> {

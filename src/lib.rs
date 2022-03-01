@@ -8,7 +8,7 @@ mod data;
 mod datawrapper;
 mod utils;
 
-#[test] 
+//#[test] 
 fn weekly_mean() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
@@ -24,7 +24,7 @@ fn weekly_mean() {
         .ok().unwrap();
 
     for variable in &variables.results {
-        if config.variables.iter().any(|var| &var.name == &variable.name) {
+        if config.variables.iter().any(|var| var == &variable.name) {
             let (start, end) = utils::time::one_week();
 
             let agg = ubidots::device::data::Aggregation {
@@ -45,8 +45,7 @@ fn weekly_mean() {
     
 }
 
-
-#[test]
+//#[test]
 fn load_config() {
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
@@ -56,16 +55,12 @@ fn load_config() {
         println!("Device name: {}", device.name);
     }
 
-    // Gets variables as a Vec<String> which can be passed directly into aggregation body
-    // This variable now owns the variable names
-    let variables = config.list_variable_names();
-
-    for name in &variables {
+    for name in &config.variables {
         println!("Variable name: {}", name);
     }
 }
 
-#[test]
+//#[test]
 fn match_device_to_variables() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
@@ -92,7 +87,7 @@ fn match_device_to_variables() {
 
             // Check if variables are contained within the requested variables (config.json)
             for variable in &variables.results {
-                if config.variables.iter().any(|var| &var.name == &variable.name) {
+                if config.variables.iter().any(|var| var == &variable.name) {
                     println!("Variable name: {}\t Label: {}", variable.name, variable.id)
                 }
             }
@@ -100,7 +95,7 @@ fn match_device_to_variables() {
     }
 }
 
-#[test]
+//#[test]
 fn unix_timestamp_to_local_day(){
     let ts = 1645491182126;
     let local_day = utils::time::unix_to_local(&ts)
@@ -111,5 +106,5 @@ fn unix_timestamp_to_local_day(){
 
 #[test]
 fn create_csv_files() {
-    data::files::overwrite_output_csvs();
+    data::files::create_output_csv_files();
 }

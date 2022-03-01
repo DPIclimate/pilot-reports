@@ -52,11 +52,43 @@
 		}
 	],
 	"variables": [
+		"salinity", 
+		"temperature"
+	],
+	"files": [
 		{
-			"name": "salinity"
+			"name": "fortnightly-temperature.csv",
+			"dynamic": false,
+			"columns": [
+				"Location",
+				"Last Week",
+				"This Week"
+			]
 		},
 		{
-			"name": "temperature"
+			"name": "fortnightly-salinity.csv",
+			"dynamic": false,
+			"columns": [
+				"Location",
+				"Last Week",
+				"This Week"
+			]
+		},
+		{
+			"name": "weekly-precipitation.csv",
+			"dynamic": false,
+			"columns": [
+				"Date",
+				"Precipitation"
+			]
+		},
+		{
+			"name": "weekly-salinity.csv",
+			"dynamic": true,
+			"columns": [
+				"Location",
+				"HA"
+			]
 		}
 	]
 }
