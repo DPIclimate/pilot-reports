@@ -1,5 +1,5 @@
 {
-	"buoys": [
+	"devices": [
 		{
 			"name": "clyde-salinity20c",
 			"location": "Wray Street",
@@ -49,6 +49,14 @@
 			"name": "clyde-salinity507",
 			"location": "Double Bay",
 			"buoy_number": "13"
+		}
+	],
+	"variables": [
+		{
+			"name": "salinity"
+		},
+		{
+			"name": "temperature"
 		}
 	]
 }

@@ -1,88 +1,115 @@
 // use cargo run -- --nocapture to see println! statements
 
+extern crate dotenv;
+use std::env;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    extern crate dotenv;
-    use std::env;
+mod ubidots;
+mod data;
+mod datawrapper;
+mod utils;
 
-    mod ubidots;
-    mod gmail;
-    mod data;
-    mod datawrapper;
-    mod utils;
+#[test] 
+fn weekly_mean() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Organisation key not found");
 
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok().unwrap();
 
-    #[test]
-    fn test_download_csv() {
-        // Test the process of downloading a csv file from a specified url
-        let url = "https://s3.amazonaws.com/prd-293huhzkha/00d11feca77ff462_device_7_variables_5lbO.csv".to_string();
-        let fname = "clyde-salinity90d".to_string();
-        data::download::csv(&url, &fname)
-            .map_err(|err| println!("Error downloading file: {}", err))
-            .ok().unwrap();
+    let device_id = "6181b4ca852f0907a66ca289".to_string();
+
+    let variables = ubidots::device::variables::list_variables(&device_id, &token)
+        .map_err(|err| println!("Error getting device variables: {}", err))
+        .ok().unwrap();
+
+    for variable in &variables.results {
+        if config.variables.iter().any(|var| &var.name == &variable.name) {
+            let (start, end) = utils::time::one_week();
+
+            let agg = ubidots::device::data::Aggregation {
+                variables: vec![variable.id.to_owned()],
+                aggregation: "mean".to_string(), 
+                join_dataframes: false, 
+                start: start,
+                end: end,
+            };
+
+            let response = agg.aggregate(&token)
+                .map_err(|err| println!("Error requesting weekly mean: {}", err))
+                .ok().unwrap();
+
+            response.to_csv(&variable.name);
+        }
     }
-
-    #[test]
-    fn test_extract_device_name() {
-        // Test the extraction of device name from email contents
-        // Has the potential to change in the future if ubidots updates their mail strucutre
-        // In that case, this funciton will need to be changed accordingly
-        let msg = "Hi there, Your sensor data export &quot;clyde-salinity90b&quot; is ready for download https://s3.amazonaws.com/prd-293huhzkha/00e3ced15d56e7a9_device_7_variables_Xqjl.csv All the best,".to_string();
-
-        let name = gmail::messages::extract_device_name(&msg);
-
-        assert_eq!("clyde-salinity90b", name);
-    }
-
-    #[test]
-    fn test_python_transform() {
-        // Test taking the devices .csv files and transform them into the datawrapper template
-        data::transform::to_csv();
-    }
-
-    #[test]
-    fn test_datawrapper_upload() {
-        // Test the process of uploading .csv dataset to datawrapper and 
-        // publishing the chart
-        dotenv::dotenv().expect("Failed to read .env file");
-        let table_id = env::var("TABLE_ID").expect("Table ID not found");
-        let dw_key = env::var("DW_KEY").expect("Datawapper key not found");
-        let dataset_path = String::from("data/transformed/transformed.csv");
-        datawrapper::export::upload_dataset(&dataset_path, &table_id, &dw_key)
-            .map_err(|err| println!("{}", err))
-            .ok();
-
-        datawrapper::export::publish_chart(&table_id, &dw_key)
-            .map_err(|err| println!("{}", err))
-            .ok();
-    }
-
-    #[test]
-    fn test_precipitation_chart_create() {
-        dotenv::dotenv().expect("Failed to read .env file");
-        
-        // Get the data from the AWS and publish it to datawrapper
-        let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
-        let dw_key = env::var("DW_KEY").expect("Datawapper key not found");
-
-        let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
-            .map_err(|err| println!("{}", err))
-            .ok().expect("Precipitation parse error.");
-
-        datawrapper::chart::json_to_csv(&aws);
-
-        let aws_path = String::from("data/precipitation/precipitation.csv");
-        let chart_id = env::var("CHART_ID").expect("Chart ID not found");
-        datawrapper::export::upload_dataset(&aws_path, &chart_id, &dw_key)
-            .map_err(|err| println!("{}", err))
-            .ok();
-
-        datawrapper::export::publish_chart(&chart_id, &dw_key)
-            .map_err(|err| println!("{}", err))
-            .ok();
-    }
+    
 }
 
 
+#[test]
+fn load_config() {
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok().unwrap();
+
+    for device in &config.devices {
+        println!("Device name: {}", device.name);
+    }
+
+    // Gets variables as a Vec<String> which can be passed directly into aggregation body
+    // This variable now owns the variable names
+    let variables = config.list_variable_names();
+
+    for name in &variables {
+        println!("Variable name: {}", name);
+    }
+}
+
+#[test]
+fn match_device_to_variables() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Organisation key not found");
+
+    // Get all devcies from Ubidots under specific org
+    let all_devices = ubidots::devices::get_all_devices(&token)
+        .map_err(|err| println!("Error getting devices list: {}", err))
+        .ok().unwrap();
+
+    // Get data from config file
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok().unwrap();
+
+    // Check if configured devices are within the requested devices
+    for device in &all_devices.results {
+        if config.devices.iter().any(|dev| &dev.name == &device.name) {
+            println!("Device name: {}", device.name);
+
+            // List variables of device
+            let variables = ubidots::device::variables::list_variables(&device.id, &token)
+                .map_err(|err| println!("Error getting device variables: {}", err))
+                .ok().unwrap();
+
+            // Check if variables are contained within the requested variables (config.json)
+            for variable in &variables.results {
+                if config.variables.iter().any(|var| &var.name == &variable.name) {
+                    println!("Variable name: {}\t Label: {}", variable.name, variable.id)
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn unix_timestamp_to_local_day(){
+    let ts = 1645491182126;
+    let local_day = utils::time::unix_to_local(&ts)
+        .date()
+        .format("%A");
+    assert_eq!("Tuesday".to_string(), local_day.to_string());
+}
+
+#[test]
+fn create_csv_files() {
+    data::files::overwrite_output_csvs();
+}

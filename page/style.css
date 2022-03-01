@@ -28,14 +28,17 @@ body {
 }
 
 .variables-table {
-	width: 95%;
 	margin: auto;
 	padding: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 1rem;
 }
 
 .precip-chart {
-	flex: 49%;
+	flex: 45%;
 	padding: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 1rem;
 }
 
 
@@ -45,8 +48,10 @@ body {
 }
 
 .fieldwork-table {
-	flex: 49%;
+	flex: 46%;
 	padding: 1rem;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin: 1rem;
 }
 
 .fieldwork-table tr:nth-child(even) {
