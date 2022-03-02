@@ -16,6 +16,7 @@ pub fn create_output_csv_files() {
         let file_path = format!("{}{}", path, file.filename);
 
         let csv_file = OpenOptions::new()
+            .truncate(true) // Overwrites file if exits (back to zero size)
             .write(true)
             .create(true)
             .open(file_path)
@@ -46,13 +47,20 @@ pub struct Fortnightly {
 pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>) {
     // Take a vector of fortnightly values and put them into a csv
 
-    let file = format!("data/{}-test.csv", variable_name);
+    let filename = format!("data/fortnightly-{}.csv", variable_name);
 
-    let mut wtr = csv::Writer::from_path(file)
-        .expect("Unable to write to request file path / filename");
+    let mut file = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .open(filename)
+        .unwrap();
+
+    let mut wtr = csv::Writer::from_writer(file);
 
     for row in fortnightly.iter() {
-        wtr.serialize(row).expect("Unable to write to CSV");
+        wtr.write_record([row.location.to_owned(),
+                        row.last_week.to_string(), 
+                        row.this_week.to_string()]).expect("Unable to write to CSV");
     }
 
     wtr.flush().expect("Error flushing writer");

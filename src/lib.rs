@@ -10,6 +10,8 @@ mod utils;
 
 #[test]
 fn variables_list() {
+    data::files::create_output_csv_files(); // Overwrite existing .csv files
+
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
 
