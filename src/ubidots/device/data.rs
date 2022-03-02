@@ -54,31 +54,3 @@ impl Aggregation {
     }
 }
 
-#[derive(Serialize)]
-struct Record<'a>{
-    day_of_week: &'a String, 
-    value: &'a f64,
-}
-
-impl Response {
-    pub fn to_csv(&self, variable_name: &String) {
-
-        let file = format!("data/{}-test.csv", variable_name);
-        let mut wtr = csv::Writer::from_path(file)
-            .expect("Unable to write to request file path / filename");
-
-        for res in &self.results {
-            let local_day = utils::time::unix_to_local(&res.timestamp)
-                .date()
-                .format("%A");
-            let rec = Record {
-                day_of_week: &local_day.to_string(),
-                value: &res.value
-            };
-            wtr.serialize(rec).expect("Unable to write to CSV");
-        }
-
-        wtr.flush().expect("Error flushing writer");
-    }
-}
-

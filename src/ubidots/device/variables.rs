@@ -1,7 +1,6 @@
 //! Get device variables
-use serde::{Serialize, Deserialize};
+use serde::Deserialize;
 use std::error::Error;
-use crate::utils;
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -39,14 +38,16 @@ pub struct VariablesList {
     pub name: String,
     pub ids: Vec<String>,
     pub corresponding_device: Vec<String>,
+    pub harvest_area: Vec<String>,
 }
 
 impl VariablesList {
     // Contains a list of like varaible ids to use in request to Ubidots
 
-    pub fn add_variable_and_device(&mut self, variable_id: &String, device_name: &String) {
+    pub fn add_variable_and_device(&mut self, variable_id: &String, device_name: &String, harvest_area: &String) {
         self.ids.push(variable_id.to_string());
         self.corresponding_device.push(device_name.to_string());
+        self.harvest_area.push(harvest_area.to_string());
     }
-
 }
+

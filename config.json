@@ -73,7 +73,8 @@
 			"columns": [
 				"Location",
 				"Last Week",
-				"This Week"
+				"This Week",
+				"Harvest Area"
 			]
 		},
 		{
@@ -83,7 +84,8 @@
 			"columns": [
 				"Location",
 				"Last Week",
-				"This Week"
+				"This Week",
+				"Harvest Area"
 			]
 		},
 		{
@@ -101,7 +103,7 @@
 			"dynamic": true,
 			"columns": [
 				"Location",
-				"HA"
+				"Harvest Area"
 			]
 		}
 	]

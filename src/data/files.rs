@@ -1,5 +1,5 @@
 use std::fs::OpenOptions;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use crate::utils;
 
 pub fn create_output_csv_files() {
@@ -42,6 +42,7 @@ pub struct Fortnightly {
     pub location: String,
     pub last_week: f64,
     pub this_week: f64,
+    pub harvest_area: String, 
 }
 
 pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>) {
@@ -49,7 +50,7 @@ pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>
 
     let filename = format!("data/fortnightly-{}.csv", variable_name);
 
-    let mut file = OpenOptions::new()
+    let file = OpenOptions::new()
         .write(true)
         .append(true)
         .open(filename)
@@ -60,23 +61,38 @@ pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>
     for row in fortnightly.iter() {
         wtr.write_record([row.location.to_owned(),
                         row.last_week.to_string(), 
-                        row.this_week.to_string()]).expect("Unable to write to CSV");
+                        row.this_week.to_string(),
+                        row.harvest_area.to_owned()])
+            .expect("Unable to write to CSV");
     }
 
     wtr.flush().expect("Error flushing writer");
 }
 
 
-// Days are used here as their name is dynamic
 pub struct Weekly {
-    day1: f64, 
-    day2: f64, 
-    day3: f64, 
-    day4: f64, 
-    day5: f64, 
-    day6: f64, 
-    day7: f64, 
-    location: String,
-    harvest_area: String,
+    pub location: Vec<String>,
+    pub daily_value: Vec<f64>,
+    pub harvest_area: Vec<String>,
+}
+
+impl Weekly {
+    pub fn to_csv(&self) {
+        let filename = format!("data/weekly-{}.csv", variable_name);
+
+        let file = OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open(filename)
+            .unwrap();
+
+        let mut wtr = csv::Writer::from_writer(file);
+
+        for (loc, (dv, ha)) in self.location().iter().zip(self.daily_value.iter().zip(harvest_area.iter)) {
+            // start here tomorrow
+            wtr.write_record([])
+        }
+        wtr.flush().expect("Error flushing writer");
+    }
 }
 

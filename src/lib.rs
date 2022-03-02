@@ -8,106 +8,7 @@ mod data;
 mod datawrapper;
 mod utils;
 
-#[test]
-fn variables_list() {
-    data::files::create_output_csv_files(); // Overwrite existing .csv files
-
-    dotenv::dotenv().expect("Failed to read .env file.");
-    let token = env::var("ORG_KEY").expect("Organisation key not found");
-
-    let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
-        .ok().unwrap();
-
-    // Get all devcies from Ubidots under specific org
-    let all_devices = ubidots::devices::get_all_devices(&token)
-        .map_err(|err| println!("Error getting devices list: {}", err))
-        .ok().unwrap();
-
-    for variable in &config.variables {
-        let mut variable_list = ubidots::device::variables::VariablesList {
-            name: variable.to_string(),
-            ids: Vec::new(),
-            corresponding_device: Vec::new(),
-        };
-
-        for device in &all_devices.results {
-            if config.devices.iter().any(|dev| &dev.name == &device.name) {
-                // List variables of device
-                let all_variables = ubidots::device::variables::list_variables(&device.id, &token)
-                    .map_err(|err| println!("Error getting device variables: {}", err))
-                    .ok().unwrap();
-
-                // Check if variables are contained within the requested variables (config.json)
-                for var in &all_variables.results {
-                    if &var.name == variable {
-                        let mut location: String = "unknown".to_string();
-                        for dev in &config.devices {
-                            if &dev.name == &device.name {
-                                location = dev.location.to_owned();;
-                                break;
-                            }
-                        }
-                        variable_list.add_variable_and_device(&var.id, &location);
-                        break;
-                    }
-                }
-            }
-        }
-
-        // ---- Last Week ---- //
-        let (start, end) = utils::time::one_week();
-
-        let agg = ubidots::device::data::Aggregation {
-            variables: variable_list.ids.to_owned(),
-            aggregation: "mean".to_string(), 
-            join_dataframes: false, 
-            start: start,
-            end: end,
-        };
-
-        let response = agg.aggregate(&token)
-            .map_err(|err| println!("Error requesting weekly mean: {}", err))
-            .ok().unwrap();
-
-        // ---- This Week ---- //
-        let agg2 = ubidots::device::data::Aggregation {
-            variables: variable_list.ids.to_owned(),
-            aggregation: "mean".to_string(), 
-            join_dataframes: false, 
-            start: start,
-            end: end,
-        };
-
-        let response2 = agg2.aggregate(&token)
-            .map_err(|err| println!("Error requesting weekly mean: {}", err))
-            .ok().unwrap();
-
-        let mut fortnight_vec: Vec<data::files::Fortnightly> = Vec::new();
-
-        for (lw, (tw, cd)) in response.results.iter().zip(response2.results.iter()
-                .zip(variable_list.corresponding_device.iter())) {
-
-            let fortnight = data::files::Fortnightly {
-                location: cd.to_string(),
-                last_week: lw.value,
-                this_week: tw.value,
-            };
-            fortnight_vec.push(fortnight);
-        }
-
-        data::files::fortnightly_to_csv(&variable, &fortnight_vec);
-
-        println!("Variable name: {}", variable);
-        for item in &variable_list.ids {
-            println!("Variable ID: {}", item);
-        }
-
-    }
-}
-
-
-//#[test] 
+#[test] 
 fn weekly_mean() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
@@ -143,7 +44,7 @@ fn weekly_mean() {
     }
 }
 
-//#[test]
+#[test]
 fn load_config() {
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
@@ -158,7 +59,7 @@ fn load_config() {
     }
 }
 
-//#[test]
+#[test]
 fn match_device_to_variables() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
@@ -194,7 +95,7 @@ fn match_device_to_variables() {
     }
 }
 
-//#[test]
+#[test]
 fn unix_timestamp_to_local_day(){
     let ts = 1645491182126;
     let local_day = utils::time::unix_to_local(&ts)
@@ -203,7 +104,7 @@ fn unix_timestamp_to_local_day(){
     assert_eq!("Tuesday".to_string(), local_day.to_string());
 }
 
-//#[test]
+#[test]
 fn create_csv_files() {
     data::files::create_output_csv_files();
 }

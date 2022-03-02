@@ -11,12 +11,18 @@ pub mod time {
         DateTime::<Local>::from(datetime_ts)
     }
 
-
     pub fn one_week() -> (i64, i64) {
         // Get the time a week ago and the current time in UNIX timestamp
         let time_now = Utc::now().timestamp() * 1000;
         let last_week = time_now - 604800000;
         (last_week, time_now)
+    }
+
+    pub fn last_week() -> (i64, i64) {
+        // Get the time between the start of two weeks ago and the start of last week
+        let last_week_end = (Utc::now().timestamp() * 1000) - 604800000;
+        let last_week_start = last_week_end - 604800000;
+        (last_week_start, last_week_end)
     }
 
     pub fn fortnight() -> (i64, i64) {
