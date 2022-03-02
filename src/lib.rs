@@ -39,12 +39,21 @@ fn variables_list() {
                 // Check if variables are contained within the requested variables (config.json)
                 for var in &all_variables.results {
                     if &var.name == variable {
-                        variable_list.add_variable_and_device(&var.id, &device.name);
+                        let mut location: String = "unknown".to_string();
+                        for dev in &config.devices {
+                            if &dev.name == &device.name {
+                                location = dev.location.to_owned();;
+                                break;
+                            }
+                        }
+                        variable_list.add_variable_and_device(&var.id, &location);
+                        break;
                     }
                 }
             }
         }
 
+        // ---- Last Week ---- //
         let (start, end) = utils::time::one_week();
 
         let agg = ubidots::device::data::Aggregation {
@@ -59,8 +68,33 @@ fn variables_list() {
             .map_err(|err| println!("Error requesting weekly mean: {}", err))
             .ok().unwrap();
 
-        let filename = format!("weekly-{}", variable);
-        response.to_csv(&filename);
+        // ---- This Week ---- //
+        let agg2 = ubidots::device::data::Aggregation {
+            variables: variable_list.ids.to_owned(),
+            aggregation: "mean".to_string(), 
+            join_dataframes: false, 
+            start: start,
+            end: end,
+        };
+
+        let response2 = agg2.aggregate(&token)
+            .map_err(|err| println!("Error requesting weekly mean: {}", err))
+            .ok().unwrap();
+
+        let mut fortnight_vec: Vec<data::files::Fortnightly> = Vec::new();
+
+        for (lw, (tw, cd)) in response.results.iter().zip(response2.results.iter()
+                .zip(variable_list.corresponding_device.iter())) {
+
+            let fortnight = data::files::Fortnightly {
+                location: cd.to_string(),
+                last_week: lw.value,
+                this_week: tw.value,
+            };
+            fortnight_vec.push(fortnight);
+        }
+
+        data::files::fortnightly_to_csv(&variable, &fortnight_vec);
 
         println!("Variable name: {}", variable);
         for item in &variable_list.ids {

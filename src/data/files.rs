@@ -38,9 +38,9 @@ pub fn create_output_csv_files() {
 // Setup the structs that corresponds to the csv files (don't know how to do this dynamically)
 #[derive(Serialize)]
 pub struct Fortnightly {
-    location: String,
-    last_week: String,
-    this_week: String,
+    pub location: String,
+    pub last_week: f64,
+    pub this_week: f64,
 }
 
 pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>) {
