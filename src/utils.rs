@@ -61,6 +61,8 @@ pub mod config {
     pub struct Device {
         pub name: String,
         pub location: String,
+        #[serde(rename = "harvest_area")]
+        pub harvest_area: String,
         #[serde(rename = "buoy_number")]
         pub buoy_number: String,
     }
@@ -68,6 +70,7 @@ pub mod config {
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct FileConfig {
+        pub filename: String,
         pub name: String,
         pub dynamic: bool,
         pub columns: Vec<String>,

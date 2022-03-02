@@ -63,11 +63,10 @@ struct Record<'a>{
 impl Response {
     pub fn to_csv(&self, variable_name: &String) {
 
-        let file = format!("data/{}.csv", variable_name);
+        let file = format!("data/{}-test.csv", variable_name);
         let mut wtr = csv::Writer::from_path(file)
             .expect("Unable to write to request file path / filename");
 
-        // Should only be one result
         for res in &self.results {
             let local_day = utils::time::unix_to_local(&res.timestamp)
                 .date()

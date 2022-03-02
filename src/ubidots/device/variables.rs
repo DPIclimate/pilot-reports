@@ -35,3 +35,18 @@ pub async fn list_variables(device_id: &String, token: &String) -> Result<Variab
     Ok(response)
 }
 
+pub struct VariablesList {
+    pub name: String,
+    pub ids: Vec<String>,
+    pub corresponding_device: Vec<String>,
+}
+
+impl VariablesList {
+    // Contains a list of like varaible ids to use in request to Ubidots
+
+    pub fn add_variable_and_device(&mut self, variable_id: &String, device_name: &String) {
+        self.ids.push(variable_id.to_string());
+        self.corresponding_device.push(device_name.to_string());
+    }
+
+}
