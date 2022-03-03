@@ -32,7 +32,7 @@ pub async fn upload_dataset(file_path: &String, chart_id: &String,
     let url = format!("https://api.datawrapper.de/v3/charts/{}/data", chart_id);
 
     let client = reqwest::Client::new();
-    let response = client
+    let _response = client
         .put(url)
         .bearer_auth(datawrapper_key.as_str())
         .header("Content-Type", "text/csv")

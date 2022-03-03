@@ -10,16 +10,12 @@ pub fn create_output_csv_files() {
         .map_err(|err| println!("Error loading config: {}", err))
         .ok().unwrap();
 
-    let path = "data/".to_string();
-
     for file in &config.files {
-        let file_path = format!("{}{}", path, file.filename);
-
         let csv_file = OpenOptions::new()
             .truncate(true) // Overwrites file if exits (back to zero size)
             .write(true)
             .create(true)
-            .open(file_path)
+            .open(file.filepath.to_owned())
             .unwrap();
 
         let mut wtr = csv::Writer::from_writer(csv_file);

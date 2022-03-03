@@ -67,7 +67,7 @@
 	],
 	"files": [
 		{
-			"filename": "fortnightly-temperature.csv",
+			"filepath": "data/fortnightly-temperature.csv",
 			"name": "fortnightly-temperature",
 			"chart_id": "FRGYL",
 			"dynamic": false,
@@ -79,7 +79,7 @@
 			]
 		},
 		{
-			"filename": "fortnightly-salinity.csv",
+			"filepath": "data/fortnightly-salinity.csv",
 			"name": "fortnightly-salinity",
 			"chart_id": "9bX8b",
 			"dynamic": false,
@@ -91,7 +91,7 @@
 			]
 		},
 		{
-			"filename": "weekly-precipitation.csv",
+			"filepath": "data/weekly-precipitation.csv",
 			"name": "weekly-precipitation",
 			"chart_id": "JCtlb",
 			"dynamic": false,
@@ -101,7 +101,7 @@
 			]
 		},
 		{
-			"filename": "weekly-salinity.csv",
+			"filepath": "data/weekly-salinity.csv",
 			"name": "weekly-salinity",
 			"chart_id": "Kf811",
 			"dynamic": true,
@@ -111,7 +111,7 @@
 			]
 		},
 		{
-			"filename": "weekly-temperature.csv",
+			"filepath": "data/weekly-temperature.csv",
 			"name": "weekly-temperature",
 			"chart_id": "73fCc",
 			"dynamic": true,

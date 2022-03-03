@@ -69,7 +69,7 @@ pub mod config {
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct FileConfig {
-        pub filename: String,
+        pub filepath: String,
         pub name: String,
         #[serde(rename = "chart_id")]
         pub chart_id: String,

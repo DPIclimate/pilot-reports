@@ -150,7 +150,18 @@ fn main() {
     }
 
     // ---- Write csv's to datawrapper ---- //
+    let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
 
-
+    for file in &config.files {
+        let filepath = file.filepath.to_string();
+        println!("Filepath: {}", filepath);
+        let chart_id = file.chart_id.to_string();
+        datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key)
+            .map_err(|err| println!("Error uploading data: {}", err))
+            .ok();
+        datawrapper::export::publish_chart(&chart_id, &dw_key)
+            .map_err(|err| println!("Error publishing chart: {}", err))
+            .ok();
+    }
 }
 
