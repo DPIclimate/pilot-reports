@@ -41,6 +41,7 @@ pub async fn weekly_precipitation(token: &String) -> Result<WeatherStation, Box<
     Ok(response)
 }
 
+
 #[derive(Serialize)]
 struct Record<'a> {
     date: &'a String,

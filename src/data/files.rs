@@ -2,13 +2,9 @@ use std::fs::OpenOptions;
 use serde::Serialize;
 use crate::utils;
 
-pub fn create_output_csv_files() {
+pub fn create_output_csv_files(config: &utils::config::Config) {
     // Uses the settings in config.json to create .csv files with appropriate columns
     // This need to be run at the start of a new query to clear previous data
-
-    let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
-        .ok().unwrap();
 
     for file in &config.files {
         let csv_file = OpenOptions::new()

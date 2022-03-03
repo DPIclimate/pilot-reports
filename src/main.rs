@@ -7,7 +7,6 @@ mod utils;
 mod data;
 
 fn main() {
-    data::files::create_output_csv_files(); // Overwrite existing .csv files
 
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Organisation key not found");
@@ -15,6 +14,9 @@ fn main() {
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
         .ok().unwrap();
+
+    // Overwrite existing .csv files
+    data::files::create_output_csv_files(&config);
 
     // Get all devcies from Ubidots under specific org
     let all_devices = ubidots::devices::get_all_devices(&token)
