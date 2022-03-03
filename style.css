@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+:root {
+	--div-min-width: 960px;
+}
+
 body {
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
@@ -7,6 +11,13 @@ body {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	background: #f4f4f4;
+	min-width: var(--div-min-width);
+}
+
+.main-content {
+	margin: 2rem;
+	margin-top: 0rem;
 }
 
 .header{
@@ -14,24 +25,22 @@ body {
 	justify-content: space-evenly;
 	flex-direction: row;
 	align-items: center;
-	background: #1D3D59;
 	width: 100vw;
-	height: 100px;
-	color: white;
+	height: 120px;
+	color: #002664;
+	min-width: var(--div-min-width);
 }
 
 .dpi-logo {
 	max-height: 80%;
 	padding: 1rem;
-	-webkit-filter: invert(100%);
-	filter: invert(100%);
 }
 
 .variables-table {
-	margin: auto;
 	padding: 1rem;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	margin: 1rem;
+	background: #fff;
 }
 
 .precip-chart {
@@ -39,6 +48,7 @@ body {
 	padding: 1rem;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	margin: 1rem;
+	background: #fff;
 }
 
 
@@ -74,14 +84,20 @@ body {
 	padding: 0.5rem;
 }
 
+.funding-source {
+	color: #002664;
+	text-align: center;
+}
 
 .footer {
 	display: flex;
 	justify-content: space-evenly;
 	flex-direction: row;
-	background: #1D3D59;
+	align-items: center;
 	width: 100vw;
-	margin-top: 4rem;
+	min-width: var(--div-min-width);
+	background: #333;
+	margin-top: 2rem;
 	height: 60px;
 	bottom: 0;
 }
@@ -89,5 +105,4 @@ body {
 .footer h3, h4 {
 	color: white;
 }
-
 
