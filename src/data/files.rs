@@ -57,11 +57,22 @@ pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>
     let mut wtr = csv::Writer::from_writer(file);
 
     for row in fortnightly.iter() {
-        wtr.write_record([row.location.to_owned(),
-                        row.last_week.to_string(), 
-                        row.this_week.to_string(),
-                        row.harvest_area.to_owned()])
-            .expect("Unable to write to CSV");
+        // Zero values or values above 40 represent un-reponsive devices 
+        // These should be represented as null in the csv
+        if row.this_week > 0.0 && row.this_week < 40.0 && 
+            row.last_week > 0.0 && row.last_week < 40.0 {
+            wtr.write_record([row.location.to_owned(),
+                            row.last_week.to_string(), 
+                            row.this_week.to_string(),
+                            row.harvest_area.to_owned()])
+                .expect("Unable to write to CSV");
+        } else {
+            wtr.write_record([row.location.to_owned(),
+                            "".to_string(),
+                            "".to_string(),
+                            row.harvest_area.to_owned()])
+                .expect("Unable to write to CSV");
+        }
     }
 
     wtr.flush().expect("Error flushing writer");
@@ -96,7 +107,7 @@ impl Weekly {
             for day in self.daily_value.iter(){
                 // Zero values or values above 40 represent un-reponsive devices 
                 // These should be represented as null in the csv
-                if day[i as usize] != 0.0 && day[i as usize] < 40.0 {
+                if day[i as usize] > 0.0 && day[i as usize] < 40.0 {
                     day_transpose.push(day[i as usize].to_string());
                 } else {
                     let null = "".to_string();

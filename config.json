@@ -91,16 +91,6 @@
 			]
 		},
 		{
-			"filepath": "data/weekly-precipitation.csv",
-			"name": "weekly-precipitation",
-			"chart_id": "JCtlb",
-			"dynamic": false,
-			"columns": [
-				"Date",
-				"Precipitation"
-			]
-		},
-		{
 			"filepath": "data/weekly-salinity.csv",
 			"name": "weekly-salinity",
 			"chart_id": "Kf811",

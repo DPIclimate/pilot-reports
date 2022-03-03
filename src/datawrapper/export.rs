@@ -11,9 +11,6 @@ use std::io::Read;
 #[tokio::main]
 pub async fn upload_dataset(file_path: &String, chart_id: &String, 
     datawrapper_key: &String) -> Result<(), Box<dyn Error>> {
-    // Takes the transform.csv data set and sends it to datawrapper using a specific 
-    // chart id.
-    // If this fails the publish chart method will still occur just with old data
 
     print!("Exporting data to datawrapper.de...");
 

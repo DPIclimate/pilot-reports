@@ -163,5 +163,19 @@ fn main() {
             .map_err(|err| println!("Error publishing chart: {}", err))
             .ok();
     }
+
+    // ---- Custom push to datawrapper for AWS ---- //
+    let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+    let precip_id = env::var("PRECIP_ID").expect("Unable to find precip chart id");
+
+    let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
+        .map_err(|err| println!("{}", err))
+        .ok().expect("Precipitation parse error.");
+
+    ubidots::device::aws::json_to_csv(&aws);
+
+    datawrapper::export::publish_chart(&precip_id, &dw_key)
+        .map_err(|err| println!("Error publishing chart: {}", err))
+        .ok();
 }
 
