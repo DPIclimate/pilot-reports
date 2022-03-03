@@ -69,6 +69,7 @@
 		{
 			"filename": "fortnightly-temperature.csv",
 			"name": "fortnightly-temperature",
+			"chart_id": "FRGYL",
 			"dynamic": false,
 			"columns": [
 				"Location",
@@ -80,6 +81,7 @@
 		{
 			"filename": "fortnightly-salinity.csv",
 			"name": "fortnightly-salinity",
+			"chart_id": "9bX8b",
 			"dynamic": false,
 			"columns": [
 				"Location",
@@ -91,6 +93,7 @@
 		{
 			"filename": "weekly-precipitation.csv",
 			"name": "weekly-precipitation",
+			"chart_id": "JCtlb",
 			"dynamic": false,
 			"columns": [
 				"Date",
@@ -100,6 +103,17 @@
 		{
 			"filename": "weekly-salinity.csv",
 			"name": "weekly-salinity",
+			"chart_id": "Kf811",
+			"dynamic": true,
+			"columns": [
+				"Location",
+				"Harvest Area"
+			]
+		},
+		{
+			"filename": "weekly-temperature.csv",
+			"name": "weekly-temperature",
+			"chart_id": "73fCc",
 			"dynamic": true,
 			"columns": [
 				"Location",

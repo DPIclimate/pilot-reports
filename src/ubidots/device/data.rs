@@ -1,7 +1,6 @@
 //! Device data by aggrigation (weekly or fortnightly)
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use crate::utils;
 
 // This represents the body that needs to be sent to Ubidots when reqesting data aggregation.
 #[derive(Serialize)]
@@ -33,6 +32,8 @@ impl Aggregation {
     #[tokio::main]
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
 
+        print!("Aggregating data from ubidots...");
+
         let url = String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/aggregation/");
 
         let client = reqwest::Client::new();
@@ -44,11 +45,11 @@ impl Aggregation {
             .send() 
             .await?;
 
-        println!("Aggregate response: {}", &response.status());
-
         let json_res = response
             .json::<Response>()
             .await?;
+
+        println!("finished");
 
         Ok(json_res)
     }

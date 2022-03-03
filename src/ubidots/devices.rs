@@ -23,6 +23,9 @@ pub struct Devices {
 pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> {
     // Get all devices within a organisation 
     // Returns a Devices struct containg a vector of devices
+
+    print!("Getting all devices from ubidots...");
+
     let url = String::from("https://industrial.api.ubidots.com/api/v2.0/devices/");
 
     let client = reqwest::Client::new();
@@ -34,6 +37,8 @@ pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> 
         .await?
         .json::<Devices>()
         .await?;
+
+    println!("finished");
 
     Ok(response)
 }

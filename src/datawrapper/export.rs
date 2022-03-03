@@ -15,7 +15,7 @@ pub async fn upload_dataset(file_path: &String, chart_id: &String,
     // chart id.
     // If this fails the publish chart method will still occur just with old data
 
-    println!("Exporting data to datawrapper.de");
+    print!("Exporting data to datawrapper.de...");
 
     // Read in the file as a raw string
     let body = match File::open(file_path) {
@@ -40,7 +40,7 @@ pub async fn upload_dataset(file_path: &String, chart_id: &String,
         .send()
         .await?;
 
-    println!("Response: {}", &response.status());
+    println!("finished");
 
     Ok(())
 }

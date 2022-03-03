@@ -48,6 +48,8 @@ pub struct Fortnightly {
 pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>) {
     // Take a vector of fortnightly values and put them into a csv
 
+    print!("Publishing fortnightly {} data to csv...", variable_name);
+
     let filename = format!("data/fortnightly-{}.csv", variable_name);
 
     let file = OpenOptions::new()
@@ -67,17 +69,22 @@ pub fn fortnightly_to_csv(variable_name: &String, fortnightly: &Vec<Fortnightly>
     }
 
     wtr.flush().expect("Error flushing writer");
+
+    println!("finished");
 }
 
 
+#[derive(Debug, Clone)]
 pub struct Weekly {
     pub location: Vec<String>,
-    pub daily_value: Vec<f64>,
+    pub daily_value: Vec<Vec<f64>>,
     pub harvest_area: Vec<String>,
 }
 
 impl Weekly {
-    pub fn to_csv(&self) {
+    pub fn to_csv(&self, variable_name: &String) {
+        print!("Publishing weekly {} data to csv...", variable_name);
+
         let filename = format!("data/weekly-{}.csv", variable_name);
 
         let file = OpenOptions::new()
@@ -88,11 +95,25 @@ impl Weekly {
 
         let mut wtr = csv::Writer::from_writer(file);
 
-        for (loc, (dv, ha)) in self.location().iter().zip(self.daily_value.iter().zip(harvest_area.iter)) {
-            // start here tomorrow
-            wtr.write_record([])
+        for (i, (loc, ha)) in self.location.iter().zip(self.harvest_area.iter()).enumerate() {
+            let mut day_transpose: Vec<String> = Vec::new();
+            for day in self.daily_value.iter(){
+                // Zero values or values above 40 represent un-reponsive devices 
+                // These should be represented as null in the csv
+                if day[i as usize] != 0.0 && day[i as usize] < 40.0 {
+                    day_transpose.push(day[i as usize].to_string());
+                } else {
+                    let null = "".to_string();
+                    day_transpose.push(null.to_owned());
+                }
+            }
+            day_transpose.push(loc.to_string());
+            day_transpose.push(ha.to_string());
+            wtr.serialize([day_transpose]).expect("Serialization error");
         }
         wtr.flush().expect("Error flushing writer");
+
+        println!("finished");
     }
 }
 

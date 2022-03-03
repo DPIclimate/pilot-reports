@@ -22,6 +22,8 @@ fn main() {
         .ok().unwrap();
 
     for variable in &config.variables {
+        println!("Processing variable: {}", variable);
+
         let mut variable_list = ubidots::device::variables::VariablesList {
             name: variable.to_string(),
             ids: Vec::new(),
@@ -55,66 +57,71 @@ fn main() {
             }
         }
 
-       // // ---- Last Week ---- //
-       // let (start, end) = utils::time::one_week();
+        // ---- Last Week ---- //
+        let (start, end) = utils::time::one_week();
 
-       // let this_week_agg = ubidots::device::data::Aggregation {
-       //     variables: variable_list.ids.to_owned(),
-       //     aggregation: "mean".to_string(), 
-       //     join_dataframes: false, 
-       //     start: start,
-       //     end: end,
-       // };
+        let this_week_agg = ubidots::device::data::Aggregation {
+            variables: variable_list.ids.to_owned(),
+            aggregation: "mean".to_string(), 
+            join_dataframes: false, 
+            start: start,
+            end: end,
+        };
 
-       // let this_week = this_week_agg.aggregate(&token)
-       //     .map_err(|err| println!("Error requesting weekly mean: {}", err))
-       //     .ok().unwrap();
+        let this_week = this_week_agg.aggregate(&token)
+            .map_err(|err| println!("Error requesting weekly mean: {}", err))
+            .ok().unwrap();
 
-       // // ---- This Week ---- //
-       // let (start, end) = utils::time::last_week();
+        // ---- This Week ---- //
+        let (start, end) = utils::time::last_week();
 
-       // let last_week_agg = ubidots::device::data::Aggregation {
-       //     variables: variable_list.ids.to_owned(),
-       //     aggregation: "mean".to_string(), 
-       //     join_dataframes: false, 
-       //     start: start,
-       //     end: end,
-       // };
+        let last_week_agg = ubidots::device::data::Aggregation {
+            variables: variable_list.ids.to_owned(),
+            aggregation: "mean".to_string(), 
+            join_dataframes: false, 
+            start: start,
+            end: end,
+        };
 
-       // let last_week = last_week_agg.aggregate(&token)
-       //     .map_err(|err| println!("Error requesting weekly mean: {}", err))
-       //     .ok().unwrap();
+        let last_week = last_week_agg.aggregate(&token)
+            .map_err(|err| println!("Error requesting weekly mean: {}", err))
+            .ok().unwrap();
 
-       // let mut fortnight_vec: Vec<data::files::Fortnightly> = Vec::new();
+        let mut fortnight_vec: Vec<data::files::Fortnightly> = Vec::new();
 
-       // for (lw, (tw, (cd, ha))) in last_week.results.iter().zip(this_week.results.iter()
-       //         .zip(variable_list.corresponding_device.iter()
-       //             .zip(variable_list.harvest_area.iter()))) {
+        for (lw, (tw, (cd, ha))) in last_week.results.iter().zip(this_week.results.iter()
+                .zip(variable_list.corresponding_device.iter()
+                    .zip(variable_list.harvest_area.iter()))) {
 
-       //     let fortnight = data::files::Fortnightly {
-       //         location: cd.to_string(),
-       //         last_week: lw.value,
-       //         this_week: tw.value,
-       //         harvest_area: ha.to_string(),
-       //     };
-       //     fortnight_vec.push(fortnight);
-       // }
+            let fortnight = data::files::Fortnightly {
+                location: cd.to_string(),
+                last_week: lw.value,
+                this_week: tw.value,
+                harvest_area: ha.to_string(),
+            };
+            fortnight_vec.push(fortnight);
+        }
 
-       // // Write fortnight vector to csv
-       // data::files::fortnightly_to_csv(&variable, &fortnight_vec);
+        data::files::fortnightly_to_csv(&variable, &fortnight_vec);
 
-        // ---- Daily Summary ---- //
-        
-        let (week_start, _week_end) = utils::time::one_week();
-        // Seven days
-        let mut offset = 0;
-        let mut day_offset = 86400000;
+        // ---- Weekly Summary ---- //
         let mut weekly = data::files::Weekly {
             location: Vec::new(),
             daily_value: Vec::new(),
             harvest_area: Vec::new(),
         };
-        let mut initial = true;
+
+        // Get device location  and harvest area
+        for (cd, ha) in variable_list.corresponding_device.iter().zip(variable_list.harvest_area.iter()) {
+            weekly.location.push(cd.to_string());
+            weekly.harvest_area.push(ha.to_string());
+        }
+        
+        let (week_start, _week_end) = utils::time::one_week();
+
+        let mut offset = 0;
+        let mut day_offset = 86400000;
+        // Seven days
         for _ in 0..7 {
             let daily_agg = ubidots::device::data::Aggregation {
                 variables: variable_list.ids.to_owned(),
@@ -128,19 +135,22 @@ fn main() {
                 .map_err(|err| println!("Error requesting weekly mean: {}", err))
                 .ok().unwrap();
 
-            for (day, (cd, ha)) in daily.results.iter().zip(variable_list.corresponding_device.iter()
-                .zip(variable_list.harvest_area.iter())) {
-                if initial {
-                    weekly.location.push(cd.to_string());
-                    weekly.harvest_area.push(ha.to_string());
-                }
-                weekly.daily_value.push(day.value.to_owned());
+            let mut day_vec: Vec<f64> = Vec::new();
+            for day in daily.results.iter() {
+                day_vec.push(day.value.to_owned());
             }
 
-            initial = false;
+            weekly.daily_value.push(day_vec.to_owned());
+
             offset += 86400000;
             day_offset += 86400000;
         }
+
+       weekly.to_csv(&variable);
     }
+
+    // ---- Write csv's to datawrapper ---- //
+
+
 }
 

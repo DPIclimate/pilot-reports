@@ -25,13 +25,6 @@ pub mod time {
         (last_week_start, last_week_end)
     }
 
-    pub fn fortnight() -> (i64, i64) {
-        // Get the time a fortnight ago and the current time in UNIX timestamp
-        let time_now = Utc::now().timestamp() * 1000;
-        let last_week = time_now - 1209600000;
-        (last_week, time_now)
-    }
-
     pub fn weekly_column_names() -> Vec<String> {
         let mut unix_time = (Utc::now().timestamp() * 1000) - 604800000;
         let mut col_names: Vec<String> = Vec::new();
@@ -78,12 +71,16 @@ pub mod config {
     pub struct FileConfig {
         pub filename: String,
         pub name: String,
+        #[serde(rename = "chart_id")]
+        pub chart_id: String,
         pub dynamic: bool,
         pub columns: Vec<String>,
     }
 
     pub fn get_config() -> Result<Config, Box<dyn Error>> {
         // Get the configuration of devices and variables to use for analysis
+
+        print!("Loading config...");
 
         let file = File::open("config.json")
             .expect("Error, devices.json file not found.");
@@ -92,6 +89,8 @@ pub mod config {
 
         let config = serde_json::from_reader(reader)
             .expect("Error, device.json should be valid json.");
+
+        println!("loaded");
 
         Ok(config)
     }

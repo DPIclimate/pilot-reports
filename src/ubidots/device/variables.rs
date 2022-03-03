@@ -20,6 +20,9 @@ pub struct Variable {
 #[tokio::main]
 pub async fn list_variables(device_id: &String, token: &String) -> Result<Variables, Box<dyn Error>> {
     // Lists all variables for a device
+
+    print!("Getting variables list from ubidots for {}...", device_id);
+
     let url = format!("https://industrial.api.ubidots.com/api/v2.0/devices/{}/variables/", device_id);
 
     let client = reqwest::Client::new();
@@ -30,6 +33,8 @@ pub async fn list_variables(device_id: &String, token: &String) -> Result<Variab
         .await?
         .json::<Variables>()
         .await?;
+
+    println!("finished");
 
     Ok(response)
 }
