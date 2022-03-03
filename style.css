@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
 :root {
 	--div-min-width: 960px;
@@ -34,6 +34,37 @@ body {
 .dpi-logo {
 	max-height: 80%;
 	padding: 1rem;
+}
+
+input { display: none; }
+input + label { display: inline-block; }
+
+input ~ .tab { display: none; }
+#tab1:checked ~ .tab.chart-view,
+#tab2:checked ~ .tab.indepth-view { display: block; }
+
+input + label {
+	border: 1px solid #002664;
+	background: #002664;
+	color: #fff;
+	padding: 4px 12px;
+	border-radius: 4px 4px 0 0;
+	position: relative;
+	top: 1px;
+}
+input:checked + label {
+	background: #FFF;
+	color: #000;
+	border-bottom: 1px solid transparent;
+}
+input ~ .tab {
+	border-top: 1px solid #999;
+	padding: 12px;
+}
+
+label:hover {
+	cursor: pointer;
+	opacity: 80%;
 }
 
 .variables-table {
