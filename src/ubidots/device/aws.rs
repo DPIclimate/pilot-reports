@@ -50,6 +50,8 @@ struct Record<'a> {
 
 pub fn json_to_csv(aws: &WeatherStation) {
 
+    print!("Converting AWS JSON to csv...");
+
     let file_path = String::from("data/weekly-precipitation.csv");
 
     let mut wtr = csv::Writer::from_path(file_path)
@@ -67,5 +69,7 @@ pub fn json_to_csv(aws: &WeatherStation) {
 
     }
     wtr.flush().expect("Error flushing writer");
+
+    println!("finished");
 }
 

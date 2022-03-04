@@ -13,9 +13,22 @@ pub mod time {
 
     pub fn one_week() -> (i64, i64) {
         // Get the time a week ago and the current time in UNIX timestamp
-        let time_now = Utc::now().timestamp() * 1000;
-        let last_week = time_now - 604800000;
-        (last_week, time_now)
+        // This gets the current UTC time, subracts a week (UNIX ms) then
+        // rounds down to the start of the day (h = 0, m = 0, sec = 0)
+        // This is needed otherwise running the program at random times would
+        // effect the daily average.
+        let time_now = Utc::now().timestamp(); // 1646364269
+        let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
+        let local_time_now = DateTime::<Local>::from(utc_time_now);
+        let midnight_today = chrono::Local.ymd(
+            local_time_now.year(),
+            local_time_now.month(),
+            local_time_now.day()
+        ).and_hms(0, 0, 0).timestamp();
+
+        let last_week = (midnight_today * 1000) - 518400000;
+
+        (last_week, time_now * 1000)
     }
 
     pub fn last_week() -> (i64, i64) {
@@ -26,7 +39,8 @@ pub mod time {
     }
 
     pub fn weekly_column_names() -> Vec<String> {
-        let mut unix_time = (Utc::now().timestamp() * 1000) - 604800000;
+        let (last_week, _now) = one_week();
+        let mut unix_time = last_week.to_owned();
         let mut col_names: Vec<String> = Vec::new();
         for _ in 0..7 { 
             let local_day = unix_to_local(&unix_time)

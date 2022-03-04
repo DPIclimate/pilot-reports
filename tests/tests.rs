@@ -1,11 +1,12 @@
 // use cargo run -- --nocapture to see println! statements
 extern crate pilot_reports;
-pub use pilot_reports::{data, datawrapper, utils};
+pub use pilot_reports::{data, datawrapper, ubidots, utils};
 
 extern crate dotenv;
 use std::env;
 
 #[test]
+#[ignore]
 fn load_config() {
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
@@ -21,6 +22,17 @@ fn load_config() {
 }
 
 #[test]
+fn weekly_timestamp() {
+    let (start, end) = utils::time::one_week();
+    println!("Start: {}\tEnd: {}", start, end);
+    let cols = utils::time::weekly_column_names();
+    for c in &cols {
+        println!("{}", c);
+    }
+}
+
+#[test]
+#[ignore]
 fn unix_timestamp_to_local_day(){
     let ts = 1645491182126;
     let local_day = utils::time::unix_to_local(&ts)
@@ -32,10 +44,15 @@ fn unix_timestamp_to_local_day(){
 #[test]
 #[ignore]
 fn create_csv_files() {
-    data::files::create_output_csv_files();
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok().unwrap();
+
+    data::files::create_output_csv_files(&config);
 }
 
 #[test]
+#[ignore]
 fn datawrapper_upload() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
@@ -48,9 +65,38 @@ fn datawrapper_upload() {
         let filepath = file.filepath.to_string();
         println!("Filepath: {}", filepath);
         let chart_id = file.chart_id.to_string();
-        datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key);
-        datawrapper::export::publish_chart(&chart_id, &dw_key);
+        datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key)
+            .map_err(|err| println!("Error: {}", err))
+            .ok();
+        datawrapper::export::publish_chart(&chart_id, &dw_key)
+            .map_err(|err| println!("Error: {}", err))
+            .ok();
         break;
     }
 }
 
+#[test]
+#[ignore]
+fn aws_to_datawrapper() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+
+    let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
+    let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+    let precip_id = env::var("PRECIP_ID").expect("Unable to find precip chart id");
+
+    let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
+        .map_err(|err| println!("{}", err))
+        .ok().expect("Precipitation parse error.");
+
+    ubidots::device::aws::json_to_csv(&aws);
+
+    let aws_filepath = "data/weekly-precipitation.csv".to_string();
+    datawrapper::export::upload_dataset(&aws_filepath, &precip_id, &dw_key)
+        .map_err(|err| println!("Error uploading data: {}", err))
+        .ok();
+
+    datawrapper::export::publish_chart(&precip_id, &dw_key)
+        .map_err(|err| println!("Error publishing chart: {}", err))
+        .ok();
+
+}

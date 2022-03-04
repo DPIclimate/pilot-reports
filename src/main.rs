@@ -176,6 +176,11 @@ fn main() {
 
     ubidots::device::aws::json_to_csv(&aws);
 
+    let aws_filepath = "data/weekly-precipitation.csv".to_string();
+    datawrapper::export::upload_dataset(&aws_filepath, &precip_id, &dw_key)
+        .map_err(|err| println!("Error uploading data: {}", err))
+        .ok();
+
     datawrapper::export::publish_chart(&precip_id, &dw_key)
         .map_err(|err| println!("Error publishing chart: {}", err))
         .ok();
