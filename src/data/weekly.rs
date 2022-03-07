@@ -40,7 +40,7 @@ impl Weekly {
     pub fn to_csv(&self, variable_name: &String) {
         let filename = format!("data/weekly-{}.csv", variable_name);
 
-        info!("Publishing weekly {} data {}", variable_name, filename);
+        info!("Publishing weekly {} data to {}", variable_name, filename);
 
         let file = OpenOptions::new()
             .write(true)

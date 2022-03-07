@@ -1,4 +1,5 @@
 //! Get device lists
+use log::info;
 use serde::Deserialize;
 use std::error::Error;
 
@@ -24,7 +25,7 @@ pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> 
     // Get all devices within a organisation
     // Returns a Devices struct containg a vector of devices
 
-    print!("Getting all devices from ubidots...");
+    info!("Getting device list from Ubidots");
 
     let url = String::from("https://industrial.api.ubidots.com/api/v2.0/devices/");
 
@@ -37,8 +38,6 @@ pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> 
         .await?
         .json::<Devices>()
         .await?;
-
-    println!("finished");
 
     Ok(response)
 }

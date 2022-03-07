@@ -56,7 +56,6 @@ pub fn all_files_to_datawrapper(dw_key: &String, config: &utils::config::Config)
     // ---- Write csv's to datawrapper ---- //
     for file in &config.files {
         let filepath = file.filepath.to_string();
-        info!("Filepath: {}", filepath);
         let chart_id = file.chart_id.to_string();
         datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key)
             .map_err(|err| error!("Error uploading data: {}", err))

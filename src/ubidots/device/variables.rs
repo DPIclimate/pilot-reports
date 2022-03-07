@@ -1,6 +1,7 @@
 //! Get device variables
 use crate::ubidots;
 use crate::utils;
+use log::{error, info};
 use serde::Deserialize;
 use std::error::Error;
 
@@ -26,7 +27,7 @@ pub async fn list_variables(
 ) -> Result<Variables, Box<dyn Error>> {
     // Lists all variables for a device
 
-    print!("Getting variables list from ubidots for {}...", device_id);
+    info!("Getting variables list from Ubidots.");
 
     let url = format!(
         "https://industrial.api.ubidots.com/api/v2.0/devices/{}/variables/",
@@ -42,8 +43,6 @@ pub async fn list_variables(
         .json::<Variables>()
         .await?;
 
-    println!("finished");
-
     Ok(response)
 }
 
@@ -55,8 +54,6 @@ pub struct VariablesList {
 }
 
 impl VariablesList {
-    // Contains a list of like varaible ids to use in request to Ubidots
-
     pub fn add_variable_and_device(
         &mut self,
         variable_id: &String,
@@ -81,16 +78,18 @@ pub fn get_variables_list(
         harvest_area: Vec::new(),
     };
 
+    info!("Getting refined variable list from config.json");
+
     // Get all devcies from Ubidots under specific org
     let all_devices = ubidots::devices::get_all_devices(&token)
-        .map_err(|err| println!("Error getting devices list: {}", err))
+        .map_err(|err| error!("Error getting devices list: {}", err))
         .ok()
         .unwrap();
 
     for device in &all_devices.results {
         if config.devices.iter().any(|dev| &dev.name == &device.name) {
             let all_variables = list_variables(&device.id, &token)
-                .map_err(|err| println!("Error getting device variables: {}", err))
+                .map_err(|err| error!("Error getting device variables: {}", err))
                 .ok()
                 .unwrap();
 

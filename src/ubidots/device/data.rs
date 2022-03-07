@@ -1,4 +1,5 @@
 //! Device data by aggrigation (weekly or fortnightly)
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 
@@ -30,8 +31,7 @@ pub struct Value {
 impl Aggregation {
     #[tokio::main]
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
-        print!("Aggregating data from ubidots...");
-
+        info!("Getting aggregate data from ubidots.");
         let url =
             String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/aggregation/");
 
@@ -45,8 +45,6 @@ impl Aggregation {
             .await?;
 
         let json_res = response.json::<Response>().await?;
-
-        println!("finished");
 
         Ok(json_res)
     }

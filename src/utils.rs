@@ -67,6 +67,7 @@ pub mod time {
 
 pub mod config {
 
+    use log::info;
     use serde::Deserialize;
     use std::error::Error;
     use std::fs::File;
@@ -105,7 +106,7 @@ pub mod config {
     pub fn get_config() -> Result<Config, Box<dyn Error>> {
         // Get the configuration of devices and variables to use for analysis
 
-        print!("Loading config...");
+        info!("Loading config from config.json");
 
         let file = File::open("config.json").expect("Error, devices.json file not found.");
 
@@ -113,8 +114,6 @@ pub mod config {
 
         let config =
             serde_json::from_reader(reader).expect("Error, device.json should be valid json.");
-
-        println!("loaded");
 
         Ok(config)
     }

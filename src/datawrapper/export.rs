@@ -45,15 +45,13 @@ pub async fn upload_dataset(
     let url = format!("https://api.datawrapper.de/v3/charts/{}/data", chart_id);
 
     let client = reqwest::Client::new();
-    let _response = client
+    client
         .put(url)
         .bearer_auth(datawrapper_key.as_str())
         .header("Content-Type", "text/csv")
         .body(body)
         .send()
         .await?;
-
-    info!("Exported data to datawrapper");
 
     Ok(())
 }
@@ -66,7 +64,7 @@ pub async fn publish_chart(
     // Once a new dataset has been PUT to datawrappers endpoint this method re-runs
     // the publishing of the chart.
 
-    println!(
+    info!(
         "Publishing chart at https://datawrapper.dwcdn.net/{}/",
         chart_id
     );
@@ -74,13 +72,11 @@ pub async fn publish_chart(
     let url = format!("https://api.datawrapper.de/v3/charts/{}/publish", chart_id);
 
     let client = reqwest::Client::new();
-    let response = client
+    client
         .post(url)
         .bearer_auth(datawrapper_key.as_str())
         .send()
         .await?;
-
-    println!("Response: {}", &response.status());
 
     Ok(())
 }
