@@ -1,6 +1,5 @@
 //! Get data from local weather station
-use crate::{ubidots, utils};
-use log::{error, info};
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 
@@ -39,7 +38,8 @@ impl RawSeries {
     ) -> Result<Precipitation, Box<dyn Error>> {
         let url = "https://industrial.api.ubidots.com/api/v1.6/data/raw/series";
 
-        println!("{:?}", serde_json::to_string(self)?);
+        info!("Getting year to date precipitation");
+
         let client = reqwest::Client::new();
         let response = client
             .post(url)
@@ -50,6 +50,7 @@ impl RawSeries {
             .await?
             .json::<Precipitation>()
             .await?;
+
         Ok(response)
     }
 }

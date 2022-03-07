@@ -7,12 +7,19 @@ use log::error;
 use std::env;
 
 #[test]
+fn create_dataframe() {
+    data::yearly::join_precipitation_datasets();
+}
+
+#[test]
+#[ignore]
 fn days_since() {
     let n_days = utils::time::days_since_jan_first();
     println!("Num Days: {}", n_days);
 }
 
 #[test]
+#[ignore]
 fn yearly_precipitation() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");

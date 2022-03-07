@@ -78,8 +78,10 @@
 			"chart_id": "6W882",
 			"dynamic": false,
 			"columns": [
-				"Date",
-				"Precipitation"
+				"2020",
+				"2021",
+				"date",
+				"2022"
 			]
 		},
 		{
