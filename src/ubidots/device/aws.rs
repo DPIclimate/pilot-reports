@@ -4,69 +4,52 @@ use log::{error, info};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct WeatherStation {
-    pub results: Vec<Precipitation>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[derive(Deserialize, Serialize)]
 pub struct Precipitation {
-    pub timestamp: i64,
-    pub value: f64,
+    pub results: Vec<Vec<Vec<f64>>>,
+    pub columns: Vec<Vec<String>>,
 }
 
-#[tokio::main]
-pub async fn weekly_precipitation(token: &String) -> Result<WeatherStation, Box<dyn Error>> {
-    // clyde-j301 (hardcoded here but could be dynamic)
-    let device_label = String::from("00d646ad8b0c16d0");
-    let variable_label = String::from("daily_precip_total_9am-9am");
-
-    // Hard coded past 7 days of precip data
-    let url =
-        format!("https://industrial.api.ubidots.com/api/v1.6/devices/{}/{}/values/?format=json&page_size={}", device_label, variable_label, 7);
-
-    let client = reqwest::Client::new();
-    let response = client
-        .get(url)
-        .header("X-Auth-Token", token)
-        .header("Content-Type", "application/json")
-        .send()
-        .await?
-        .json::<WeatherStation>()
-        .await?;
-
-    Ok(response)
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RawSeries {
+    pub variables: Vec<String>,
+    pub columns: Vec<String>,
+    #[serde(rename = "join_dataframes")]
+    pub join_dataframes: bool,
+    pub start: i64,
+    pub end: i64,
 }
 
-#[derive(Serialize)]
-struct Record<'a> {
-    date: &'a String,
-    precipitation: &'a f64,
-}
-
-pub fn aws_to_csv(aws_token: &String) {
-    info!("Converting AWS request to csv");
-
-    let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
-        .map_err(|err| error!("{}", err))
-        .ok()
-        .expect("Precipitation parse error.");
-
-    let file_path = String::from("data/weekly-precipitation.csv");
-
-    let mut wtr = csv::Writer::from_path(file_path).expect("Unable to find file to write to.");
-
-    for precip in &aws.results {
-        let local_date = utils::time::unix_to_local(&precip.timestamp)
-            .date()
-            .format("%Y-%m-%d");
-        let rec = Record {
-            date: &local_date.to_string(),
-            precipitation: &precip.value,
-        };
-        wtr.serialize(rec).expect("CSV writer error");
+impl RawSeries {
+    pub fn new(variables: &Vec<String>, (start, end): (i64, i64)) -> Self {
+        RawSeries {
+            variables: variables.to_owned(),
+            columns: vec!["value.value".to_string(), "timestamp".to_string()],
+            join_dataframes: false,
+            start: start,
+            end: end,
+        }
     }
-    wtr.flush().expect("Error flushing writer");
+
+    #[tokio::main]
+    pub async fn get_year_to_date(
+        &self,
+        aws_token: &String,
+    ) -> Result<Precipitation, Box<dyn Error>> {
+        let url = "https://industrial.api.ubidots.com/api/v1.6/data/raw/series";
+
+        println!("{:?}", serde_json::to_string(self)?);
+        let client = reqwest::Client::new();
+        let response = client
+            .post(url)
+            .header("X-Auth-Token", aws_token)
+            .header("Content-Type", "application/json")
+            .body(serde_json::to_string(self)?) // Convert struct to JSON
+            .send()
+            .await?
+            .json::<Precipitation>()
+            .await?;
+        Ok(response)
+    }
 }

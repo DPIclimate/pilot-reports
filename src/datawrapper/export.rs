@@ -13,15 +13,6 @@ use std::io::Read;
 ///
 /// Requires the chart to exist on datawrapper's server and a valid API key.
 /// Will panic if file cannot be found or cannot be opened.
-///
-/// # Example
-/// ```
-/// let dw_key = env::var("DW_KEY").expect("Unable to find datawrapper key.");
-/// let chart_id = env::var("CHART_ID").expect("Unable to find chart key.");
-/// let file_path = String::from("data/weekly-salinity.csv");
-///
-/// datawrapper::export::upload_dataset(&file_path, &chart_id, &dw_key);
-/// ```
 #[tokio::main]
 pub async fn upload_dataset(
     file_path: &String,

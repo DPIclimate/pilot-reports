@@ -3,7 +3,21 @@ extern crate pilot_reports;
 pub use pilot_reports::{data, datawrapper, ubidots, utils};
 
 extern crate dotenv;
+use log::error;
 use std::env;
+
+#[test]
+fn days_since() {
+    let n_days = utils::time::days_since_jan_first();
+    println!("Num Days: {}", n_days);
+}
+
+#[test]
+fn yearly_precipitation() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+    data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+}
 
 #[test]
 #[ignore]
@@ -40,6 +54,7 @@ fn unix_timestamp_to_local_day() {
 }
 
 #[test]
+#[ignore]
 fn create_csv_files() {
     log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
 
@@ -74,30 +89,4 @@ fn datawrapper_upload() {
             .ok();
         break;
     }
-}
-
-#[test]
-#[ignore]
-fn aws_to_datawrapper() {
-    dotenv::dotenv().expect("Failed to read .env file.");
-
-    let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
-    let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
-    let precip_id = env::var("PRECIP_ID").expect("Unable to find precip chart id");
-
-    let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
-        .map_err(|err| println!("{}", err))
-        .ok()
-        .expect("Precipitation parse error.");
-
-    ubidots::device::aws::json_to_csv(&aws);
-
-    let aws_filepath = "data/weekly-precipitation.csv".to_string();
-    datawrapper::export::upload_dataset(&aws_filepath, &precip_id, &dw_key)
-        .map_err(|err| println!("Error uploading data: {}", err))
-        .ok();
-
-    datawrapper::export::publish_chart(&precip_id, &dw_key)
-        .map_err(|err| println!("Error publishing chart: {}", err))
-        .ok();
 }

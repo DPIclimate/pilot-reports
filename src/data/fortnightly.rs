@@ -22,29 +22,6 @@ pub struct Fortnightly {
 /// function differs from `weekly_to_csv` as this function takes a vector of
 /// fortnightly values.
 ///
-/// # Example
-/// ```
-/// let mut fortnight_vec: Vec<Fortnightly> = Vec::new();
-///
-/// // lw = last_week, tw = this_week, cd = corresponding_device, ha = harvest_area
-/// for (lw, (tw, (cd, ha))) in last_week.results.iter().zip(this_week.results.iter()
-///                 .zip(variable_list.corresponding_device.iter()
-///                     .zip(variable_list.harvest_area.iter()))) {
-///
-///     let fortnight = data::fortnightly::Fortnightly {
-///         location: cd.to_string(),
-///         last_week: lw.value,
-///         this_week: tw.value,
-///         harvest_area: ha.to_string(),
-///     };
-///     
-///     fortnight_vec.push(fortnight);
-/// }
-///
-/// let variable = String::from("temperature");
-/// data::files::to_csv(&variable, &fortnight_vec);
-/// ```
-///
 /// This function also does some basic data cleaning. This involves replacing
 /// negative values and extreme values with empty strings. This allows them to
 /// be ignored by datawrapper.de

@@ -12,6 +12,31 @@ pub mod time {
         DateTime::<Local>::from(datetime_ts)
     }
 
+    pub fn days_since_jan_first() -> i64 {
+        let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
+        let ts_now = utc_time_now.timestamp();
+        let local_time_now = DateTime::<Local>::from(utc_time_now);
+        let start_of_year = chrono::Local
+            .ymd(local_time_now.year(), 1, 1)
+            .and_hms(0, 0, 0)
+            .timestamp();
+
+        let sec_diff = ts_now - start_of_year;
+        let days: i64 = sec_diff / 86400;
+        days
+    }
+
+    pub fn this_year() -> (i64, i64) {
+        let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
+        let ts_now = utc_time_now.timestamp();
+        let local_time_now = DateTime::<Local>::from(utc_time_now);
+        let start_of_year = chrono::Local
+            .ymd(local_time_now.year() - 1, 12, 31)
+            .and_hms(0, 0, 0)
+            .timestamp();
+        (start_of_year * 1000, ts_now * 1000)
+    }
+
     pub fn one_week() -> (i64, i64) {
         // Get the time a week ago and the current time in UNIX timestamp
         // This gets the current UTC time, subracts a week (UNIX ms) then

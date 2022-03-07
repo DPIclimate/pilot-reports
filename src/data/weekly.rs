@@ -21,22 +21,6 @@ impl Weekly {
     /// and extreme values will empty strings. These will be ignored by
     /// datawrapper.de
     ///
-    /// # Example
-    /// ```
-    /// let variable = String::from("temperature");
-    ///
-    /// let mut weekly = data::files::Weekly {
-    ///     location: Vec::new(),
-    ///     daily_value: Vec::new(),
-    ///     harvest_area: Vec::new(),
-    /// }
-    ///
-    /// // Append data to weekly struct
-    /// // --snip--
-    ///
-    /// weekly.to_csv(&variable)
-    ///
-    /// ```
     pub fn to_csv(&self, variable_name: &String) {
         let filename = format!("data/weekly-{}.csv", variable_name);
 
