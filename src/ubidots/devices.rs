@@ -1,4 +1,4 @@
-//! Get device lists 
+//! Get device lists
 use serde::Deserialize;
 use std::error::Error;
 
@@ -21,7 +21,7 @@ pub struct Devices {
 
 #[tokio::main]
 pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> {
-    // Get all devices within a organisation 
+    // Get all devices within a organisation
     // Returns a Devices struct containg a vector of devices
 
     print!("Getting all devices from ubidots...");
@@ -42,4 +42,3 @@ pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> 
 
     Ok(response)
 }
-

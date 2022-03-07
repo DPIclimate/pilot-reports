@@ -1,4 +1,6 @@
 //! Get device variables
+use crate::ubidots;
+use crate::utils;
 use serde::Deserialize;
 use std::error::Error;
 
@@ -18,12 +20,18 @@ pub struct Variable {
 }
 
 #[tokio::main]
-pub async fn list_variables(device_id: &String, token: &String) -> Result<Variables, Box<dyn Error>> {
+pub async fn list_variables(
+    device_id: &String,
+    token: &String,
+) -> Result<Variables, Box<dyn Error>> {
     // Lists all variables for a device
 
     print!("Getting variables list from ubidots for {}...", device_id);
 
-    let url = format!("https://industrial.api.ubidots.com/api/v2.0/devices/{}/variables/", device_id);
+    let url = format!(
+        "https://industrial.api.ubidots.com/api/v2.0/devices/{}/variables/",
+        device_id
+    );
 
     let client = reqwest::Client::new();
     let response = client
@@ -49,10 +57,60 @@ pub struct VariablesList {
 impl VariablesList {
     // Contains a list of like varaible ids to use in request to Ubidots
 
-    pub fn add_variable_and_device(&mut self, variable_id: &String, device_name: &String, harvest_area: &String) {
+    pub fn add_variable_and_device(
+        &mut self,
+        variable_id: &String,
+        device_name: &String,
+        harvest_area: &String,
+    ) {
         self.ids.push(variable_id.to_string());
         self.corresponding_device.push(device_name.to_string());
         self.harvest_area.push(harvest_area.to_string());
     }
 }
 
+pub fn get_variables_list(
+    variable: &String,
+    config: &utils::config::Config,
+    token: &String,
+) -> VariablesList {
+    let mut variable_list = VariablesList {
+        name: variable.to_string(),
+        ids: Vec::new(),
+        corresponding_device: Vec::new(),
+        harvest_area: Vec::new(),
+    };
+
+    // Get all devcies from Ubidots under specific org
+    let all_devices = ubidots::devices::get_all_devices(&token)
+        .map_err(|err| println!("Error getting devices list: {}", err))
+        .ok()
+        .unwrap();
+
+    for device in &all_devices.results {
+        if config.devices.iter().any(|dev| &dev.name == &device.name) {
+            let all_variables = list_variables(&device.id, &token)
+                .map_err(|err| println!("Error getting device variables: {}", err))
+                .ok()
+                .unwrap();
+
+            // Check if variables are contained within the requested variables (config.json)
+            for var in &all_variables.results {
+                if &var.name == variable {
+                    let mut location: String = "unknown".to_string();
+                    let mut harvest_area: String = "unknown".to_string();
+                    for dev in &config.devices {
+                        if &dev.name == &device.name {
+                            location = dev.location.to_owned();
+                            harvest_area = dev.harvest_area.to_owned();
+                            break;
+                        }
+                    }
+                    variable_list.add_variable_and_device(&var.id, &location, &harvest_area);
+                    break;
+                }
+            }
+        }
+    }
+    variable_list
+}

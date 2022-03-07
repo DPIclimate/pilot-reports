@@ -1,12 +1,13 @@
-//! Utilities that don't warrant a particular header but are required 
+//! Utilities that don't warrant a particular header but are required
 
 pub mod time {
     extern crate chrono;
     use chrono::prelude::*;
+    use log::info;
 
     pub fn unix_to_local(unix_time: &i64) -> DateTime<Local> {
         // Takes a unix time in ms (conveting it to seconds before parsing)
-        // Returns the local time 
+        // Returns the local time
         let datetime_ts = Utc.timestamp(unix_time / 1000, 0);
         DateTime::<Local>::from(datetime_ts)
     }
@@ -20,14 +21,22 @@ pub mod time {
         let time_now = Utc::now().timestamp(); // 1646364269
         let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
         let local_time_now = DateTime::<Local>::from(utc_time_now);
-        let midnight_today = chrono::Local.ymd(
-            local_time_now.year(),
-            local_time_now.month(),
-            local_time_now.day()
-        ).and_hms(0, 0, 0).timestamp();
+        let midnight_today = chrono::Local
+            .ymd(
+                local_time_now.year(),
+                local_time_now.month(),
+                local_time_now.day(),
+            )
+            .and_hms(0, 0, 0)
+            .timestamp();
 
         let last_week = (midnight_today * 1000) - 518400000;
 
+        info!(
+            "Last week UNIX ts: {} Current UNIX ts: {}",
+            last_week / 1000,
+            time_now
+        );
         (last_week, time_now * 1000)
     }
 
@@ -42,24 +51,26 @@ pub mod time {
         let (last_week, _now) = one_week();
         let mut unix_time = last_week.to_owned();
         let mut col_names: Vec<String> = Vec::new();
-        for _ in 0..7 { 
-            let local_day = unix_to_local(&unix_time)
-                .date()
-                .format("%A");
+        for _ in 0..7 {
+            let local_day = unix_to_local(&unix_time).date().format("%A");
             col_names.push(local_day.to_string());
             unix_time += 86400000;
         }
+        info!(
+            "Column names range from {} to {}",
+            col_names[0],
+            col_names[col_names.len() - 1]
+        );
         col_names
     }
 }
 
-
 pub mod config {
 
-    use std::fs::File;
-    use std::io::BufReader;
     use serde::Deserialize;
     use std::error::Error;
+    use std::fs::File;
+    use std::io::BufReader;
 
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
@@ -96,17 +107,15 @@ pub mod config {
 
         print!("Loading config...");
 
-        let file = File::open("config.json")
-            .expect("Error, devices.json file not found.");
+        let file = File::open("config.json").expect("Error, devices.json file not found.");
 
         let reader = BufReader::new(file);
 
-        let config = serde_json::from_reader(reader)
-            .expect("Error, device.json should be valid json.");
+        let config =
+            serde_json::from_reader(reader).expect("Error, device.json should be valid json.");
 
         println!("loaded");
 
         Ok(config)
     }
 }
-

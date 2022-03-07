@@ -7,7 +7,7 @@ use std::error::Error;
 #[serde(rename_all = "camelCase")]
 pub struct Aggregation {
     pub variables: Vec<String>, // Variable API labels (not names unfortunatly)
-    pub aggregation: String, // mean, min, max, sum, count
+    pub aggregation: String,    // mean, min, max, sum, count
     #[serde(rename = "join_dataframes")]
     pub join_dataframes: bool, // should be false
     pub start: i64,
@@ -27,14 +27,13 @@ pub struct Value {
     pub timestamp: i64,
 }
 
-
 impl Aggregation {
     #[tokio::main]
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
-
         print!("Aggregating data from ubidots...");
 
-        let url = String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/aggregation/");
+        let url =
+            String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/aggregation/");
 
         let client = reqwest::Client::new();
         let response = client
@@ -42,16 +41,13 @@ impl Aggregation {
             .header("X-Auth-Token", token)
             .header("Content-Type", "application/json")
             .body(serde_json::to_string(self)?) // Convert struct to JSON
-            .send() 
+            .send()
             .await?;
 
-        let json_res = response
-            .json::<Response>()
-            .await?;
+        let json_res = response.json::<Response>().await?;
 
         println!("finished");
 
         Ok(json_res)
     }
 }
-

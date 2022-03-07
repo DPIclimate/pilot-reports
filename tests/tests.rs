@@ -10,7 +10,8 @@ use std::env;
 fn load_config() {
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
-        .ok().unwrap();
+        .ok()
+        .unwrap();
 
     for device in &config.devices {
         println!("Device name: {}", device.name);
@@ -22,31 +23,30 @@ fn load_config() {
 }
 
 #[test]
+#[ignore]
 fn weekly_timestamp() {
-    let (start, end) = utils::time::one_week();
-    println!("Start: {}\tEnd: {}", start, end);
-    let cols = utils::time::weekly_column_names();
-    for c in &cols {
-        println!("{}", c);
-    }
+    log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
+
+    utils::time::one_week();
+    utils::time::weekly_column_names();
 }
 
 #[test]
 #[ignore]
-fn unix_timestamp_to_local_day(){
+fn unix_timestamp_to_local_day() {
     let ts = 1645491182126;
-    let local_day = utils::time::unix_to_local(&ts)
-        .date()
-        .format("%A");
+    let local_day = utils::time::unix_to_local(&ts).date().format("%A");
     assert_eq!("Tuesday".to_string(), local_day.to_string());
 }
 
 #[test]
-#[ignore]
 fn create_csv_files() {
+    log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
+
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
-        .ok().unwrap();
+        .ok()
+        .unwrap();
 
     data::files::create_output_csv_files(&config);
 }
@@ -59,7 +59,8 @@ fn datawrapper_upload() {
 
     let config = utils::config::get_config()
         .map_err(|err| println!("Error loading config: {}", err))
-        .ok().unwrap();
+        .ok()
+        .unwrap();
 
     for file in &config.files {
         let filepath = file.filepath.to_string();
@@ -86,7 +87,8 @@ fn aws_to_datawrapper() {
 
     let aws = ubidots::device::aws::weekly_precipitation(&aws_token)
         .map_err(|err| println!("{}", err))
-        .ok().expect("Precipitation parse error.");
+        .ok()
+        .expect("Precipitation parse error.");
 
     ubidots::device::aws::json_to_csv(&aws);
 
@@ -98,5 +100,4 @@ fn aws_to_datawrapper() {
     datawrapper::export::publish_chart(&precip_id, &dw_key)
         .map_err(|err| println!("Error publishing chart: {}", err))
         .ok();
-
 }
