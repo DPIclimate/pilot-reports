@@ -74,6 +74,10 @@ label:hover {
 	background: #fff;
 }
 
+input ~ .tab { display: none; }
+#tab1-precip:checked ~ .tab.weekly-view,
+#tab2-precip:checked ~ .tab.yearly-view { display: block; }
+
 .precip-chart {
 	flex: 45%;
 	padding: 1rem;
