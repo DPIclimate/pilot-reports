@@ -30,9 +30,11 @@ fn main() {
     for variable in &config.variables {
         info!("Processing variable: {}", variable);
 
+        let variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+
         // Construct a list of variables that match devices in config.jon
-        let variable_list =
-            ubidots::device::variables::get_variables_list(&variable, &config, &token);
+        // let variable_list =
+        //ubidots::device::variables::VariablesList::new(&variable, &config, &token);
 
         // Create fortnightly csv files
         let fortnight_vec = data::fortnightly::parse(&variable_list, &token);
@@ -45,6 +47,9 @@ fn main() {
         let weekly_chart = data::weekly::chart::parse(&variable_list, &token);
         weekly_chart.to_csv(&variable);
     }
+
+    // Weekly bar chart of precipitation
+    data::weekly::bar::weekly_precipitation_to_csv(&aws_token);
 
     // Make year to data precipitation datasets
     data::yearly::year_to_date_precipitation_to_csv(&aws_token);

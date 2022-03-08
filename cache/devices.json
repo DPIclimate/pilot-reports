@@ -1,0 +1,173 @@
+{
+  "count": 24,
+  "results": [
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/620c3489a9683d1e8e12b5b8",
+      "id": "620c3489a9683d1e8e12b5b8",
+      "label": "003e22ca70699dc1",
+      "name": "clyde-salinity90f",
+      "lastActivity": 1646428252696
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6181b4ca852f0907a66ca289",
+      "id": "6181b4ca852f0907a66ca289",
+      "label": "00da98bdf9399d7b",
+      "name": "clyde-salinity507",
+      "lastActivity": 1646689939629
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/61788ec3852f0902cbf87570",
+      "id": "61788ec3852f0902cbf87570",
+      "label": "00bae39e66f3027d",
+      "name": "clyde-salinity20c",
+      "lastActivity": 1646713878681
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/61788eb7852f090308fc0973",
+      "id": "61788eb7852f090308fc0973",
+      "label": "002b9353b22e2bdc",
+      "name": "clyde-salinity20b",
+      "lastActivity": 1646713471522
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6174704c852f09000e22a10f",
+      "id": "6174704c852f09000e22a10f",
+      "label": "00d652338ebe5fd6",
+      "name": "clyde-salinity90g",
+      "lastActivity": 1646709755044
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/61732bf5852f09000d3d1bfd",
+      "id": "61732bf5852f09000d3d1bfd",
+      "label": "00e5e1b87f3096f6",
+      "name": "clyde-salinity90a",
+      "lastActivity": 1646707784383
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/617318cf852f09000e22a100",
+      "id": "617318cf852f09000e22a100",
+      "label": "008ec7b0b5a08fd6",
+      "name": "clyde-salinity802",
+      "lastActivity": 1646707407815
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/617209c941ac9d0643a29d26",
+      "id": "617209c941ac9d0643a29d26",
+      "label": "00cd69f8c15b5aa7",
+      "name": "clyde-temp-91b",
+      "lastActivity": 1646713028579
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6171f96386f43b05690c5eb7",
+      "id": "6171f96386f43b05690c5eb7",
+      "label": "0019875609ba8dd0",
+      "name": "clyde-temp-90e",
+      "lastActivity": 1646707042018
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6171f21941ac9d06804a933a",
+      "id": "6171f21941ac9d06804a933a",
+      "label": "009e25662cd22b41",
+      "name": "clyde-temp-91d",
+      "lastActivity": 1642326053705
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6171eac3810cbd25005c19e2",
+      "id": "6171eac3810cbd25005c19e2",
+      "label": "00216a9f3b1a7c01",
+      "name": "clyde-temp-90a",
+      "lastActivity": 1646713009547
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6171d9d886f43b04efae2d46",
+      "id": "6171d9d886f43b04efae2d46",
+      "label": "00e3ced15d56e7a9",
+      "name": "clyde-salinity90b",
+      "lastActivity": 1646711559707
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/6171980c86f43b04efae2d3e",
+      "id": "6171980c86f43b04efae2d3e",
+      "label": "0034c2b7460c95bd",
+      "name": "clyde-temp-90p",
+      "lastActivity": 1639076883166
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/61714fbb810cbd25005c19e0",
+      "id": "61714fbb810cbd25005c19e0",
+      "label": "003d8169a7a4541d",
+      "name": "clyde-temp-90c",
+      "lastActivity": 1646704587471
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616e4a8686f43b01b3bd22f9",
+      "id": "616e4a8686f43b01b3bd22f9",
+      "label": "006a77d6d0df4815",
+      "name": "clyde-salinity501",
+      "lastActivity": 1646713814308
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616e493a41ac9d039cfa39f6",
+      "id": "616e493a41ac9d039cfa39f6",
+      "label": "007f3b4dd80fc570",
+      "name": "clyde-salinity90e",
+      "lastActivity": 1640183337796
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616e476c41ac9d03d99b67ea",
+      "id": "616e476c41ac9d03d99b67ea",
+      "label": "00d11feca77ff462",
+      "name": "clyde-salinity90d",
+      "lastActivity": 1646714027474
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616d0101810cbd035df4c5e0",
+      "id": "616d0101810cbd035df4c5e0",
+      "label": "00fe46b0d80c9901",
+      "name": "clyde-temp-90q",
+      "lastActivity": 1646713127860
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616cec40810cbd02e47da0d0",
+      "id": "616cec40810cbd02e47da0d0",
+      "label": "007d5865a482bad5",
+      "name": "clyde-temp-90w",
+      "lastActivity": 1646712115636
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616cca0e41ac9d02e5025515",
+      "id": "616cca0e41ac9d02e5025515",
+      "label": "00c40066c93327fe",
+      "name": "clyde-temp-90o",
+      "lastActivity": 1646712779263
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616cc76986f43b022da475cb",
+      "id": "616cc76986f43b022da475cb",
+      "label": "002389f0c028589d",
+      "name": "clyde-temp-90z",
+      "lastActivity": 1646711570106
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/616cc3f186f43b022da475ca",
+      "id": "616cc3f186f43b022da475ca",
+      "label": "0018bcc1bf12ea7d",
+      "name": "clyde-temp-901",
+      "lastActivity": 1646711547478
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/615e4ec7f4c81a0ba1c4cd02",
+      "id": "615e4ec7f4c81a0ba1c4cd02",
+      "label": "00226d84fb8e050d",
+      "name": "clyde-temp-904",
+      "lastActivity": 1634222041514
+    },
+    {
+      "url": "https://industrial.api.ubidots.com/api/v2.0/devices/615d25488c58282184a573d8",
+      "id": "615d25488c58282184a573d8",
+      "label": "aquatroll-buoy9",
+      "name": "aquatroll-buoy9",
+      "lastActivity": 1646712024100
+    }
+  ]
+}

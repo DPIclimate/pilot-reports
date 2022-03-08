@@ -73,18 +73,6 @@
 	],
 	"files": [
 		{
-			"filepath": "data/weekly-salinity-chart.csv",
-			"name": "weekly-salinity-chart",
-			"chart_id": "udOPz",
-			"dynamic": false,
-			"columns": [
-				"Day",
-				"Moonlight",
-				"Rocky Point",
-				"Waterfall"
-			]
-		},
-		{
 			"filepath": "data/combined-precipitation.csv",
 			"name": "yearly-precipitation",
 			"chart_id": "6W882",
@@ -138,6 +126,30 @@
 			"columns": [
 				"Location",
 				"Harvest Area"
+			]
+		},
+		{
+			"filepath": "data/weekly-salinity-chart.csv",
+			"name": "weekly-salinity-chart",
+			"chart_id": "udOPz",
+			"dynamic": false,
+			"columns": [
+				"Day",
+				"Moonlight",
+				"Rocky Point",
+				"Waterfall"
+			]
+		},
+		{
+			"filepath": "data/weekly-temperature-chart.csv",
+			"name": "weekly-temperature-chart",
+			"chart_id": "3BIUb",
+			"dynamic": false,
+			"columns": [
+				"Day",
+				"Moonlight",
+				"Rocky Point",
+				"Waterfall"
 			]
 		},
 		{

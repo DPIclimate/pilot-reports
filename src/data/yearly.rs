@@ -7,7 +7,7 @@ use std::fs::File;
 #[derive(Serialize)]
 struct Record<'a> {
     date: &'a String,
-    #[serde(rename(serialize = "2020"))]
+    #[serde(rename(serialize = "2022"))]
     precipitation: &'a f64,
 }
 
@@ -34,7 +34,7 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     for d in (0..&precipitation.results[0].len() - 1).rev() {
         let data = &precipitation.results[0][d];
         let (value, ts) = (data[0], (data[1].round() as i64));
-        let local_date = utils::time::unix_to_local(&ts).date().format("%Y-%m-%d");
+        let local_date = utils::time::unix_to_local(&ts).date().format("%-d/%-m/%y");
         let rec = Record {
             date: &local_date.to_string(),
             precipitation: &(value.to_owned() + sum),

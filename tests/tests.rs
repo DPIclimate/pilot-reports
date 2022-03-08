@@ -7,6 +7,41 @@ use log::error;
 use std::env;
 
 #[test]
+#[ignore]
+fn cache_variables() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Org key not found");
+
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    for variable in &config.variables {
+        // Construct a list of variables that match devices in config.jon
+        let variable_list =
+            ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+        variable_list.cache(&variable);
+    }
+}
+
+#[test]
+#[ignore]
+fn cache_device() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Org key not found");
+
+    // Get all devcies from Ubidots under specific org
+    let all_devices = ubidots::devices::get_all_devices(&token)
+        .map_err(|err| error!("Error getting devices list: {}", err))
+        .ok()
+        .unwrap();
+
+    all_devices.cache();
+}
+
+#[test]
+#[ignore]
 fn create_weekly_chart() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Org key not found");
@@ -20,7 +55,7 @@ fn create_weekly_chart() {
 
     // Construct a list of variables that match devices in config.jon
     let variable = String::from("salinity");
-    let variable_list = ubidots::device::variables::get_variables_list(&variable, &config, &token);
+    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
     let chart = data::weekly::chart::parse(&variable_list, &token);
     chart.to_csv(&variable);
 }
@@ -32,11 +67,12 @@ fn create_dataframe() {
 }
 
 #[test]
-#[ignore]
-fn yearly_precipitation() {
+fn precipitation_to_csvs() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+    data::weekly::bar::weekly_precipitation_to_csv(&aws_token);
     data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+    data::yearly::join_precipitation_datasets();
 }
 
 #[test]

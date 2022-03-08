@@ -1,9 +1,10 @@
 //! Get device lists
 use log::info;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::error::Error;
+use std::fs::File;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Device {
     pub url: String,
@@ -13,7 +14,7 @@ pub struct Device {
     pub last_activity: i64,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Devices {
     pub count: i64,
@@ -40,4 +41,11 @@ pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> 
         .await?;
 
     Ok(response)
+}
+
+impl Devices {
+    pub fn cache(&self) {
+        let file = File::create("cache/devices.json").expect("Unable to create devices.json");
+        serde_json::to_writer_pretty(&file, &self).expect("Error parsing devices to devices.json");
+    }
 }

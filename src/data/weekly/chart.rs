@@ -1,6 +1,7 @@
 use crate::{ubidots, utils};
 use log::{error, info};
 use std::error::Error;
+use std::fs::File;
 use std::fs::OpenOptions;
 
 pub struct Chart {
@@ -85,7 +86,6 @@ pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &
             _ => error!("Unknown harvest area found. Append this harvest area before re-running."),
         }
     }
-
     let (week_start, _week_end) = utils::time::one_week();
     let mut offset = 0;
     for _ in 0..7 {
@@ -119,8 +119,6 @@ pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &
         offset += 86400000;
     }
 
-    println!("{:#?}", chart.day);
-
     chart
 }
 
@@ -129,6 +127,8 @@ fn aggregate_harvest_area_daily(
     token: &String,
     (start, end): &(i64, i64),
 ) -> Result<ubidots::device::data::Response, Box<dyn Error>> {
+    info!("Aggregating harvest area data");
+
     let aggregation = ubidots::device::data::Aggregation {
         variables: variables.to_vec(),
         aggregation: "mean".to_string(),
