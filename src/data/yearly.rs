@@ -21,7 +21,7 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     let raw_series = ubidots::device::aws::RawSeries::new(&variables, utils::time::this_year());
 
     let precipitation = raw_series
-        .get_year_to_date(&aws_token)
+        .get_precipitation(&aws_token)
         .map_err(|err| error!("Error getting precipitation data: {}", err))
         .ok()
         .unwrap();

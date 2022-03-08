@@ -38,10 +38,17 @@ fn main() {
         let fortnight_vec = data::fortnightly::parse(&variable_list, &token);
         data::fortnightly::to_csv(&variable, &fortnight_vec);
 
-        // Create weekly csv files
-        let weekly = data::weekly::parse(&variable_list, &token);
-        weekly.to_csv(&variable);
+        // Create weekly table csv files
+        let weekly_table = data::weekly::table::parse(&variable_list, &token);
+        weekly_table.to_csv(&variable);
+
+        let weekly_chart = data::weekly::chart::parse(&variable_list, &token);
+        weekly_chart.to_csv(&variable);
     }
+
+    // Make year to data precipitation datasets
+    data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+    data::yearly::join_precipitation_datasets();
 
     // Write datasets to datawrapper
     data::files::all_files_to_datawrapper(&dw_key, &config);

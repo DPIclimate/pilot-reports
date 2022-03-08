@@ -7,15 +7,28 @@ use log::error;
 use std::env;
 
 #[test]
-fn create_dataframe() {
-    data::yearly::join_precipitation_datasets();
+fn create_weekly_chart() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Org key not found");
+    let config = utils::config::get_config()
+        .map_err(|err| println!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    // -- Overwrite csv files -- //
+    data::files::create_output_csv_files(&config);
+
+    // Construct a list of variables that match devices in config.jon
+    let variable = String::from("salinity");
+    let variable_list = ubidots::device::variables::get_variables_list(&variable, &config, &token);
+    let chart = data::weekly::chart::parse(&variable_list, &token);
+    chart.to_csv(&variable);
 }
 
 #[test]
 #[ignore]
-fn days_since() {
-    let n_days = utils::time::days_since_jan_first();
-    println!("Num Days: {}", n_days);
+fn create_dataframe() {
+    data::yearly::join_precipitation_datasets();
 }
 
 #[test]

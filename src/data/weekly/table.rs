@@ -4,7 +4,7 @@ use std::fs::OpenOptions;
 
 /// Matches weekly columns as defined in `config.json`.
 #[derive(Debug, Clone)]
-pub struct Weekly {
+pub struct Table {
     /// Location of the device (i.e. its common name)
     pub location: Vec<String>,
     /// A vector of vector of values from a variable
@@ -14,15 +14,22 @@ pub struct Weekly {
 }
 
 /// Handles weekly datasets
-impl Weekly {
+impl Table {
+    pub fn new() -> Self {
+        Table {
+            location: Vec::new(),
+            daily_value: Vec::new(),
+            harvest_area: Vec::new(),
+        }
+    }
+
     /// Transfoms a weekly struct into a csv file.
     ///
     /// This function also does some basic cleaning by replacing negitive
     /// and extreme values will empty strings. These will be ignored by
     /// datawrapper.de
-    ///
     pub fn to_csv(&self, variable_name: &String) {
-        let filename = format!("data/weekly-{}.csv", variable_name);
+        let filename = format!("data/weekly-{}-table.csv", variable_name);
 
         info!("Publishing weekly {} data to {}", variable_name, filename);
 
@@ -59,13 +66,9 @@ impl Weekly {
     }
 }
 
-pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Weekly {
-    // ---- Weekly Summary ---- //
-    let mut weekly = Weekly {
-        location: Vec::new(),
-        daily_value: Vec::new(),
-        harvest_area: Vec::new(),
-    };
+pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Table {
+    // ---- Table Summary ---- //
+    let mut weekly = Table::new();
 
     // Get device location  and harvest area
     for (cd, ha) in variable_list

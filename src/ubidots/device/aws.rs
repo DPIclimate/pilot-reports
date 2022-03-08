@@ -32,13 +32,13 @@ impl RawSeries {
     }
 
     #[tokio::main]
-    pub async fn get_year_to_date(
+    pub async fn get_precipitation(
         &self,
         aws_token: &String,
     ) -> Result<Precipitation, Box<dyn Error>> {
         let url = "https://industrial.api.ubidots.com/api/v1.6/data/raw/series";
 
-        info!("Getting year to date precipitation");
+        info!("Getting precipitation");
 
         let client = reqwest::Client::new();
         let response = client

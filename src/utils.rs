@@ -7,23 +7,18 @@ pub mod time {
 
     pub fn unix_to_local(unix_time: &i64) -> DateTime<Local> {
         // Takes a unix time in ms (conveting it to seconds before parsing)
-        // Returns the local time
         let datetime_ts = Utc.timestamp(unix_time / 1000, 0);
         DateTime::<Local>::from(datetime_ts)
     }
 
-    pub fn days_since_jan_first() -> i64 {
-        let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
-        let ts_now = utc_time_now.timestamp();
-        let local_time_now = DateTime::<Local>::from(utc_time_now);
-        let start_of_year = chrono::Local
-            .ymd(local_time_now.year(), 1, 1)
+    pub fn unix_to_local_day(unix_time: &i64) -> String {
+        let utc_unix = Utc.timestamp(unix_time / 1000, 0);
+        let local_time = DateTime::<Local>::from(utc_unix);
+        chrono::Local
+            .ymd(local_time.year(), local_time.month(), local_time.day())
             .and_hms(0, 0, 0)
-            .timestamp();
-
-        let sec_diff = ts_now - start_of_year;
-        let days: i64 = sec_diff / 86400;
-        days
+            .format("%A")
+            .to_string()
     }
 
     pub fn this_year() -> (i64, i64) {
@@ -134,9 +129,7 @@ pub mod config {
         info!("Loading config from config.json");
 
         let file = File::open("config.json").expect("Error, devices.json file not found.");
-
         let reader = BufReader::new(file);
-
         let config =
             serde_json::from_reader(reader).expect("Error, device.json should be valid json.");
 

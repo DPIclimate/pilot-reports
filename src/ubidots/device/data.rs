@@ -15,19 +15,6 @@ pub struct Aggregation {
     pub end: i64,
 }
 
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Response {
-    pub results: Vec<Value>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Value {
-    pub value: f64,
-    pub timestamp: i64,
-}
-
 impl Aggregation {
     #[tokio::main]
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
@@ -48,4 +35,17 @@ impl Aggregation {
 
         Ok(json_res)
     }
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Response {
+    pub results: Vec<Value>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Value {
+    pub value: f64,
+    pub timestamp: i64,
 }
