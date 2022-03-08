@@ -5,7 +5,6 @@ use log::{error, info};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fs::File;
-use std::{thread, time};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -75,8 +74,6 @@ impl VariablesList {
 
         for device in &all_devices.results {
             if config.devices.iter().any(|dev| &dev.name == &device.name) {
-                thread::sleep(time::Duration::from_secs(3));
-
                 let all_variables = list_variables(&device.id, &token)
                     .map_err(|err| error!("Error getting device variables: {}", err))
                     .ok()

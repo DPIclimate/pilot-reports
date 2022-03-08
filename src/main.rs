@@ -3,12 +3,15 @@ use log::{error, info};
 use log4rs;
 use std::env;
 
+mod cli;
 mod data;
 mod datawrapper;
 mod ubidots;
 mod utils;
 
 fn main() {
+    let cli_config = cli::Config::new();
+
     log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
 
     // Load env variables from .env file
@@ -30,11 +33,15 @@ fn main() {
     for variable in &config.variables {
         info!("Processing variable: {}", variable);
 
-        let variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
-
         // Construct a list of variables that match devices in config.jon
-        // let variable_list =
-        //ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+        let variable_list: ubidots::device::variables::VariablesList;
+        if cli_config.use_cache {
+            variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+        } else {
+            variable_list =
+                ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+            variable_list.cache(&variable);
+        }
 
         // Create fortnightly csv files
         let fortnight_vec = data::fortnightly::parse(&variable_list, &token);

@@ -3,7 +3,7 @@ extern crate pilot_reports;
 pub use pilot_reports::{data, datawrapper, ubidots, utils};
 
 extern crate dotenv;
-use log::error;
+use log::{error, info};
 use std::env;
 
 #[test]
@@ -13,7 +13,7 @@ fn cache_variables() {
     let token = env::var("ORG_KEY").expect("Org key not found");
 
     let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
+        .map_err(|err| error!("Error loading config: {}", err))
         .ok()
         .unwrap();
 
@@ -27,26 +27,11 @@ fn cache_variables() {
 
 #[test]
 #[ignore]
-fn cache_device() {
-    dotenv::dotenv().expect("Failed to read .env file.");
-    let token = env::var("ORG_KEY").expect("Org key not found");
-
-    // Get all devcies from Ubidots under specific org
-    let all_devices = ubidots::devices::get_all_devices(&token)
-        .map_err(|err| error!("Error getting devices list: {}", err))
-        .ok()
-        .unwrap();
-
-    all_devices.cache();
-}
-
-#[test]
-#[ignore]
 fn create_weekly_chart() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Org key not found");
     let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
+        .map_err(|err| error!("Error loading config: {}", err))
         .ok()
         .unwrap();
 
@@ -79,16 +64,16 @@ fn precipitation_to_csvs() {
 #[ignore]
 fn load_config() {
     let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
+        .map_err(|err| error!("Error loading config: {}", err))
         .ok()
         .unwrap();
 
     for device in &config.devices {
-        println!("Device name: {}", device.name);
+        info!("Device name: {}", device.name);
     }
 
     for name in &config.variables {
-        println!("Variable name: {}", name);
+        info!("Variable name: {}", name);
     }
 }
 
@@ -115,7 +100,7 @@ fn create_csv_files() {
     log4rs::init_file("config/log4rs.yaml", Default::default()).unwrap();
 
     let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
+        .map_err(|err| error!("Error loading config: {}", err))
         .ok()
         .unwrap();
 
@@ -129,19 +114,19 @@ fn datawrapper_upload() {
     let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
 
     let config = utils::config::get_config()
-        .map_err(|err| println!("Error loading config: {}", err))
+        .map_err(|err| error!("Error loading config: {}", err))
         .ok()
         .unwrap();
 
     for file in &config.files {
         let filepath = file.filepath.to_string();
-        println!("Filepath: {}", filepath);
+        info!("Filepath: {}", filepath);
         let chart_id = file.chart_id.to_string();
         datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key)
-            .map_err(|err| println!("Error: {}", err))
+            .map_err(|err| error!("Error: {}", err))
             .ok();
         datawrapper::export::publish_chart(&chart_id, &dw_key)
-            .map_err(|err| println!("Error: {}", err))
+            .map_err(|err| error!("Error: {}", err))
             .ok();
         break;
     }
