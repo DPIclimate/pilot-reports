@@ -1,4 +1,5 @@
 use clap::{Arg, Command};
+use log::info;
 
 pub struct Config {
     pub use_cache: bool,
@@ -19,10 +20,10 @@ impl Config {
             .get_matches();
 
         if args.is_present("use-cache") {
-            info!("Using cache data from cache directory")
+            info!("Using cache data from cache directory");
             return Config { use_cache: true };
         }
-        info!("Refreshing data and saving it to cache")
+        info!("Refreshing data and saving it to cache");
         Config { use_cache: true }
     }
 }
