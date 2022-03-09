@@ -1,7 +1,6 @@
 //! Handles csv creation and writing.
-use crate::datawrapper;
 use crate::utils;
-use log::{error, info};
+use log::info;
 use std::fs::OpenOptions;
 
 /// Creates new header only csv files for writing data to.
@@ -49,19 +48,5 @@ pub fn create_output_csv_files(config: &utils::config::Config) {
             wtr.serialize(file.columns.to_owned())
                 .expect("Writer error");
         }
-    }
-}
-
-pub fn all_files_to_datawrapper(dw_key: &String, config: &utils::config::Config) {
-    // ---- Write csv's to datawrapper ---- //
-    for file in &config.files {
-        let filepath = file.filepath.to_string();
-        let chart_id = file.chart_id.to_string();
-        datawrapper::export::upload_dataset(&filepath, &chart_id, &dw_key)
-            .map_err(|err| error!("Error uploading data: {}", err))
-            .ok();
-        datawrapper::export::publish_chart(&chart_id, &dw_key)
-            .map_err(|err| error!("Error publishing chart: {}", err))
-            .ok();
     }
 }

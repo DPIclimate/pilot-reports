@@ -1,11 +1,14 @@
+//! Command line interface for pilot reports
 use clap::{Arg, Command};
 use log::info;
 
 pub struct Config {
+    /// Use data from cache (true) or from Ubidots (false)
     pub use_cache: bool,
 }
 
 impl Config {
+    /// Create new cli `Config`
     pub fn new() -> Self {
         let args = Command::new("Pilot Reports")
             .version("0.1.0")

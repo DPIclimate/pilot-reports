@@ -1,16 +1,16 @@
-//! Utilities that don't warrant a particular header but are required
-
 pub mod time {
+    //! Time related utilities for handling date and time ranges
     extern crate chrono;
     use chrono::prelude::*;
     use log::info;
 
+    /// Takes a unix time in ms (conveting it to seconds before parsing)
     pub fn unix_to_local(unix_time: &i64) -> DateTime<Local> {
-        // Takes a unix time in ms (conveting it to seconds before parsing)
         let datetime_ts = Utc.timestamp(unix_time / 1000, 0);
         DateTime::<Local>::from(datetime_ts)
     }
 
+    /// Converts current unix time to local day (e.g. Tuesday)
     pub fn unix_to_local_day(unix_time: &i64) -> String {
         let utc_unix = Utc.timestamp(unix_time / 1000, 0);
         let local_time = DateTime::<Local>::from(utc_unix);
@@ -21,6 +21,8 @@ pub mod time {
             .to_string()
     }
 
+    /// Gets a tuple containing the unix time (in ms) from the start of this year
+    /// to the current date
     pub fn this_year() -> (i64, i64) {
         let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
         let ts_now = utc_time_now.timestamp();
@@ -32,12 +34,12 @@ pub mod time {
         (start_of_year * 1000, ts_now * 1000)
     }
 
+    /// Get the time a week ago and the current time in UNIX timestamp
+    /// This gets the current UTC time, subracts a week (UNIX ms) then
+    /// rounds down to the start of the day (h = 0, m = 0, sec = 0)
+    /// This is needed otherwise running the program at random times would
+    /// effect the daily average.
     pub fn one_week() -> (i64, i64) {
-        // Get the time a week ago and the current time in UNIX timestamp
-        // This gets the current UTC time, subracts a week (UNIX ms) then
-        // rounds down to the start of the day (h = 0, m = 0, sec = 0)
-        // This is needed otherwise running the program at random times would
-        // effect the daily average.
         let time_now = Utc::now().timestamp(); // 1646364269
         let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
         let local_time_now = DateTime::<Local>::from(utc_time_now);
@@ -60,13 +62,14 @@ pub mod time {
         (last_week, time_now * 1000)
     }
 
+    /// Get the time between the start of two weeks ago and the start of last week
     pub fn last_week() -> (i64, i64) {
-        // Get the time between the start of two weeks ago and the start of last week
         let last_week_end = (Utc::now().timestamp() * 1000) - 604800000;
         let last_week_start = last_week_end - 604800000;
         (last_week_start, last_week_end)
     }
 
+    /// Gets a list of column names containing only the day (e.g. Tuesday, Wednesday etc.)
     pub fn weekly_column_names() -> Vec<String> {
         let (last_week, _now) = one_week();
         let mut unix_time = last_week.to_owned();
@@ -86,6 +89,7 @@ pub mod time {
 }
 
 pub mod config {
+    //! Handles reading from `config.json` to struct
 
     use log::info;
     use serde::Deserialize;
@@ -93,39 +97,63 @@ pub mod config {
     use std::fs::File;
     use std::io::BufReader;
 
+    /// Configuration from `config.json`
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct Config {
+        /// List of devices
         pub devices: Vec<Device>,
+        /// List of variables of interest
         pub variables: Vec<String>,
+        /// List of file configurations
         pub files: Vec<FileConfig>,
     }
 
+    /// Device information from `config.json`
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct Device {
+        /// Name of the device
         pub name: String,
+        /// Location of devices
         pub location: String,
+        /// Corresponding harvest area
         #[serde(rename = "harvest_area")]
         pub harvest_area: String,
+        /// Buoy number of device
         #[serde(rename = "buoy_number")]
         pub buoy_number: String,
     }
 
+    /// File configuration from `config.json`
     #[derive(Deserialize)]
     #[serde(rename_all = "camelCase")]
     pub struct FileConfig {
+        /// Path to output directory (data/... reccommended)
         pub filepath: String,
+        /// Name of output file without directory
         pub name: String,
+        /// Chart id from datawrapper
         #[serde(rename = "chart_id")]
         pub chart_id: String,
+        /// Are the column headers generated dynamically
         pub dynamic: bool,
+        /// List of columns
         pub columns: Vec<String>,
     }
 
+    /// Get the configuration of devices and variables to use for analysis
+    /// # Example
+    /// ```
+    /// use crate::utils::config;
+    ///
+    /// let config = config::get_config()
+    ///    .map_err(|err| println!("Error loading config: {}", err))
+    ///    .ok()
+    ///    .unwrap();
+    /// ```
+    ///
     pub fn get_config() -> Result<Config, Box<dyn Error>> {
-        // Get the configuration of devices and variables to use for analysis
-
         info!("Loading config from config.json");
 
         let file = File::open("config.json").expect("Error, devices.json file not found.");

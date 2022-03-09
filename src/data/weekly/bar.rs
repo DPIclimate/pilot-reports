@@ -1,3 +1,4 @@
+//! Create bar chart dataset (currently only precipitation)
 use crate::{ubidots, utils};
 use log::{error, info};
 use serde::Serialize;

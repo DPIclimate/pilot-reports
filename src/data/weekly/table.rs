@@ -1,3 +1,4 @@
+//! Create table dataset
 use crate::{ubidots, utils};
 use log::{error, info};
 use std::fs::OpenOptions;
@@ -15,12 +16,80 @@ pub struct Table {
 
 /// Handles weekly datasets
 impl Table {
-    pub fn new() -> Self {
-        Table {
+    /// Method for converting a list of variables into an aggregate weekly dataset of values.
+    ///
+    /// `variable_list` can be taken from cache or from a new request.
+    ///
+    /// # Example
+    /// ```
+    /// extern crate dotenv;
+    /// use std::env;
+    /// use crate::{utils, ubidots};
+    ///
+    /// dotenv::dotenv().expect("Failed to read .env file.");
+    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
+    ///
+    /// let config = utils::config::get_config()
+    ///     .map_err(|err| println!("Error: {}", err))
+    ///     .ok().unwrap();
+    ///
+    /// let variable_list: ubidots::device::variables::VariablesList;
+    /// // Must have some variables defined in config.json
+    /// for variable in &config.variables {
+    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+    /// }
+    ///
+    /// let weekly_table = data::weekly::table::Table::new(&variable_list, &token);
+    /// ```
+    pub fn new(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Table {
+        // ---- Table Summary ---- //
+        let mut weekly = Table {
             location: Vec::new(),
             daily_value: Vec::new(),
             harvest_area: Vec::new(),
+        };
+
+        // Get device location  and harvest area
+        for (cd, ha) in variable_list
+            .corresponding_device
+            .iter()
+            .zip(variable_list.harvest_area.iter())
+        {
+            weekly.location.push(cd.to_string());
+            weekly.harvest_area.push(ha.to_string());
         }
+
+        let (week_start, _week_end) = utils::time::one_week();
+
+        let mut offset = 0;
+        let mut day_offset = 86400000;
+        // Seven days
+        for _ in 0..7 {
+            let daily_agg = ubidots::device::data::Aggregation {
+                variables: variable_list.ids.to_owned(),
+                aggregation: "mean".to_string(),
+                join_dataframes: false,
+                start: week_start + offset,
+                end: week_start + day_offset,
+            };
+
+            let daily = daily_agg
+                .aggregate(&token)
+                .map_err(|err| error!("Error requesting weekly mean: {}", err))
+                .ok()
+                .unwrap();
+
+            let mut day_vec: Vec<f64> = Vec::new();
+            for day in daily.results.iter() {
+                day_vec.push(day.value.to_owned());
+            }
+
+            weekly.daily_value.push(day_vec.to_owned());
+
+            offset += 86400000;
+            day_offset += 86400000;
+        }
+        weekly
     }
 
     /// Transfoms a weekly struct into a csv file.
@@ -28,6 +97,30 @@ impl Table {
     /// This function also does some basic cleaning by replacing negitive
     /// and extreme values will empty strings. These will be ignored by
     /// datawrapper.de
+    ///
+    /// # Example
+    /// ```
+    /// extern crate dotenv;
+    /// use std::env;
+    /// use crate::{utils, ubidots};
+    ///
+    /// dotenv::dotenv().expect("Failed to read .env file.");
+    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
+    ///
+    /// let config = utils::config::get_config()
+    ///     .map_err(|err| println!("Error: {}", err))
+    ///     .ok().unwrap();
+    ///
+    /// let variable_list: ubidots::device::variables::VariablesList;
+    /// // Must have some variables defined in config.json
+    /// for variable in &config.variables {
+    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+    /// }
+    ///
+    /// let weekly_table = data::weekly::table::parse(&variable_list, &token);
+    /// weekly_table.to_csv(&variable);
+    /// ```
+    ///
     pub fn to_csv(&self, variable_name: &String) {
         let filename = format!("data/weekly-{}-table.csv", variable_name);
 
@@ -64,51 +157,4 @@ impl Table {
         }
         wtr.flush().expect("Error flushing writer");
     }
-}
-
-pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Table {
-    // ---- Table Summary ---- //
-    let mut weekly = Table::new();
-
-    // Get device location  and harvest area
-    for (cd, ha) in variable_list
-        .corresponding_device
-        .iter()
-        .zip(variable_list.harvest_area.iter())
-    {
-        weekly.location.push(cd.to_string());
-        weekly.harvest_area.push(ha.to_string());
-    }
-
-    let (week_start, _week_end) = utils::time::one_week();
-
-    let mut offset = 0;
-    let mut day_offset = 86400000;
-    // Seven days
-    for _ in 0..7 {
-        let daily_agg = ubidots::device::data::Aggregation {
-            variables: variable_list.ids.to_owned(),
-            aggregation: "mean".to_string(),
-            join_dataframes: false,
-            start: week_start + offset,
-            end: week_start + day_offset,
-        };
-
-        let daily = daily_agg
-            .aggregate(&token)
-            .map_err(|err| error!("Error requesting weekly mean: {}", err))
-            .ok()
-            .unwrap();
-
-        let mut day_vec: Vec<f64> = Vec::new();
-        for day in daily.results.iter() {
-            day_vec.push(day.value.to_owned());
-        }
-
-        weekly.daily_value.push(day_vec.to_owned());
-
-        offset += 86400000;
-        day_offset += 86400000;
-    }
-    weekly
 }

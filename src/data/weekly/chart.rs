@@ -1,25 +1,121 @@
+//! Create line chart dataset
 use crate::{ubidots, utils};
 use log::{error, info};
 use std::error::Error;
 use std::fs::OpenOptions;
 
 pub struct Chart {
+    /// Day of the week e.g. Tuesday
     pub day: Vec<String>,
+    /// Waterfall harvest area
     pub waterfall: Vec<f64>,
+    /// Moonlight harvest area
     pub moonlight: Vec<f64>,
+    /// Rocky point harvest area
     pub rocky_point: Vec<f64>,
 }
 
 impl Chart {
-    pub fn new() -> Self {
-        Chart {
+    /// Method for converting a list of variables into an aggregate weekly dataset of values.
+    ///
+    /// `variable_list` can be taken from cache or from a new request.
+    ///
+    /// # Example
+    /// ```
+    /// extern crate dotenv;
+    /// use std::env;
+    /// use crate::{utils, ubidots};
+    ///
+    /// dotenv::dotenv().expect("Failed to read .env file.");
+    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
+    ///
+    /// let config = utils::config::get_config()
+    ///     .map_err(|err| println!("Error: {}", err))
+    ///     .ok().unwrap();
+    ///
+    /// let variable_list: ubidots::device::variables::VariablesList;
+    /// // Must have some variables defined in config.json
+    /// for variable in &config.variables {
+    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+    /// }
+    ///
+    /// let weekly_chart = data::weekly::chart::Chart::new(&variable_list, &token);
+    /// ```
+    pub fn new(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Self {
+        info!("Creating chart data");
+
+        let mut chart = Chart {
             day: Vec::new(),
             waterfall: Vec::new(),
             moonlight: Vec::new(),
             rocky_point: Vec::new(),
+        };
+
+        let mut harvest_area_variables = HarvestAreaVariables {
+            waterfall: Vec::new(),
+            moonlight: Vec::new(),
+            rocky_point: Vec::new(),
+        };
+
+        // Combine like harvest areas together into a vector that can be passed to ubidots
+        for (var_id, ha) in variable_list
+            .ids
+            .iter()
+            .zip(variable_list.harvest_area.iter())
+        {
+            // Convert String to &str
+            match &ha[..] {
+                "Moonlight" => harvest_area_variables.moonlight.push(var_id.to_owned()),
+                "Rocky Point" => harvest_area_variables.rocky_point.push(var_id.to_owned()),
+                "Waterfall" => harvest_area_variables.waterfall.push(var_id.to_owned()),
+                _ => error!(
+                    "Unknown harvest area found. Append this harvest area before re-running."
+                ),
+            }
         }
+        let (week_start, _week_end) = utils::time::one_week();
+        let mut offset = 0;
+        for _ in 0..7 {
+            let (start, end) = (week_start + offset, week_start + offset + 86400000);
+
+            let local_day = utils::time::unix_to_local_day(&start); // Plain text day e.g. Sunday
+            chart.day.push(local_day);
+
+            // Formulate the JSON body for each request and get data
+            let moonlight = aggregate_harvest_area_daily(
+                &harvest_area_variables.moonlight,
+                &token,
+                &(start, end),
+            )
+            .unwrap();
+
+            chart.moonlight.push(moonlight.results[0].value);
+
+            let rocky_point = aggregate_harvest_area_daily(
+                &harvest_area_variables.rocky_point,
+                &token,
+                &(start, end),
+            )
+            .unwrap();
+
+            chart.rocky_point.push(rocky_point.results[0].value);
+
+            let waterfall = aggregate_harvest_area_daily(
+                &harvest_area_variables.waterfall,
+                &token,
+                &(start, end),
+            )
+            .unwrap();
+
+            chart.waterfall.push(waterfall.results[0].value);
+
+            offset += 86400000;
+        }
+
+        chart
     }
 
+    /// Write a `Chart` struct to csv.
     pub fn to_csv(&self, variable_name: &String) {
         let filename = format!("data/weekly-{}-chart.csv", variable_name);
 
@@ -47,80 +143,17 @@ impl Chart {
     }
 }
 
-// Vector of variables within a harvest area
+/// Vector of variables within a harvest area
 struct HarvestAreaVariables {
+    /// Waterfall harvest area variables
     waterfall: Vec<String>,
+    /// Moonlight harvest area variables
     moonlight: Vec<String>,
+    /// Rocky Point harvest area variables
     rocky_point: Vec<String>,
 }
 
-impl HarvestAreaVariables {
-    fn new() -> Self {
-        HarvestAreaVariables {
-            waterfall: Vec::new(),
-            moonlight: Vec::new(),
-            rocky_point: Vec::new(),
-        }
-    }
-}
-
-pub fn parse(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Chart {
-    info!("Creating chart data");
-
-    let mut chart = Chart::new();
-
-    let mut harvest_area_variables = HarvestAreaVariables::new();
-
-    // Combine like harvest areas together into a vector that can be passed to ubidots
-    for (var_id, ha) in variable_list
-        .ids
-        .iter()
-        .zip(variable_list.harvest_area.iter())
-    {
-        // Convert String to &str
-        match &ha[..] {
-            "Moonlight" => harvest_area_variables.moonlight.push(var_id.to_owned()),
-            "Rocky Point" => harvest_area_variables.rocky_point.push(var_id.to_owned()),
-            "Waterfall" => harvest_area_variables.waterfall.push(var_id.to_owned()),
-            _ => error!("Unknown harvest area found. Append this harvest area before re-running."),
-        }
-    }
-    let (week_start, _week_end) = utils::time::one_week();
-    let mut offset = 0;
-    for _ in 0..7 {
-        let (start, end) = (week_start + offset, week_start + offset + 86400000);
-
-        let local_day = utils::time::unix_to_local_day(&start); // Plain text day e.g. Sunday
-        chart.day.push(local_day);
-
-        // Formulate the JSON body for each request and get data
-        let moonlight =
-            aggregate_harvest_area_daily(&harvest_area_variables.moonlight, &token, &(start, end))
-                .unwrap();
-
-        chart.moonlight.push(moonlight.results[0].value);
-
-        let rocky_point = aggregate_harvest_area_daily(
-            &harvest_area_variables.rocky_point,
-            &token,
-            &(start, end),
-        )
-        .unwrap();
-
-        chart.rocky_point.push(rocky_point.results[0].value);
-
-        let waterfall =
-            aggregate_harvest_area_daily(&harvest_area_variables.waterfall, &token, &(start, end))
-                .unwrap();
-
-        chart.waterfall.push(waterfall.results[0].value);
-
-        offset += 86400000;
-    }
-
-    chart
-}
-
+/// Method to aggregate data from harest areas on a daily basis.
 fn aggregate_harvest_area_daily(
     variables: &Vec<String>,
     token: &String,

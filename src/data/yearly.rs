@@ -1,3 +1,4 @@
+//! Methods to parse variables to yearly datasets
 use crate::{ubidots, utils};
 use log::{error, info};
 use polars::prelude::*;
@@ -11,6 +12,22 @@ struct Record<'a> {
     precipitation: &'a f64,
 }
 
+/// Calculates year-to-date precipitation and sends it to a .csv file
+///
+/// Few things are hardcoded here including the daily precipitation variable.
+///
+/// # Example
+/// ```
+/// extern crate dotenv;
+/// use std::env;
+///
+/// mod data;
+///
+/// dotenv::dotenv().expect("Failed to read .env file.");
+/// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+///
+/// data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+/// ```
 pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     info!("Getting yearly precipitation from Ubidots.");
 
@@ -46,6 +63,23 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     wtr.flush().expect("Error flushing writer");
 }
 
+/// Joins previous (and current) years precipitation datasets into a combined dataset.
+///
+/// Few things are hardcoded here including the daily precipitation variable.
+///
+/// # Example
+/// ```
+/// extern crate dotenv;
+/// use std::env;
+///
+/// mod data;
+///
+/// dotenv::dotenv().expect("Failed to read .env file.");
+/// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
+///
+/// data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+/// data::yearly::join_precipitation_datasets();
+/// ```
 pub fn join_precipitation_datasets() {
     info!("Joining precipitation datasets");
 

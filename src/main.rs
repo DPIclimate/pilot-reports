@@ -44,14 +44,15 @@ fn main() {
         }
 
         // Create fortnightly csv files
-        let fortnight_vec = data::fortnightly::parse(&variable_list, &token);
-        data::fortnightly::to_csv(&variable, &fortnight_vec);
+        let fortnightly_range_plot =
+            data::fortnightly::rangeplot::RangePlot::new(&variable_list, &token);
+        fortnightly_range_plot.to_csv(&variable);
 
         // Create weekly table csv files
-        let weekly_table = data::weekly::table::parse(&variable_list, &token);
+        let weekly_table = data::weekly::table::Table::new(&variable_list, &token);
         weekly_table.to_csv(&variable);
 
-        let weekly_chart = data::weekly::chart::parse(&variable_list, &token);
+        let weekly_chart = data::weekly::chart::Chart::new(&variable_list, &token);
         weekly_chart.to_csv(&variable);
     }
 
@@ -63,5 +64,5 @@ fn main() {
     data::yearly::join_precipitation_datasets();
 
     // Write datasets to datawrapper
-    data::files::all_files_to_datawrapper(&dw_key, &config);
+    datawrapper::export::all_files_to_datawrapper(&dw_key, &config);
 }

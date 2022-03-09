@@ -7,15 +7,21 @@ use std::error::Error;
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Aggregation {
-    pub variables: Vec<String>, // Variable API labels (not names unfortunatly)
-    pub aggregation: String,    // mean, min, max, sum, count
+    /// Variable API labels (not names unfortunatly)
+    pub variables: Vec<String>,
+    /// mean, min, max, sum, count
+    pub aggregation: String,
+    /// Combined to single value (should be false for this request)
     #[serde(rename = "join_dataframes")]
-    pub join_dataframes: bool, // should be false
+    pub join_dataframes: bool,
+    /// Start of aggregation
     pub start: i64,
+    /// End of aggregation (defaults to Unix time now if ommitted)
     pub end: i64,
 }
 
 impl Aggregation {
+    /// Request aggregate data from ubidots based on `Aggregation` body.
     #[tokio::main]
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
         info!("Getting aggregate data from ubidots.");
