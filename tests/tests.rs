@@ -7,6 +7,25 @@ use log::{error, info};
 use std::env;
 
 #[test]
+fn download_plots() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");
+
+    let config = utils::config::get_config()
+        .map_err(|err| error!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    for file in &config.files {
+        let filename = format!("imgs/{}.png", file.name);
+        datawrapper::download::download_image(&filename, &file.chart_id, &dw_key)
+            .map_err(|err| error!("Error downloading image: {}", err))
+            .ok()
+            .unwrap();
+    }
+}
+
+#[test]
 #[ignore]
 fn cache_variables() {
     dotenv::dotenv().expect("Failed to read .env file.");
