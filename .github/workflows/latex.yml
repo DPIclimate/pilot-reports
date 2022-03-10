@@ -19,6 +19,6 @@ jobs:
       - name: Setup Git Repository
       - uses: actions/checkout@v2
       - name: Compile LaTeX Report
-        uses: xu-cheng/latex-action@v2
+      - uses: xu-cheng/latex-action@v2
         with:
           root_file: report/src/report.tex
