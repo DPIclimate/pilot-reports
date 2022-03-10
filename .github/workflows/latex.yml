@@ -19,5 +19,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: xu-cheng/latex-action@v2
         with:
-          root_file: report/src/report.tex
-          working_directory: report/src/
+          working_directory: report/src
+          root_file: report.tex
