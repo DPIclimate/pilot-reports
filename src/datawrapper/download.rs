@@ -1,8 +1,7 @@
-use crate::utils;
-use log::{error, info};
+use log::info;
 use std::error::Error;
 use std::fs::File;
-use std::io::{copy, Read};
+use std::io::copy;
 
 #[tokio::main]
 pub async fn download_image(
