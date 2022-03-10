@@ -21,3 +21,7 @@ jobs:
         with:
           working_directory: report/src
           root_file: report.tex
+      - uses: actions/upload-artifact@v2
+        with:
+          name: clyde-water-quality-report.pdf 
+          path: report/src/report.pdf

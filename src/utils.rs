@@ -107,6 +107,8 @@ pub mod config {
         pub variables: Vec<String>,
         /// List of file configurations
         pub files: Vec<FileConfig>,
+        /// Water NSW configuration
+        pub water_nsw: WaterNsw,
     }
 
     /// Device information from `config.json`
@@ -140,6 +142,40 @@ pub mod config {
         pub dynamic: bool,
         /// List of columns
         pub columns: Vec<String>,
+    }
+
+    #[derive(Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    pub struct WaterNsw {
+        pub sites: Vec<WaterNswSite>,
+        pub defaults: WaterNswDefaults,
+    }
+
+    #[derive(Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    pub struct WaterNswSite {
+        pub name: String,
+        pub id: i64,
+    }
+
+    #[derive(Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    pub struct WaterNswDefaults {
+        pub params: WaterNswParams,
+        pub function: String,
+        pub version: i64,
+    }
+
+    #[derive(Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    pub struct WaterNswParams {
+        pub varfrom: f64,
+        pub interval: String,
+        pub varto: f64,
+        pub datasource: String,
+        #[serde(rename = "data_type")]
+        pub data_type: String,
+        pub multiplier: i64,
     }
 
     /// Get the configuration of devices and variables to use for analysis

@@ -162,5 +162,29 @@
 				"Harvest Area"
 			]
 		}
-	]
+	],
+	"water_nsw": {
+		"sites": [
+			{
+				"name": "brooman",
+				"id": 216002
+			},
+			{
+				"name": "buckenbowra",
+				"id": 216009
+			}
+		], 
+		"defaults": {
+			"params": {
+				"varfrom": 100.00,
+				"interval": "day",
+				"varto": 141.00,
+				"datasource": "CP",
+				"data_type": "mean",
+				"multiplier": 1
+			},
+			"function": "get_ts_traces",
+			"version": 2
+		}
+	}
 }

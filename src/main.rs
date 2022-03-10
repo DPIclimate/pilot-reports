@@ -8,6 +8,7 @@ mod data;
 mod datawrapper;
 mod ubidots;
 mod utils;
+mod waternsw;
 
 fn main() {
     let cli_config = cli::Config::new();
