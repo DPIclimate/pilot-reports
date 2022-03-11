@@ -23,7 +23,7 @@ pub mod time {
 
     /// Gets a tuple containing the unix time (in ms) from the start of this year
     /// to the current date
-    pub fn this_year() -> (i64, i64) {
+    pub fn this_year(millis: bool) -> (i64, i64) {
         let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
         let ts_now = utc_time_now.timestamp();
         let local_time_now = DateTime::<Local>::from(utc_time_now);
@@ -31,6 +31,9 @@ pub mod time {
             .ymd(local_time_now.year() - 1, 12, 31)
             .and_hms(0, 0, 0)
             .timestamp();
+        if !millis {
+            return (start_of_year, ts_now);
+        }
         (start_of_year * 1000, ts_now * 1000)
     }
 
@@ -62,6 +65,30 @@ pub mod time {
         (last_week, time_now * 1000)
     }
 
+    /// Two weeks as a unix timestamp range
+    pub fn two_weeks() -> (i64, i64) {
+        let time_now = Utc::now().timestamp(); // 1646364269
+        let utc_time_now = Utc::now(); // 2022-03-04 03:24:29.457745 UTC
+        let local_time_now = DateTime::<Local>::from(utc_time_now);
+        let midnight_today = chrono::Local
+            .ymd(
+                local_time_now.year(),
+                local_time_now.month(),
+                local_time_now.day(),
+            )
+            .and_hms(0, 0, 0)
+            .timestamp();
+
+        let last_week = midnight_today - (518400 * 2);
+
+        info!(
+            "Last week UNIX ts: {} Current UNIX ts: {}",
+            last_week, time_now
+        );
+
+        (last_week, time_now)
+    }
+
     /// Get the time between the start of two weeks ago and the start of last week
     pub fn last_week() -> (i64, i64) {
         let last_week_end = (Utc::now().timestamp() * 1000) - 604800000;
@@ -86,6 +113,20 @@ pub mod time {
         );
         col_names
     }
+
+    // Convert unix timestamp to timestring range that is compatible with WaterNSW
+    pub fn unix_range_to_timestring((start, end): &(i64, i64)) -> (String, String) {
+        let start_unix = Utc.timestamp(start.to_owned(), 0);
+        let start_local = DateTime::<Local>::from(start_unix)
+            .format("%Y%m%d%H%M%S")
+            .to_string();
+
+        let end_unix = Utc.timestamp(end.to_owned(), 0);
+        let end_local = DateTime::<Local>::from(end_unix)
+            .format("%Y%m%d%H%M%S")
+            .to_string();
+        (start_local, end_local)
+    }
 }
 
 pub mod config {
@@ -108,6 +149,7 @@ pub mod config {
         /// List of file configurations
         pub files: Vec<FileConfig>,
         /// Water NSW configuration
+        #[serde(rename = "water_nsw")]
         pub water_nsw: WaterNsw,
     }
 
@@ -181,7 +223,7 @@ pub mod config {
     /// Get the configuration of devices and variables to use for analysis
     /// # Example
     /// ```
-    /// use crate::utils::config;
+    /// use pilot_reports::utils::config;
     ///
     /// let config = config::get_config()
     ///    .map_err(|err| println!("Error loading config: {}", err))
@@ -192,10 +234,10 @@ pub mod config {
     pub fn get_config() -> Result<Config, Box<dyn Error>> {
         info!("Loading config from config.json");
 
-        let file = File::open("config.json").expect("Error, devices.json file not found.");
+        let file = File::open("config.json").expect("Error, config.json file not found.");
         let reader = BufReader::new(file);
         let config =
-            serde_json::from_reader(reader).expect("Error, device.json should be valid json.");
+            serde_json::from_reader(reader).expect("Error, config.json should be valid json.");
 
         Ok(config)
     }

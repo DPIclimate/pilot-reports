@@ -161,6 +161,50 @@
 				"Location",
 				"Harvest Area"
 			]
+		},
+		{
+			"filepath": "data/fortnightly-brooman.csv",
+			"name": "fortnightly-brooman",
+			"chart_id": "Gkj6A",
+			"dynamic": false,
+			"columns": [
+				"Date",
+				"Volume",
+				"Quality"
+			]
+		},
+		{
+			"filepath": "data/fortnightly-buckenbowra.csv",
+			"name": "fortnightly-buckenbowra",
+			"chart_id": "PVEkU",
+			"dynamic": false,
+			"columns": [
+				"Date",
+				"Volume",
+				"Quality"
+			]
+		},
+		{
+			"filepath": "data/yearly-brooman.csv",
+			"name": "yearly-brooman",
+			"chart_id": "Gkj6A",
+			"dynamic": false,
+			"columns": [
+				"Date",
+				"Volume",
+				"Quality"
+			]
+		},
+		{
+			"filepath": "data/yearly-buckenbowra.csv",
+			"name": "yearly-buckenbowra",
+			"chart_id": "PVEkU",
+			"dynamic": false,
+			"columns": [
+				"Date",
+				"Volume",
+				"Quality"
+			]
 		}
 	],
 	"water_nsw": {

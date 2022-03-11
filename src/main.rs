@@ -57,6 +57,14 @@ fn main() {
         weekly_chart.to_csv(&variable);
     }
 
+    // Fortnightly dataset for discharge rate
+    let mut time_range = String::from("fortnightly");
+    waternsw::flow::DischargeRate::generate(&time_range, &config);
+
+    // Yearly dataset for discharge rate
+    time_range = String::from("yearly");
+    waternsw::flow::DischargeRate::generate(&time_range, &config);
+
     // Weekly bar chart of precipitation
     data::weekly::bar::weekly_precipitation_to_csv(&aws_token);
 
@@ -66,4 +74,13 @@ fn main() {
 
     // Write datasets to datawrapper
     datawrapper::export::all_files_to_datawrapper(&dw_key, &config);
+
+    // Download images from datawrapper to generate pdf
+    for file in &config.files {
+        let filename = format!("report/imgs/{}.png", file.name);
+        datawrapper::download::download_image(&filename, &file.chart_id, &dw_key)
+            .map_err(|err| error!("Error downloading image: {}", err))
+            .ok()
+            .unwrap();
+    }
 }

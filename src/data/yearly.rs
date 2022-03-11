@@ -21,12 +21,12 @@ struct Record<'a> {
 /// extern crate dotenv;
 /// use std::env;
 ///
-/// mod data;
+/// use pilot_reports::data::yearly;
 ///
 /// dotenv::dotenv().expect("Failed to read .env file.");
 /// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
 ///
-/// data::yearly::year_to_date_precipitation_to_csv(&aws_token);
+/// yearly::year_to_date_precipitation_to_csv(&aws_token);
 /// ```
 pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     info!("Getting yearly precipitation from Ubidots.");
@@ -35,7 +35,7 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
 
     // Variable represents total daily rainfall
     let variables = vec!["61f74ccff6e837004e0691f4".to_string()];
-    let raw_series = ubidots::device::aws::RawSeries::new(&variables, utils::time::this_year());
+    let raw_series = ubidots::device::aws::RawSeries::new(&variables, utils::time::this_year(true));
 
     let precipitation = raw_series
         .get_precipitation(&aws_token)
@@ -71,14 +71,13 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
 /// ```
 /// extern crate dotenv;
 /// use std::env;
-///
-/// mod data;
+/// use pilot_reports::data::yearly;
 ///
 /// dotenv::dotenv().expect("Failed to read .env file.");
 /// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
 ///
-/// data::yearly::year_to_date_precipitation_to_csv(&aws_token);
-/// data::yearly::join_precipitation_datasets();
+/// yearly::year_to_date_precipitation_to_csv(&aws_token);
+/// yearly::join_precipitation_datasets();
 /// ```
 pub fn join_precipitation_datasets() {
     info!("Joining precipitation datasets");

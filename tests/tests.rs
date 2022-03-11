@@ -1,12 +1,32 @@
 // use cargo run -- --nocapture to see println! statements
 extern crate pilot_reports;
-pub use pilot_reports::{data, datawrapper, ubidots, utils};
+pub use pilot_reports::{data, datawrapper, ubidots, utils, waternsw};
 
 extern crate dotenv;
 use log::{error, info};
 use std::env;
 
 #[test]
+fn water_nsw() {
+    let config = utils::config::get_config()
+        .map_err(|err| error!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    // -- Overwrite csv files -- //
+    data::files::create_output_csv_files(&config);
+
+    // Fortnightly dataset
+    let mut time_range = String::from("fortnightly");
+    waternsw::flow::DischargeRate::generate(&time_range, &config);
+
+    // Yearly dataset
+    time_range = String::from("yearly");
+    waternsw::flow::DischargeRate::generate(&time_range, &config);
+}
+
+#[test]
+#[ignore]
 fn download_plots() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let dw_key = env::var("DW_KEY").expect("Datawrapper key not found");

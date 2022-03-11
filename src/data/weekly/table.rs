@@ -19,28 +19,6 @@ impl Table {
     /// Method for converting a list of variables into an aggregate weekly dataset of values.
     ///
     /// `variable_list` can be taken from cache or from a new request.
-    ///
-    /// # Example
-    /// ```
-    /// extern crate dotenv;
-    /// use std::env;
-    /// use crate::{utils, ubidots};
-    ///
-    /// dotenv::dotenv().expect("Failed to read .env file.");
-    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
-    ///
-    /// let config = utils::config::get_config()
-    ///     .map_err(|err| println!("Error: {}", err))
-    ///     .ok().unwrap();
-    ///
-    /// let variable_list: ubidots::device::variables::VariablesList;
-    /// // Must have some variables defined in config.json
-    /// for variable in &config.variables {
-    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
-    /// }
-    ///
-    /// let weekly_table = data::weekly::table::Table::new(&variable_list, &token);
-    /// ```
     pub fn new(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Table {
         // ---- Table Summary ---- //
         let mut weekly = Table {
@@ -97,30 +75,6 @@ impl Table {
     /// This function also does some basic cleaning by replacing negitive
     /// and extreme values will empty strings. These will be ignored by
     /// datawrapper.de
-    ///
-    /// # Example
-    /// ```
-    /// extern crate dotenv;
-    /// use std::env;
-    /// use crate::{utils, ubidots};
-    ///
-    /// dotenv::dotenv().expect("Failed to read .env file.");
-    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
-    ///
-    /// let config = utils::config::get_config()
-    ///     .map_err(|err| println!("Error: {}", err))
-    ///     .ok().unwrap();
-    ///
-    /// let variable_list: ubidots::device::variables::VariablesList;
-    /// // Must have some variables defined in config.json
-    /// for variable in &config.variables {
-    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
-    /// }
-    ///
-    /// let weekly_table = data::weekly::table::parse(&variable_list, &token);
-    /// weekly_table.to_csv(&variable);
-    /// ```
-    ///
     pub fn to_csv(&self, variable_name: &String) {
         let filename = format!("data/weekly-{}-table.csv", variable_name);
 

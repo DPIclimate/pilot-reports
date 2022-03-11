@@ -29,29 +29,6 @@ impl RangePlot {
     ///
     /// `variable_list` can be taken from cache or from a new request. This method returns a vector
     /// of `RangePlot` structs .
-    ///
-    /// # Example
-    /// ```
-    /// extern crate dotenv;
-    /// use std::env;
-    /// use crate::{utils, ubidots};
-    ///
-    /// dotenv::dotenv().expect("Failed to read .env file.");
-    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
-    ///
-    /// let config = utils::config::get_config()
-    ///     .map_err(|err| println!("Error: {}", err))
-    ///     .ok().unwrap();
-    ///
-    /// let variable_list: ubidots::device::variables::VariablesList;
-    /// // Must have some variables defined in config.json
-    /// for variable in &config.variables {
-    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
-    /// }
-    ///
-    /// let fortnightly_range_plot =
-    ///     data::fortnightly::rangeplot::rangeplot::new(&variable_list, &token);
-    /// ```
     pub fn new(variable_list: &ubidots::device::variables::VariablesList, token: &String) -> Self {
         // ---- Last Week ---- //
         let (start, end) = utils::time::one_week();
@@ -116,30 +93,6 @@ impl RangePlot {
     /// The `variable_name` is used to write to the correct csv file. Note this
     /// function differs from `weekly_to_csv` as this function takes a vector of
     /// fortnightly values.
-    ///
-    /// # Example
-    /// ```
-    /// extern crate dotenv;
-    /// use std::env;
-    /// use crate::{utils, ubidots};
-    ///
-    /// dotenv::dotenv().expect("Failed to read .env file.");
-    /// let token = env::var("ORG_KEY").expect("Organisation key not found");
-    ///
-    /// let config = utils::config::get_config()
-    ///     .map_err(|err| println!("Error: {}", err))
-    ///     .ok().unwrap();
-    ///
-    /// let variable_list: ubidots::device::variables::VariablesList;
-    /// // Must have some variables defined in config.json
-    /// for variable in &config.variables {
-    ///     variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
-    /// }
-    ///
-    /// let fortnightly_range_plot =
-    ///     data::fortnightly::rangeplot::rangeplot::new(&variable_list, &token);
-    /// fortnightly_range_plot.to_csv(&variable);
-    /// ```
     ///
     /// This function also does some basic data cleaning. This involves replacing
     /// negative values and extreme values with empty strings. This allows them to

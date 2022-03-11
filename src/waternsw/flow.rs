@@ -1,6 +1,8 @@
 use crate::utils;
+use log::{error, info};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
+use std::fs::OpenOptions;
 
 // ---- Start of request body ---- //
 #[derive(Serialize)]
@@ -31,34 +33,54 @@ struct Params {
 // ---- End of request body ---- //
 
 /// Contains response from discharge rate request
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DischargeRate {
     /// Result from request
-    pub result: Vec<Traces>,
+    #[serde(rename = "return")]
+    pub return_field: Return,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Return {
+    pub traces: Vec<Traces>,
 }
 
 /// Contains site information and all traces from response
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Traces {
+    /// Site details
+    #[serde(rename = "site_details")]
+    pub site_details: SiteDetails,
+    /// Result from request
+    #[serde(rename = "trace")]
+    pub trace: Vec<Trace>,
+    pub site: String,
+}
+
+/// Contains site information and all traces from response
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SiteDetails {
     /// Latitude of the measurement site
     pub latitude: String,
     /// Longitude of the measurement site
     pub longitude: String,
     /// Site name
-    pub site: String,
-    /// Result from request
-    pub traces: Vec<Trace>,
+    pub name: String,
 }
 
 /// Contains a single value, timestamp and quality code for a measurement
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Trace {
     /// Volume of water per unit time (defaults to ML per day)
+    #[serde(rename(serialize = "Volume"))]
     pub v: String,
     /// Timestring (NOT TIMESTAMP!) e.g. 20191102000000 = 2019/11/02 00:00:00
+    #[serde(rename(serialize = "Date"))]
     pub t: i64,
     /// Quality of the data (should be 140)
     pub q: i64,
@@ -70,7 +92,10 @@ impl DischargeRate {
         (start, end): &(String, String),
         config: &utils::config::Config,
     ) -> Result<Vec<Self>, Box<dyn Error>> {
+        info!("Getting discharge rate data from sites within config.json");
+
         let mut discharge_rate_vec: Vec<DischargeRate> = Vec::new();
+
         for site in &config.water_nsw.sites {
             let params = Params {
                 site_list: site.id,
@@ -109,5 +134,74 @@ impl DischargeRate {
         }
 
         Ok(discharge_rate_vec)
+    }
+
+    pub fn to_csv(&self, filename: &String) {
+        info!("Publishing discharge rate data to {}", filename);
+
+        let file = OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open(filename)
+            .unwrap();
+
+        let mut wtr = csv::Writer::from_writer(file);
+
+        for trace in &self.return_field.traces[0].trace {
+            let date_str = trace.t.to_string(); // e.g. 20220302000000
+            let date_arr = date_str
+                .chars()
+                .enumerate()
+                .flat_map(|(i, c)| {
+                    if i == 4 || i == 6 {
+                        Some('/')
+                    } else if i == 8 {
+                        Some(' ')
+                    } else {
+                        None
+                    }
+                    .into_iter()
+                    .chain(std::iter::once(c))
+                })
+                .collect::<String>(); // e.g. "2022/03/02 000000"
+
+            let date: Vec<&str> = date_arr.split(' ').collect(); // e.g. ["2022/03/02", "000000"]
+            wtr.write_record([date[0].to_owned(), trace.v.to_owned(), trace.q.to_string()])
+                .expect("Error writing to csv.")
+        }
+
+        wtr.flush().expect("Error flushing writer");
+    }
+
+    pub fn generate(time_range: &String, config: &utils::config::Config) {
+        let unix_range = match &time_range[..] {
+            "fortnightly" => utils::time::two_weeks(),
+            "yearly" => utils::time::this_year(false),
+            _ => panic!("Unknown time range specified. Append this range before re-running"),
+        };
+
+        // Create a current timestring (e.g. 20190201000000)
+        let timestring_range = utils::time::unix_range_to_timestring(&(unix_range));
+        let discharge_rate = DischargeRate::new(&timestring_range, &config)
+            .map_err(|err| error!("Error getting discharge rate from WaterNSW: {}", err));
+
+        match discharge_rate {
+            Ok(v) => {
+                for site in &v {
+                    let mut filename = format!(
+                        "data/{}-{}.csv",
+                        time_range, site.return_field.traces[0].site
+                    );
+                    for s in &config.water_nsw.sites {
+                        if s.id.to_string() == site.return_field.traces[0].site {
+                            filename = format!("data/{}-{}.csv", time_range, s.name);
+                        }
+                    }
+                    println!("{}", filename);
+                    site.to_csv(&filename);
+                }
+            }
+            Err(e) => error!("There was an error: {:?}", e),
+        };
     }
 }
