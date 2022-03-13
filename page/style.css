@@ -96,6 +96,10 @@ input ~ .tab { display: none; }
 	flex-wrap: wrap;
 }
 
+input ~ .tab { display: none; }
+#tab1-flow:checked ~ .tab.weekly-view-flow,
+#tab2-flow:checked ~ .tab.yearly-view-flow { display: block; }
+
 .fieldwork-table {
 	flex: 46%;
 	padding: 1rem;
