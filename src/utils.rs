@@ -28,7 +28,7 @@ pub mod time {
         let ts_now = utc_time_now.timestamp();
         let local_time_now = DateTime::<Local>::from(utc_time_now);
         let start_of_year = chrono::Local
-            .ymd(local_time_now.year() - 1, 12, 31)
+            .ymd(local_time_now.year(), 1, 1)
             .and_hms(0, 0, 0)
             .timestamp();
         if !millis {
@@ -221,16 +221,6 @@ pub mod config {
     }
 
     /// Get the configuration of devices and variables to use for analysis
-    /// # Example
-    /// ```
-    /// use pilot_reports::utils::config;
-    ///
-    /// let config = config::get_config()
-    ///    .map_err(|err| println!("Error loading config: {}", err))
-    ///    .ok()
-    ///    .unwrap();
-    /// ```
-    ///
     pub fn get_config() -> Result<Config, Box<dyn Error>> {
         info!("Loading config from config.json");
 

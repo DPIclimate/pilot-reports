@@ -17,12 +17,15 @@ fn water_nsw() {
     data::files::create_output_csv_files(&config);
 
     // Fortnightly dataset
-    let mut time_range = String::from("fortnightly");
+    let time_range = String::from("fortnightly");
     waternsw::flow::DischargeRate::generate(&time_range, &config);
 
     // Yearly dataset
-    time_range = String::from("yearly");
+    let time_range = String::from("yearly");
     waternsw::flow::DischargeRate::generate(&time_range, &config);
+
+    // Join datasets
+    data::yearly::join_flow_datasets();
 }
 
 #[test]
@@ -91,6 +94,7 @@ fn create_dataframe() {
 }
 
 #[test]
+#[ignore]
 fn precipitation_to_csvs() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");

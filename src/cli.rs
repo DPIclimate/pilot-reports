@@ -14,19 +14,20 @@ impl Config {
             .version("0.1.0")
             .author("Harvey Bates <harvey.bates@dpi.nsw.gov.au>")
             .about("Automatic report generation for Climate Smart Pilots")
-            .arg(Arg::new("use-cache")
-                .short('c')
-                .long("usecache")
-                .takes_value(false)
-                .help("Use stored cache variables and devices rather than requesting them from Ubidots.",
-            ))
+            .arg(
+                Arg::new("refresh")
+                    .short('r')
+                    .long("refresh")
+                    .takes_value(false)
+                    .help("Request variables and devices from Ubidots. Rather than cache."),
+            )
             .get_matches();
 
-        if args.is_present("use-cache") {
-            info!("Using cache data from cache directory");
-            return Config { use_cache: true };
+        if args.is_present("refresh") {
+            info!("Refreshing data and saving it to cache");
+            return Config { use_cache: false };
         }
-        info!("Refreshing data and saving it to cache");
+        info!("Using cache data from cache directory");
         Config { use_cache: true }
     }
 }

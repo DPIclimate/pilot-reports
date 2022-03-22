@@ -187,22 +187,22 @@
 		{
 			"filepath": "data/yearly-brooman.csv",
 			"name": "yearly-brooman",
-			"chart_id": "Gkj6A",
+			"chart_id": "JU4XG",
 			"dynamic": false,
 			"columns": [
 				"Date",
-				"Volume",
+				"2022",
 				"Quality"
 			]
 		},
 		{
 			"filepath": "data/yearly-buckenbowra.csv",
 			"name": "yearly-buckenbowra",
-			"chart_id": "PVEkU",
+			"chart_id": "FvJqp",
 			"dynamic": false,
 			"columns": [
 				"Date",
-				"Volume",
+				"2022",
 				"Quality"
 			]
 		}

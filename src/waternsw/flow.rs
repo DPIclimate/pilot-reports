@@ -32,58 +32,52 @@ struct Params {
 }
 // ---- End of request body ---- //
 
-/// Contains response from discharge rate request
-#[derive(Debug, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DischargeRate {
-    /// Result from request
+    #[serde(rename = "error_num")]
+    pub error_num: i64,
     #[serde(rename = "return")]
     pub return_field: Return,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Return {
-    pub traces: Vec<Traces>,
+    pub traces: Vec<Trace>,
 }
 
-/// Contains site information and all traces from response
-#[derive(Debug, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Traces {
-    /// Site details
+pub struct Trace {
+    #[serde(rename = "error_num")]
+    pub error_num: i64,
+    pub compressed: String,
     #[serde(rename = "site_details")]
     pub site_details: SiteDetails,
-    /// Result from request
-    #[serde(rename = "trace")]
-    pub trace: Vec<Trace>,
+    pub trace: Vec<Trace2>,
     pub site: String,
 }
 
-/// Contains site information and all traces from response
-#[derive(Debug, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SiteDetails {
-    /// Latitude of the measurement site
-    pub latitude: String,
-    /// Longitude of the measurement site
+    pub timezone: String,
+    #[serde(rename = "short_name")]
+    pub short_name: String,
     pub longitude: String,
-    /// Site name
     pub name: String,
+    pub latitude: String,
+    #[serde(rename = "org_name")]
+    pub org_name: String,
 }
 
-/// Contains a single value, timestamp and quality code for a measurement
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Trace {
-    /// Volume of water per unit time (defaults to ML per day)
-    #[serde(rename(serialize = "Volume"))]
+pub struct Trace2 {
     pub v: String,
-    /// Timestring (NOT TIMESTAMP!) e.g. 20191102000000 = 2019/11/02 00:00:00
-    #[serde(rename(serialize = "Date"))]
-    pub t: i64,
-    /// Quality of the data (should be 140)
-    pub q: i64,
+    pub t: f64,
+    pub q: f64,
 }
 
 impl DischargeRate {
@@ -123,20 +117,20 @@ impl DischargeRate {
             );
 
             let client = reqwest::Client::new();
-            let response = client
+            let res = client
                 .get(url)
                 .send()
                 .await?
                 .json::<DischargeRate>()
                 .await?;
 
-            discharge_rate_vec.push(response);
+            discharge_rate_vec.push(res);
         }
 
         Ok(discharge_rate_vec)
     }
 
-    pub fn to_csv(&self, filename: &String) {
+    pub fn to_csv(&self, time_range: &String, filename: &String) -> Result<(), Box<dyn Error>> {
         info!("Publishing discharge rate data to {}", filename);
 
         let file = OpenOptions::new()
@@ -147,6 +141,7 @@ impl DischargeRate {
 
         let mut wtr = csv::Writer::from_writer(file);
 
+        let mut sum = 0.0;
         for trace in &self.return_field.traces[0].trace {
             let date_str = trace.t.to_string(); // e.g. 20220302000000
             let date_arr = date_str
@@ -166,14 +161,27 @@ impl DischargeRate {
                 .collect::<String>(); // e.g. "2022/03/02 000000"
 
             let date: Vec<&str> = date_arr.split(' ').collect(); // e.g. ["2022/03/02", "000000"]
-            wtr.write_record([date[0].to_owned(), trace.v.to_owned(), trace.q.to_string()])
-                .expect("Error writing to csv.")
+            let flow = match &time_range[..] {
+                "fortnightly" => trace.v.to_owned(),
+                "yearly" => {
+                    let tmp_volume = trace.v.parse::<f64>()?;
+                    let volume = sum + tmp_volume;
+                    sum += tmp_volume;
+                    volume.to_string()
+                }
+                _ => panic!("Unknown time range specified. Append this range before re-running"),
+            };
+            wtr.write_record([date[0].to_owned(), flow.to_string(), trace.q.to_string()])?;
         }
 
-        wtr.flush().expect("Error flushing writer");
+        wtr.flush()?;
+
+        Ok(())
     }
 
     pub fn generate(time_range: &String, config: &utils::config::Config) {
+        info!("Generating discharge rate datasets");
+
         let unix_range = match &time_range[..] {
             "fortnightly" => utils::time::two_weeks(),
             "yearly" => utils::time::this_year(false),
@@ -182,10 +190,7 @@ impl DischargeRate {
 
         // Create a current timestring (e.g. 20190201000000)
         let timestring_range = utils::time::unix_range_to_timestring(&(unix_range));
-        let discharge_rate = DischargeRate::new(&timestring_range, &config)
-            .map_err(|err| error!("Error getting discharge rate from WaterNSW: {}", err));
-
-        match discharge_rate {
+        match DischargeRate::new(&timestring_range, &config) {
             Ok(v) => {
                 for site in &v {
                     let mut filename = format!(
@@ -197,8 +202,9 @@ impl DischargeRate {
                             filename = format!("data/{}-{}.csv", time_range, s.name);
                         }
                     }
-                    println!("{}", filename);
-                    site.to_csv(&filename);
+                    site.to_csv(&time_range, &filename)
+                        .map_err(|err| error!("Error writing Water NSW data to csv: {}", err))
+                        .ok();
                 }
             }
             Err(e) => error!("There was an error: {:?}", e),

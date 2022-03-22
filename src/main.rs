@@ -65,6 +65,9 @@ fn main() {
     time_range = String::from("yearly");
     waternsw::flow::DischargeRate::generate(&time_range, &config);
 
+    // Join datasets
+    data::yearly::join_flow_datasets();
+
     // Weekly bar chart of precipitation
     data::weekly::bar::weekly_precipitation_to_csv(&aws_token);
 

@@ -15,19 +15,6 @@ struct Record<'a> {
 /// Calculates year-to-date precipitation and sends it to a .csv file
 ///
 /// Few things are hardcoded here including the daily precipitation variable.
-///
-/// # Example
-/// ```
-/// extern crate dotenv;
-/// use std::env;
-///
-/// use pilot_reports::data::yearly;
-///
-/// dotenv::dotenv().expect("Failed to read .env file.");
-/// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
-///
-/// yearly::year_to_date_precipitation_to_csv(&aws_token);
-/// ```
 pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
     info!("Getting yearly precipitation from Ubidots.");
 
@@ -66,19 +53,6 @@ pub fn year_to_date_precipitation_to_csv(aws_token: &String) {
 /// Joins previous (and current) years precipitation datasets into a combined dataset.
 ///
 /// Few things are hardcoded here including the daily precipitation variable.
-///
-/// # Example
-/// ```
-/// extern crate dotenv;
-/// use std::env;
-/// use pilot_reports::data::yearly;
-///
-/// dotenv::dotenv().expect("Failed to read .env file.");
-/// let aws_token = env::var("AWS_ORG_KEY").expect("AWS org key not found");
-///
-/// yearly::year_to_date_precipitation_to_csv(&aws_token);
-/// yearly::join_precipitation_datasets();
-/// ```
 pub fn join_precipitation_datasets() {
     info!("Joining precipitation datasets");
 
@@ -110,6 +84,44 @@ pub fn join_precipitation_datasets() {
 
     let mut output_file =
         File::create("data/combined-precipitation.csv").expect("Unable to create combined csv");
+
+    CsvWriter::new(&mut output_file)
+        .has_header(true)
+        .with_delimiter(b',')
+        .finish(&mut df)
+        .unwrap();
+}
+
+pub fn join_flow_datasets() {
+    info!("Joining flow datasets");
+
+    let files = vec![
+        "data/historical-dischargerate.csv".to_string(),
+        "data/yearly-brooman.csv".to_string(),
+    ];
+
+    let mut df = DataFrame::default();
+
+    let mut init = true;
+    for file in &files {
+        let tmp_df = CsvReader::from_path(file)
+            .expect("Unable to open discharge rate file")
+            .infer_schema(None)
+            .has_header(true)
+            .finish()
+            .unwrap();
+        if init {
+            df = tmp_df.clone();
+            init = false;
+        } else {
+            df = df
+                .join(&tmp_df, ["Date"], ["Date"], JoinType::Outer, None)
+                .expect("Unable to join dataframes");
+        }
+    }
+
+    let mut output_file = File::create("data/combined-dischargerate.csv")
+        .expect("Unable to create combined discharge rate dataset");
 
     CsvWriter::new(&mut output_file)
         .has_header(true)
