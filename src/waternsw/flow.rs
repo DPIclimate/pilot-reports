@@ -116,7 +116,11 @@ impl DischargeRate {
                 req_str
             );
 
-            let client = reqwest::Client::new();
+            // Requrired by WaterNSW for some reason
+            static USER_AGENT: &str =
+                concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
+
+            let client = reqwest::Client::builder().user_agent(USER_AGENT).build()?;
             let res = client
                 .get(url)
                 .send()

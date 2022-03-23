@@ -85,6 +85,19 @@
 			]
 		},
 		{
+			"filepath": "data/combined-dischargerate.csv",
+			"name": "combined-dischargerate",
+			"chart_id": "4sWJe",
+			"dynamic": false,
+			"columns": [
+				"2021",
+				"2020",
+				"2019",
+				"2018",
+				"Date"
+			]
+		},
+		{
 			"filepath": "data/fortnightly-temperature.csv",
 			"name": "fortnightly-temperature",
 			"chart_id": "FRGYL",
@@ -204,6 +217,28 @@
 				"Date",
 				"2022",
 				"Quality"
+			]
+		},
+		{
+			"filepath": "data/weekly-salinity-extremes.csv",
+			"name": "weekly-salinity-extremes",
+			"chart_id": "eEJLQ",
+			"dynamic": false,
+			"columns": [
+				"Site",
+				"Minimum",
+				"Maximum"
+			]
+		},
+		{
+			"filepath": "data/weekly-temperature-extremes.csv",
+			"name": "weekly-temperature-extremes",
+			"chart_id": "TQXEq",
+			"dynamic": false,
+			"columns": [
+				"Site",
+				"Minimum",
+				"Maximum"
 			]
 		}
 	],

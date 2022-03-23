@@ -7,6 +7,28 @@ use log::{error, info};
 use std::env;
 
 #[test]
+#[ignore]
+fn weekly_extremes() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Org key not found");
+    let config = utils::config::get_config()
+        .map_err(|err| error!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    // -- Overwrite csv files -- //
+    data::files::create_output_csv_files(&config);
+
+    let variable = String::from("salinity");
+    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+    data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
+
+    let variable = String::from("temperature");
+    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+    data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
+}
+
+#[test]
 fn water_nsw() {
     let config = utils::config::get_config()
         .map_err(|err| error!("Error loading config: {}", err))

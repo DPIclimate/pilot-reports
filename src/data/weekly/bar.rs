@@ -32,10 +32,18 @@ pub fn weekly_precipitation_to_csv(aws_token: &String) {
         let data = &precipitation.results[0][d];
         let (value, ts) = (data[0], (data[1].round() as i64));
         let local_date = utils::time::unix_to_local(&ts).date().format("%m/%d/%Y");
+
+        // When AWS reads less than 1mm this value is likely false, so show zero instead
+        let mut cleaned_value = &value.to_owned();
+        if cleaned_value < &1.0 {
+            cleaned_value = &0.0;
+        }
+
         let rec = Record {
             date: &local_date.to_string(),
-            precipitation: &value.to_owned(),
+            precipitation: cleaned_value,
         };
+
         wtr.serialize(rec).expect("CSV writer error");
     }
 
