@@ -29,6 +29,7 @@ fn weekly_extremes() {
 }
 
 #[test]
+#[ignore]
 fn water_nsw() {
     let config = utils::config::get_config()
         .map_err(|err| error!("Error loading config: {}", err))

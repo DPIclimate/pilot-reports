@@ -10,6 +10,7 @@ tokencache.json
 *.csv
 *.ipynb
 /imgs
+precis.json
 
 ## Latex stuff below
 ## Core latex/pdflatex auxiliary files:

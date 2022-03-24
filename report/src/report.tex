@@ -10,38 +10,15 @@
 \usepackage{environ}
 \newcounter{abspage}
 
-\usepackage{hyperref}
+\usepackage{float}
 
+\usepackage{indentfirst}
+\usepackage{hyperref}
 \usepackage{xcolor}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[sfdefault]{ClearSans}
-
-\makeatletter
-\newcommand{\newSFPage}[1]
-  {\global\expandafter\let\csname SFPage@#1\endcsname\null}
-
-\NewEnviron{SidewaysFigure}{\begin{figure}[p]
-\protected@write\@auxout{\let\theabspage=\relax}% delays expansion until shipout
-  {\string\newSFPage{\theabspage}}%
-\ifdim\textwidth=\textheight
-  \rotatebox{90}{\parbox[c][\textwidth][c]{\linewidth}{\BODY}}%
-\else
-  \rotatebox{90}{\parbox[c][\textwidth][c]{\textheight}{\BODY}}%
-\fi
-\end{figure}}
-
-\AddEverypageHook{% check if sideways figure on this page
-  \ifdim\textwidth=\textheight
-    \stepcounter{abspage}% already in landscape
-  \else
-    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 0}}%
-    \stepcounter{abspage}%
-    \@ifundefined{SFPage@\theabspage}{}{\global\pdfpageattr{/Rotate 90}}%
-  \fi}
-\makeatother
-
 
 \begin{document}
 
@@ -80,69 +57,126 @@ This work has been produced by the NSW Primary Industries Climate Change Researc
 \subsection*{NSW Department of Primary Industries Disclaimer}
 This is a research trial and pilot project, and you should not rely solely on the information or advice provided in these reports.
 
-\subsection*{NSW Food Authority Disclaimer}
-The NSW Food Authority attempts to ensure this information is updated regularly. Due to the unpredictable nature of events leading to harvesting closures, and the fact they may not always occur during business hours, the list may not always reflect the most recent closures and conditions and is not intended to be legally binding. Before harvesting shellfish for human consumption, farmers should confirm the status of the Harvest Area.
-
 \subsection*{Feedback and Questions}
 Please provide feedback and questions to Harvey Bates \\ \\
 Email: \href{mailto:harvey.bates@dpi.nsw.gov.au}{harvey.bates@dpi.nsw.gov.au} \\ \\
 Ph: 0447 359 557
 
+\pagebreak
 
-\begin{SidewaysFigure}
-\centering
-\includegraphics[width=1.3\textwidth]{weekly-salinity-chart.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\tableofcontents
 
-\begin{SidewaysFigure}
-\centering
-\includegraphics[width=1.3\textwidth]{weekly-salinity.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\listoffigures
 
-\begin{SidewaysFigure}
-\centering
-\includegraphics[width=1.3\textwidth]{fortnightly-salinity.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\pagebreak
 
-\begin{SidewaysFigure}
-\centering
-\includegraphics[width=1.3\textwidth]{weekly-temperature-chart.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\section{Salinity}
+\subsection{Weekly}
 
-\begin{SidewaysFigure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.3\textwidth]{weekly-temperature.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\includegraphics[width=\textwidth]{weekly-salinity-extremes.png}
+\caption[Weekly Minimum and Maximum Salinity]{These values represent the highest and lowest salinity reading a buoy has recorded in each of the harvest areas in the past week.}
+\end{figure}
 
-\begin{SidewaysFigure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.3\textwidth]{fortnightly-temperature.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\includegraphics[width=\textwidth]{weekly-salinity-chart.png}
+\caption[Average Weekly Salinity Chart]{This figure represents the daily average salinity of all buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of salinity over the past week.}
+\end{figure}
 
-\begin{SidewaysFigure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.3\textwidth]{weekly-precipitation.png}
-\end{SidewaysFigure}
-\vfill
-\newpage
+\includegraphics[width=\textwidth]{weekly-salinity.png}
+\caption[Average Weekly Salinity Table]{This figure represents the daily average salinity of each of the buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of salinity over the past week for specific locations within harvest areas.}
+\end{figure}
 
-\begin{SidewaysFigure}
+\pagebreak
+
+\subsection{Fortnightly}
+
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.3\textwidth]{yearly-precipitation.png}
-\end{SidewaysFigure}
-\vfill
+\includegraphics[width=\textwidth]{fortnightly-salinity.png}
+\caption[Average Fortnightly Salinity Difference]{This figure demonstrates the average difference in salinity for this week compared with the prior week. Its a longer term general trend to see if salinity is increasing, stabilising or decreasing.}
+\end{figure}
+
+\pagebreak
+
 \newpage
+\section{Water Temperature}
+\subsection{Weekly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature-extremes.png}
+\caption[Weekly Minimum and Maximum Temperature]{These values represent the highest and lowest temperature reading a buoy has recorded in each of the harvest areas.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature-chart.png}
+\caption[Average Weekly Temperature Chart]{This figure represents the daily average temperature of all buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of temperature over the past week.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature.png}
+\caption[Average Weekly Temperature Table]{This figure represents the daily average temperature of each of the buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of temperature over the past week for specific locations within harvest areas.}
+\end{figure}
+
+\subsection{Fortnightly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-temperature.png}
+\caption[Average Fortnightly Temperature Difference]{This figure demonstrates the average difference in temperature for this week compared with the prior week. Its a longer term general trend to see if temperature is increasing, stabilising or decreasing.}
+\end{figure}
+
+\section{Precipitation}
+\subsection{Weekly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-precipitation.png}
+\caption[Daily Total Precipitation Budd Island]{Total daily precipitation at Budd Island for the past week.}
+\end{figure}
+
+\subsection{Yearly}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{yearly-precipitation.png}
+\caption[Yearly Cumulative Precipitation Budd Island]{Compares this years total precipitation against previous years.}
+\end{figure}
+
+\section{Flow Rate from Tributaries}
+\subsection{Fortnightly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-brooman.png}
+\caption[Fortnightly Discharge From Brooman Tributary]{Fortnightly (daily total) water discharge from Brooman.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-buckenbowra.png}
+\caption[Fortnightly Discharge Rate Buckenbowra]{Fortnightly (daily total) water discharge from Buckenbowra.}
+\end{figure}
+
+\subsection{Yearly}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{combined-dischargerate.png}
+\caption[Yearly Discharge Rate Brooman]{Compares this years total water discharge against previous years. Drought years (2018 and 2019) are shown for comparison.}
+\end{figure}
 
 \end{document}
+
+
+
+
+
+
+
+
