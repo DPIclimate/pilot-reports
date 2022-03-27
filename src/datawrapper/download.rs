@@ -14,7 +14,16 @@ pub async fn download_image(
         output_filename
     );
 
-    let url = format!("https://api.datawrapper.de/v3/charts/{}/export/png?unit=px&mode=rgb&plain=false&borderWidth=20", chart_id);
+    let url = format!(
+        "https://api.datawrapper.de/v3/charts/{}/export/\
+        png\
+        ?unit=px\
+        &width=800\
+        &mode=rgb\
+        &plain=false\
+        &borderWidth=10",
+        chart_id
+    );
 
     let client = reqwest::Client::new();
     let response = client
