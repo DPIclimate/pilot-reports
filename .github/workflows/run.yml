@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
   schedule:
-    - cron: "0 */3 * * *" # Runs every 3 hours
+    - cron: "0 23 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings)
   workflow_dispatch: 
 
 env:
@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build & Run
-    - env:
+      env:
         ORG_KEY: ${{ secrets.ORG_KEY }}
         DW_KEY: ${{ secrets.DW_KEY }}
         AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
