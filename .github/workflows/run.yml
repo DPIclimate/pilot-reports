@@ -1,0 +1,32 @@
+name: Run & Deploy
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "0 */3 * * *" # Runs every 3 hours
+  workflow_dispatch: 
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_rust:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build & Run
+      run: cargo run --verbose
+      
+  build_latex:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - uses: xu-cheng/latex-action@v2
+        with:
+          working_directory: report/src
+          root_file: report.tex
+      - uses: actions/upload-artifact@v2
+        with:
+          name: clyde-water-quality-report.pdf 
+          path: report/src/report.pdf
