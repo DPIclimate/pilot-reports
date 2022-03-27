@@ -13,10 +13,14 @@ env:
 jobs:
   build_rust:
     runs-on: ubuntu-latest
+    env:
+      ORG_KEY: ${{ secrets.ORG_KEY }}
+      DW_KEY: ${{ DW_KEY }}
+      AWS_ORG_KEY: ${{ AWS_ORG_KEY }}
     steps:
     - uses: actions/checkout@v2
     - name: Build & Run
-      run: cargo run --verbose
+      run: cargo run
       
   build_latex:
     runs-on: ubuntu-latest
