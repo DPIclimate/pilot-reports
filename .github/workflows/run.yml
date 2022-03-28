@@ -14,15 +14,16 @@ jobs:
   build_rust:
     runs-on: ubuntu-latest
     steps:
-    - uses: SpicyPizza/create-envfile@v1.3
+    - name: Build & Run
+    - uses: actions/checkout@v2
+    
     - name: Make env
+      uses: SpicyPizza/create-envfile@v1.3
       with:
         envkey_ORG_KEY: ${{ secrets.ORG_KEY }}
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
-    - uses: actions/checkout@v2
-    - name: Build & Run
-      run: cargo run
+    - run: cargo run
       
   build_latex:
     runs-on: ubuntu-latest
