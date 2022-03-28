@@ -1,21 +1,44 @@
-name: deploy-static 
+name: Build, Run & Deploy
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  schedule:
+    - cron: "0 23 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings)
+  workflow_dispatch: 
+
+env:
+  CARGO_TERM_COLOR: always
 
 jobs:
   build:
-    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - uses: JamesIves/github-pages-deploy-action@4.1.7
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: page # The folder the action should deploy.
+    - name: Make env
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_ORG_KEY: ${{ secrets.ORG_KEY }}
+        envkey_DW_KEY: ${{ secrets.DW_KEY }}
+        envkey_AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
+    - name: Build & Run
+      uses: actions/checkout@v2
+    - run: cargo run
+    - name: Make PDF Report
+      uses: xu-cheng/latex-action@v2
+      with:
+        working_directory: report/src
+        root_file: report.tex
+    - name: Upload PDF Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: clyde-water-quality-report.pdf 
+        path: report/src/report.pdf
+    - name: Deploy GH Pages
+      uses: actions/checkout@v2
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+      uses: JamesIves/github-pages-deploy-action@4.1.7
+      with:
+        branch: gh-pages # The branch the action should deploy to.
+        folder: page # The folder the action should deploy.
