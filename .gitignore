@@ -7,7 +7,6 @@
 .env
 clientsecret.json
 tokencache.json
-*.csv
 *.ipynb
 /imgs
 precis.json

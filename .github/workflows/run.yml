@@ -22,17 +22,14 @@ jobs:
         envkey_ORG_KEY: ${{ secrets.ORG_KEY }}
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
-    - run: mkdir data && cargo run
-      
-  build_latex:
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v2
-      - uses: xu-cheng/latex-action@v2
-        with:
-          working_directory: report/src
-          root_file: report.tex
-      - uses: actions/upload-artifact@v2
-        with:
-          name: clyde-water-quality-report.pdf 
-          path: report/src/report.pdf
+    - run: cargo run
+    - name: Make PDF Report
+      uses: xu-cheng/latex-action@v2
+      with:
+        working_directory: report/src
+        root_file: report.tex
+    - name: Upload PDF Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: clyde-water-quality-report.pdf 
+        path: report/src/report.pdf
