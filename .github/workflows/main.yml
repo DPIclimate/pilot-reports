@@ -1,8 +1,6 @@
 name: Build, Run & Deploy
 
 on:
-  push:
-    branches: [ master ]
   schedule:
     - cron: "0 23 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings)
   workflow_dispatch: 
@@ -20,9 +18,8 @@ jobs:
         envkey_ORG_KEY: ${{ secrets.ORG_KEY }}
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
-    - name: Build & Run
-      uses: actions/checkout@v2
-    - run: cargo run
+    - name: Rust Build & Run
+      run: cargo run
     - name: Make PDF Report
       uses: xu-cheng/latex-action@v2
       with:
@@ -34,10 +31,6 @@ jobs:
         name: clyde-water-quality-report.pdf 
         path: report/src/report.pdf
     - name: Deploy GH Pages
-      uses: actions/checkout@v2
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
       uses: JamesIves/github-pages-deploy-action@4.1.7
       with:
         branch: gh-pages # The branch the action should deploy to.
