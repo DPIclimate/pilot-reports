@@ -15,8 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build & Run
-    - uses: actions/checkout@v2
-    
+      uses: actions/checkout@v2
     - name: Make env
       uses: SpicyPizza/create-envfile@v1.3
       with:
