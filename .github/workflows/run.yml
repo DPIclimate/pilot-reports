@@ -11,7 +11,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  create_env:
+  build_rust:
     runs-on: ubuntu-latest
     steps:
     - uses: SpicyPizza/create-envfile@v1.3
@@ -20,10 +20,6 @@ jobs:
         envkey_ORG_KEY: ${{ secrets.ORG_KEY }}
         envkey_DW_KEY: ${{ secrets.DW_KEY }}
         envkey_AWS_ORG_KEY: ${{ secrets.AWS_ORG_KEY }}
-
-  build_rust:
-    runs-on: ubuntu-latest
-    steps:
     - uses: actions/checkout@v2
     - name: Build & Run
       run: cargo run
