@@ -90,7 +90,7 @@ impl Extremes {
                 };
 
                 if init {
-                    if min_value < 0.0 {
+                    if min_value > 0.0 {
                         abs_min = min_value;
                         init = false;
                         continue;
