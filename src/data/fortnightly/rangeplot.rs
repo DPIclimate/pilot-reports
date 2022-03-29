@@ -76,10 +76,19 @@ impl RangePlot {
                     .zip(variable_list.harvest_area.iter()),
             ),
         ) {
+            let lw_value = match lw.value {
+                Some(v) => v,
+                None => 0.0,
+            };
+            let tw_value = match tw.value {
+                Some(v) => v,
+                None => 0.0,
+            };
+
             let values = RangeValues {
                 location: cd.to_string(),
-                last_week: lw.value,
-                this_week: tw.value,
+                last_week: lw_value,
+                this_week: tw_value,
                 harvest_area: ha.to_string(),
             };
             range_plot.range_values.push(values);

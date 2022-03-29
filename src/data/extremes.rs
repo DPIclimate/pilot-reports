@@ -72,7 +72,7 @@ impl Extremes {
             let weekly_min = ubidots::device::data::Aggregation {
                 variables: ha.to_owned(),
                 aggregation: "min".to_string(),
-                join_dataframes: true,
+                join_dataframes: false,
                 start: start,
                 end: end,
             }
@@ -81,10 +81,30 @@ impl Extremes {
             .ok()
             .expect("Error unwrapping aggregate min");
 
+            let mut abs_min = 0.0;
+            let mut init = true;
+            for min in weekly_min.results.iter() {
+                let min_value = match min.value {
+                    Some(v) => v,
+                    None => continue,
+                };
+
+                if init {
+                    if min_value < 0.0 {
+                        abs_min = min_value;
+                        init = false;
+                        continue;
+                    }
+                }
+                if min_value < abs_min && min_value >= 0.0 {
+                    abs_min = min_value;
+                }
+            }
+
             let weekly_max = ubidots::device::data::Aggregation {
                 variables: ha.to_owned(),
                 aggregation: "max".to_string(),
-                join_dataframes: true,
+                join_dataframes: false,
                 start: start,
                 end: end,
             }
@@ -93,15 +113,34 @@ impl Extremes {
             .ok()
             .expect("Error unwrapping aggregate max");
 
-            // Should only return one result if "join_dataframes": true
-            for (min, max) in weekly_min.results.iter().zip(weekly_max.results.iter()) {
-                extremes.rows.push(Row {
-                    site: site_names[index].to_string(),
-                    min: min.value,
-                    max: max.value,
-                });
-                break;
+            let mut abs_max = 0.0;
+            let mut location = "".to_string();
+            let mut init = true;
+            for max in weekly_max.results.iter() {
+                let max_value = match max.value {
+                    Some(v) => v,
+                    None => continue,
+                };
+                if init {
+                    if max_value < 45.0 {
+                        abs_max = max_value;
+                        location = site_names[index].to_string();
+                        init = false;
+                        continue;
+                    }
+                }
+                if max_value > abs_max && max_value < 45.0 {
+                    abs_max = max_value;
+                    location = site_names[index].to_string();
+                }
             }
+
+            extremes.rows.push(Row {
+                site: location.to_string(),
+                min: abs_min,
+                max: abs_max,
+            });
+
             index += 1;
         }
         extremes

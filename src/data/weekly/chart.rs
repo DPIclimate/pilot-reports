@@ -67,7 +67,11 @@ impl Chart {
             )
             .unwrap();
 
-            chart.moonlight.push(moonlight.results[0].value);
+            let ml_value = match moonlight.results[0].value {
+                Some(v) => v,
+                None => 0.0,
+            };
+            chart.moonlight.push(ml_value);
 
             let rocky_point = aggregate_harvest_area_daily(
                 &harvest_area_variables.rocky_point,
@@ -76,7 +80,11 @@ impl Chart {
             )
             .unwrap();
 
-            chart.rocky_point.push(rocky_point.results[0].value);
+            let rp_value = match rocky_point.results[0].value {
+                Some(v) => v,
+                None => 0.0,
+            };
+            chart.rocky_point.push(rp_value);
 
             let waterfall = aggregate_harvest_area_daily(
                 &harvest_area_variables.waterfall,
@@ -85,7 +93,11 @@ impl Chart {
             )
             .unwrap();
 
-            chart.waterfall.push(waterfall.results[0].value);
+            let wf_value = match waterfall.results[0].value {
+                Some(v) => v,
+                None => 0.0,
+            };
+            chart.waterfall.push(wf_value);
 
             offset += 86400000;
         }

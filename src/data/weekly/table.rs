@@ -59,7 +59,11 @@ impl Table {
 
             let mut day_vec: Vec<f64> = Vec::new();
             for day in daily.results.iter() {
-                day_vec.push(day.value.to_owned());
+                let day_value = match day.value {
+                    Some(v) => v,
+                    None => 0.0,
+                };
+                day_vec.push(day_value);
             }
 
             weekly.daily_value.push(day_vec.to_owned());

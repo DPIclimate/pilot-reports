@@ -43,15 +43,15 @@ impl Aggregation {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Response {
     pub results: Vec<Value>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Value {
-    pub value: f64,
+    pub value: Option<f64>,
     pub timestamp: i64,
 }
