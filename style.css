@@ -104,9 +104,17 @@ input ~ .tab { display: none; }
 
 .fieldwork-table {
 	flex: 46%;
-	padding: 1rem;
+}
+
+.maintain-table {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 1rem;
 	margin: 1rem;
+}
+
+.maintain-table a {
+	align-items: left;
+	text-align: right;
 }
 
 .fieldwork-table th {
