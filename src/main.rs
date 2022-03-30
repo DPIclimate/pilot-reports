@@ -53,8 +53,8 @@ fn main() {
         let weekly_table = data::weekly::table::Table::new(&variable_list, &token);
         weekly_table.to_csv(&variable);
 
-        let weekly_chart = data::weekly::chart::Chart::new(&variable_list, &token);
-        weekly_chart.to_csv(&variable);
+        let fortnightly_chart = data::fortnightly::chart::Chart::new(&variable_list, &token);
+        fortnightly_chart.to_csv(&variable);
     }
 
     // Create weekly max and min dataset

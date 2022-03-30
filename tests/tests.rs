@@ -7,6 +7,25 @@ use log::{error, info};
 use std::env;
 
 #[test]
+fn create_line_chart() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let token = env::var("ORG_KEY").expect("Org key not found");
+    let config = utils::config::get_config()
+        .map_err(|err| error!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+
+    // -- Overwrite csv files -- //
+    data::files::create_output_csv_files(&config);
+
+    let variable = String::from("temperature");
+    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+
+    let fortnightly_chart = data::fortnightly::chart::Chart::new(&variable_list, &token);
+    fortnightly_chart.to_csv(&variable);
+}
+
+#[test]
 #[ignore]
 fn weekly_extremes() {
     dotenv::dotenv().expect("Failed to read .env file.");

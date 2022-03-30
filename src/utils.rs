@@ -10,17 +10,6 @@ pub mod time {
         DateTime::<Local>::from(datetime_ts)
     }
 
-    /// Converts current unix time to local day (e.g. Tuesday)
-    pub fn unix_to_local_day(unix_time: &i64) -> String {
-        let utc_unix = Utc.timestamp(unix_time / 1000, 0);
-        let local_time = DateTime::<Local>::from(utc_unix);
-        chrono::Local
-            .ymd(local_time.year(), local_time.month(), local_time.day())
-            .and_hms(0, 0, 0)
-            .format("%A")
-            .to_string()
-    }
-
     /// Gets a tuple containing the unix time (in ms) from the start of this year
     /// to the current date
     pub fn this_year(millis: bool) -> (i64, i64) {

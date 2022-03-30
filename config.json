@@ -142,24 +142,24 @@
 			]
 		},
 		{
-			"filepath": "data/weekly-salinity-chart.csv",
-			"name": "weekly-salinity-chart",
+			"filepath": "data/fortnightly-salinity-chart.csv",
+			"name": "fortnightly-salinity-chart",
 			"chart_id": "udOPz",
 			"dynamic": false,
 			"columns": [
-				"Day",
+				"Date",
 				"Moonlight",
 				"Rocky Point",
 				"Waterfall"
 			]
 		},
 		{
-			"filepath": "data/weekly-temperature-chart.csv",
-			"name": "weekly-temperature-chart",
+			"filepath": "data/fortnightly-temperature-chart.csv",
+			"name": "fortnightly-temperature-chart",
 			"chart_id": "3BIUb",
 			"dynamic": false,
 			"columns": [
-				"Day",
+				"Date",
 				"Moonlight",
 				"Rocky Point",
 				"Waterfall"
