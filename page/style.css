@@ -150,7 +150,6 @@ input ~ .tab { display: none; }
 	width: 100vw;
 	min-width: var(--div-min-width);
 	background: #333;
-	margin-top: 2rem;
 	height: 60px;
 	bottom: 0;
 }

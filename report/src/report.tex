@@ -1,6 +1,6 @@
 \documentclass[10pt]{article}
 
-\usepackage[a4paper, left=2cm, right=2cm]{geometry} % A4 paper size and thin margins
+\usepackage[a4paper, left=2cm, right=2cm, bottom=2cm]{geometry} % A4 paper size and thin margins
 
 \usepackage{graphicx}
 \graphicspath{ {../imgs/} }
@@ -9,6 +9,13 @@
 \usepackage{everypage}
 \usepackage{environ}
 \newcounter{abspage}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Climate Smart Pilots}
+\lhead{NSW Department of Primary Industries}
+\cfoot{This data is released by NSW Department of Primary Industries for evaluation purposes only and should not be relied upon for business decisions, carrying out risk assessments or other uses.}
 
 \usepackage{float}
 
