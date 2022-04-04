@@ -1,9 +1,9 @@
 \contentsline {section}{\numberline {1}Salinity}{3}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Weekly}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Fortnightly}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.2}Fortnightly}{4}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Water Temperature}{6}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Weekly}{6}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Fortnightly}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Fortnightly}{7}{subsection.2.2}%
 \contentsline {section}{\numberline {3}Precipitation}{9}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Weekly}{9}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Yearly}{10}{subsection.3.2}%
