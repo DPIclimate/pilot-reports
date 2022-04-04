@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+
+\usepackage[a4paper, left=2cm, right=2cm, bottom=2cm]{geometry} % A4 paper size and thin margins
+
+\usepackage{graphicx}
+\graphicspath{ {../imgs/} }
+
+\usepackage{blindtext}
+\usepackage{everypage}
+\usepackage{environ}
+\newcounter{abspage}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Climate Smart Pilots}
+\lhead{NSW Department of Primary Industries}
+\cfoot{This data is released by NSW Department of Primary Industries for evaluation purposes only and should not be relied upon for business decisions, carrying out risk assessments or other uses.}
+
+\usepackage{float}
+
+\usepackage{indentfirst}
+\usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[sfdefault]{ClearSans}
+
+\begin{document}
+
+
+\begin{titlepage}
+		\parbox[t]{0.93\textwidth}{
+			\parbox[t]{0.91\textwidth}{
+				\raggedright
+				\fontsize{50pt}{80pt}\selectfont
+				\vspace{0.7cm}
+				\includegraphics[width=0.5\textwidth]{DPI_logo.png}
+				
+				Clyde River Water\\
+				Quality Report\\
+				\vspace{0.7cm}
+			}
+		}
+	\vfill
+	\parbox[t]{0.93\textwidth}{ 
+		\raggedleft
+		\large
+		{\Large Climate Smart Pilots}\\[4pt] 
+		\today \\
+		\vspace{0.5cm}
+		\texttt{www.farmdecisiontech.net.au}\\
+		
+		\hfill\rule{0.2\linewidth}{1pt}
+	}
+\end{titlepage}
+
+\section*{Foreword}
+
+\subsection*{Funding}
+This work has been produced by the NSW Primary Industries Climate Change Research Strategy funded by the NSW Climate Change Fund.
+
+\subsection*{NSW Department of Primary Industries Disclaimer}
+This is a research trial and pilot project, and you should not rely solely on the information or advice provided in these reports.
+
+\subsection*{Feedback and Questions}
+Please provide feedback and questions to Harvey Bates \\ \\
+Email: \href{mailto:harvey.bates@dpi.nsw.gov.au}{harvey.bates@dpi.nsw.gov.au} \\ \\
+Ph: 0447 359 557
+
+\pagebreak
+
+\tableofcontents
+
+\listoffigures
+
+\pagebreak
+
+\section{Salinity}
+\subsection{Weekly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-salinity-extremes.png}
+\caption[Weekly Minimum and Maximum Salinity]{These values represent the highest and lowest salinity reading a buoy has recorded in each of the harvest areas in the past week.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-salinity-chart.png}
+\caption[Average Weekly Salinity Chart]{This figure represents the daily average salinity of all buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of salinity over the past week.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-salinity.png}
+\caption[Average Weekly Salinity Table]{This figure represents the daily average salinity of each of the buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of salinity over the past week for specific locations within harvest areas.}
+\end{figure}
+
+\pagebreak
+
+\subsection{Fortnightly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-salinity.png}
+\caption[Average Fortnightly Salinity Difference]{This figure demonstrates the average difference in salinity for this week compared with the prior week. It displays a longer term, general trend to see if salinity is increasing, stabilising or decreasing.}
+\end{figure}
+
+\pagebreak
+
+\newpage
+\section{Water Temperature}
+\subsection{Weekly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature-extremes.png}
+\caption[Weekly Minimum and Maximum Temperature]{These values represent the highest and lowest temperature reading a buoy has recorded in each of the harvest areas in the past week.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature-chart.png}
+\caption[Average Weekly Temperature Chart]{This figure represents the daily average temperature of all buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of temperature over the past week.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-temperature.png}
+\caption[Average Weekly Temperature Table]{This figure represents the daily average temperature of each of the buoys contained within a harvest area. Its designed to reduce the impact of tides and provide the general trend of temperature over the past week for specific locations within harvest areas.}
+\end{figure}
+
+\subsection{Fortnightly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-temperature.png}
+\caption[Average Fortnightly Temperature Difference]{This figure demonstrates the average difference in temperature for this week compared with the prior week. It displays a longer term, general trend to see if temperature is increasing, stabilising or decreasing.}
+\end{figure}
+
+\section{Precipitation}
+\subsection{Weekly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{weekly-precipitation.png}
+\caption[Daily Total Precipitation Budd Island]{Daily total precipitation at Budd Island for the past week.}
+\end{figure}
+
+\subsection{Yearly}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{yearly-precipitation.png}
+\caption[Yearly Cumulative Precipitation Budd Island]{Compares this years total precipitation against previous years.}
+\end{figure}
+
+\section{Flow Rate from Tributaries}
+\subsection{Fortnightly}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-brooman.png}
+\caption[Fortnightly Discharge From Brooman Tributary]{Fortnightly (daily total) water discharge from Brooman.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fortnightly-buckenbowra.png}
+\caption[Fortnightly Discharge Rate Buckenbowra]{Fortnightly (daily total) water discharge from Buckenbowra.}
+\end{figure}
+
+\subsection{Yearly}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{combined-dischargerate.png}
+\caption[Yearly Cumulative Discharge Rate Brooman]{Compares this years total water discharge against previous years. Drought years (2018 and 2019) are shown for comparison.}
+\end{figure}
+
+\end{document}
+
+
+
+
+
+
+
+
