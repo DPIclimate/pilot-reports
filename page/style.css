@@ -44,6 +44,7 @@ input ~ .tab { display: none; }
 #tab1:checked ~ .tab.chart-view,
 #tab2:checked ~ .tab.indepth-view { display: block; }
 #tab3:checked ~ .tab.fortnightly-salinity-view { display: block; }
+#tab4:checked ~ .tab.map-salinity-view { display: block; }
 
 input + label {
 	border: 1px solid #002664;
@@ -73,6 +74,7 @@ input ~ .tab { display: none; }
 #tab1-temp:checked ~ .tab.temp-chart-view,
 #tab2-temp:checked ~ .tab.temp-indepth-view { display: block; }
 #tab3-temp:checked ~ .tab.fortnightly-temp-view { display: block; }
+#tab4-temp:checked ~ .tab.map-temp-view { display: block; }
 
 .variables-table {
 	padding: 1rem;
