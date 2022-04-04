@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
 :root {
-	--div-min-width: 1000px;
+	--div-min-width: 600px;
 }
 
 body {
@@ -16,13 +16,14 @@ body {
 }
 
 .main-content {
-	margin: 2rem;
-	margin-top: 0rem;
+	margin: 1rem;
+	margin-top: 50px;
 }
 
 .header{
 	display: flex;
 	justify-content: space-evenly;
+	flex-wrap: wrap;
 	flex-direction: row;
 	align-items: center;
 	width: 100vw;
