@@ -88,7 +88,7 @@ fn main() {
 
     // Download images from datawrapper to generate pdf
     for file in &config.files {
-        let filename = format!("report/imgs/{}.png", file.name);
+        let filename = format!("page/pdf/imgs/{}.png", file.name);
         datawrapper::download::download_image(&filename, &file.chart_id, &dw_key)
             .map_err(|err| error!("Error downloading image: {}", err))
             .ok()

@@ -24,7 +24,7 @@ jobs:
     - name: Make PDF Report
       uses: xu-cheng/latex-action@v2
       with:
-        working_directory: report/src
+        working_directory: page/pdf/src
         root_file: report.tex
     - name: Upload PDF Report
       uses: actions/upload-artifact@v2
