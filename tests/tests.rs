@@ -125,7 +125,7 @@ fn create_weekly_chart() {
     // Construct a list of variables that match devices in config.jon
     let variable = String::from("salinity");
     let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
-    let chart = data::weekly::chart::Chart::new(&variable_list, &token);
+    let chart = data::fortnightly::chart::Chart::new(&variable_list, &token);
     chart.to_csv(&variable);
 }
 
