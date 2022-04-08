@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 
 // This represents the body that needs to be sent to Ubidots when reqesting data aggregation.
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Aggregation {
     /// Variable API labels (not names unfortunatly)

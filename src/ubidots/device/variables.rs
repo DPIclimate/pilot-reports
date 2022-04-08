@@ -57,7 +57,7 @@ pub async fn list_variables(
 
 /// Currated list of devices and corresponding variable_ids for a specific variable e.g. salinity,
 /// temperature
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct VariablesList {
     /// Name of variable
     pub name: String,

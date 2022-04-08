@@ -19,6 +19,7 @@ pub struct Row {
 }
 
 /// Vector of variables within a harvest area
+#[derive(Debug)]
 struct HarvestAreaVariables {
     /// Moonlight harvest area variables
     moonlight: Vec<String>,
@@ -69,17 +70,18 @@ impl Extremes {
         let site_names = vec!["Moonlight", "Rocky Point", "Waterfall"];
         let mut index = 0;
         for ha in harvest_area_variables.as_array() {
-            let weekly_min = ubidots::device::data::Aggregation {
+            let weekly_min_agg = ubidots::device::data::Aggregation {
                 variables: ha.to_owned(),
                 aggregation: "min".to_string(),
                 join_dataframes: false,
                 start: start,
                 end: end,
-            }
-            .aggregate(&token)
-            .map_err(|err| error!("Error requesting aggregate min value: {}", err))
-            .ok()
-            .expect("Error unwrapping aggregate min");
+            };
+
+            let weekly_min = match weekly_min_agg.aggregate(&token) {
+                Ok(r) => r,
+                Err(e) => panic!("Error getting aggregate min: {}", e),
+            };
 
             let mut abs_min = 0.0;
             let mut init = true;

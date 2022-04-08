@@ -1,12 +1,13 @@
 // use cargo run -- --nocapture to see println! statements
 extern crate pilot_reports;
-pub use pilot_reports::{data, datawrapper, ubidots, utils, waternsw};
+pub use pilot_reports::{cli, data, datawrapper, ubidots, utils, waternsw};
 
 extern crate dotenv;
 use log::{error, info};
 use std::env;
 
 #[test]
+#[ignore]
 fn create_line_chart() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Org key not found");
@@ -26,9 +27,9 @@ fn create_line_chart() {
 }
 
 #[test]
-#[ignore]
 fn weekly_extremes() {
     dotenv::dotenv().expect("Failed to read .env file.");
+    let cli_config = cli::Config::new();
     let token = env::var("ORG_KEY").expect("Org key not found");
     let config = utils::config::get_config()
         .map_err(|err| error!("Error loading config: {}", err))
@@ -38,12 +39,16 @@ fn weekly_extremes() {
     // -- Overwrite csv files -- //
     data::files::create_output_csv_files(&config);
 
+    println!("Getting salinity");
     let variable = String::from("salinity");
-    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+    let variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
+
+    println!("Variable list: {:#?}", variable_list);
     data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
 
+    println!("Getting temperature");
     let variable = String::from("temperature");
-    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+    let variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
     data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
 }
 

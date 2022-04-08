@@ -44,6 +44,9 @@ fn main() {
             variable_list.cache(&variable);
         }
 
+        // Create weekly max and min dataset
+        data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
+
         // Create fortnightly csv files
         let fortnightly_range_plot =
             data::fortnightly::rangeplot::RangePlot::new(&variable_list, &token);
@@ -56,14 +59,6 @@ fn main() {
         let fortnightly_chart = data::fortnightly::chart::Chart::new(&variable_list, &token);
         fortnightly_chart.to_csv(&variable);
     }
-
-    // Create weekly max and min dataset
-    let variable = String::from("salinity");
-    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
-    data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
-    let variable = String::from("temperature");
-    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
-    data::extremes::Extremes::new(&variable_list, &token).to_csv(&variable);
 
     // Fortnightly dataset for discharge rate
     let mut time_range = String::from("fortnightly");
