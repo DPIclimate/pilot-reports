@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.4)  10 APR 2022 23:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.4)  11 APR 2022 01:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -558,12 +558,12 @@ File: ../imgs//fortnightly-salinity-chart.png Graphic file (type png)
 Package pdftex.def Info: ../imgs//fortnightly-salinity-chart.png  used on input
  line 101.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
-<../imgs//fortnightly-salinity.png, id=124, 1626.075pt x 1003.75pt>
+<../imgs//fortnightly-salinity.png, id=124, 1626.075pt x 1037.8775pt>
 File: ../imgs//fortnightly-salinity.png Graphic file (type png)
 <use ../imgs//fortnightly-salinity.png>
 Package pdftex.def Info: ../imgs//fortnightly-salinity.png  used on input line 
 107.
-(pdftex.def)             Requested size: 483.69687pt x 298.56955pt.
+(pdftex.def)             Requested size: 483.69687pt x 308.72092pt.
  [4 <../imgs//fortnightly-salinity-chart.png>] [5 <../imgs//fortnightly-salinit
 y.png>]
 <../imgs//weekly-temperature-extremes.png, id=135, 1626.075pt x 403.5075pt>
@@ -645,7 +645,7 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (14 pages, 1448411 bytes).
+Output written on report.pdf (14 pages, 1495368 bytes).
 PDF statistics:
  218 PDF objects out of 1000 (max. 8388607)
  166 compressed objects within 2 object streams
