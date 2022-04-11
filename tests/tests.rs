@@ -8,6 +8,13 @@ use std::env;
 
 #[test]
 #[ignore]
+fn time_range() {
+    let (start, end) = utils::time::two_weeks();
+    let ts = utils::time::unix_to_local(&(&end * 1000)).to_string();
+    println!("Start: {}, End: {}, End Converted: {}", &start, &end, &ts);
+}
+
+#[test]
 fn create_line_chart() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Org key not found");
@@ -20,16 +27,17 @@ fn create_line_chart() {
     data::files::create_output_csv_files(&config);
 
     let variable = String::from("temperature");
-    let variable_list = ubidots::device::variables::VariablesList::new(&variable, &config, &token);
+    let variable_list = ubidots::device::variables::VariablesList::new_from_cache(&variable);
 
     let fortnightly_chart = data::fortnightly::chart::Chart::new(&variable_list, &token);
     fortnightly_chart.to_csv(&variable);
 }
 
 #[test]
+#[ignore]
 fn weekly_extremes() {
     dotenv::dotenv().expect("Failed to read .env file.");
-    let cli_config = cli::Config::new();
+    let _cli_config = cli::Config::new();
     let token = env::var("ORG_KEY").expect("Org key not found");
     let config = utils::config::get_config()
         .map_err(|err| error!("Error loading config: {}", err))

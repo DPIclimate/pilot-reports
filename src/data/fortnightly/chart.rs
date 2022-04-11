@@ -62,7 +62,7 @@ impl Chart {
                 variables: ha.to_owned(),
                 aggregation: "mean".to_string(),
                 join_dataframes: true,
-                period: "1D".to_string(),
+                period: "12H".to_string(),
                 start: start * 1000,
                 end: end * 1000,
             }
@@ -83,11 +83,11 @@ impl Chart {
                         Some(t) => t,
                         None => continue,
                     };
-                    chart.date.push(
-                        utils::time::unix_to_local(&(ts.round() as i64))
-                            .format("%d/%m/%Y")
-                            .to_string(),
-                    );
+
+                    let fmt_time = utils::time::unix_to_local(&(ts.round() as i64))
+                        .format("%d/%m/%Y %H:%M")
+                        .to_string();
+                    chart.date.push(fmt_time);
                 }
                 let mut sum = 0.0;
                 let mut n = 0.0;
