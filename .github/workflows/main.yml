@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: clyde-water-quality-report.pdf 
-        path: report/src/report.pdf
+        path: page/pdf/src/report.pdf
     - name: Deploy GH Pages
       uses: JamesIves/github-pages-deploy-action@4.1.7
       with:
