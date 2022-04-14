@@ -2,7 +2,7 @@ name: Build, Run & Deploy
 
 on:
   schedule:
-    - cron: "0 23 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings)
+    - cron: "0 23,17,11,5 * * *" # Runs at 9am (daylight savings or 10 am non-daylight savings)
   workflow_dispatch: 
 
 env:
