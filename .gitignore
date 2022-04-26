@@ -8,7 +8,6 @@
 clientsecret.json
 tokencache.json
 *.ipynb
-/imgs
 precis.json
 
 ## Latex stuff below
