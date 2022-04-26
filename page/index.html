@@ -2,12 +2,23 @@
 <html lang="en" xmlns="https://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 	<head>
 		<title>FarmDesisionTECH Clyde River Water Quality Report</title>
+		<meta charset="utf-8">
 		<meta http-equiv=”Content-Type”/>
 		<meta name="google-site-verification" content="0Al8AazZiQLl8qHgusbGu6cuE1Dz3MN6TC47qit7iGE"/>
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<meta name="description" content="Summary of water quality on the Clyde River.">
 		<meta name="keywords" content="Water quality Clyde River NSW DPI Primary Industries">
 		<link href="style.css" rel="stylesheet" type="text/css">
+		<script>
+			var salinity_urls = [];
+			var temp_urls = [];
+			for (let i = 0; i < 25; i++) {
+				var surl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/"+ i + ".png";
+				var turl = "https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/"+ i + ".png";
+				salinity_urls.push(surl);
+				temp_urls.push(turl);
+			}
+		</script>
 	</head>
 	<body>
 
@@ -57,16 +68,16 @@
 				<h2>Salinity</h2>
 				<hr>
 
-				<input type="radio" name="tabs" id="tab1" checked />
+				<input class="hidden" type="radio" name="tabs" id="tab1" checked />
 				<label for="tab1">Chart View</label>
 
-				<input type="radio" name="tabs" id="tab2"/>
+				<input class="hidden" type="radio" name="tabs" id="tab2"/>
 				<label for="tab2">In-depth View</label>
 
-				<input type="radio" name="tabs" id="tab3"/>
+				<input class="hidden" type="radio" name="tabs" id="tab3"/>
 				<label for="tab3">Fortnightly Trend</label>
 
-				<input type="radio" name="tabs" id="tab4"/>
+				<input class="hidden" type="radio" name="tabs" id="tab4"/>
 				<label for="tab4">Map View</label>
 
 				<div class="tab chart-view">
@@ -84,9 +95,22 @@
 
 				</div>
 
-				<div class="tab map-salinity-view">
-					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/latest-salinity.png" 
-						style="width: 100%; margin: auto;">
+				<div class="tab map-salinity-view" style="max-width: 1500px">
+					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/0.png" 
+						style="width: 100%; margin: auto;" id="salinityImg">
+					<div class="sliderDiv">
+						<h5>Select range:</h5>
+						<input type="range" min="-24" max="0" value="0"  class="salinitySlider" id="salinitySlider">
+						<h5 id="salinityCurrent">0h</h5>
+						<script>
+							salinitySlider.oninput = function() {
+								var value = 24 - -this.value;
+								document.getElementById("salinityCurrent").innerHTML = this.value + "h";
+								var img = document.getElementById("salinityImg");
+								img.src = salinity_urls[value];
+							}
+						</script>
+					</div>
 				</div>
 
 			</div>
@@ -95,16 +119,16 @@
 				<h2>Temperature</h2>
 				<hr>
 
-				<input type="radio" name="tabs-temp" id="tab1-temp" checked />
+				<input class="hidden" type="radio" name="tabs-temp" id="tab1-temp" checked />
 				<label for="tab1-temp">Chart View</label>
 
-				<input type="radio" name="tabs-temp" id="tab2-temp"/>
+				<input class="hidden" type="radio" name="tabs-temp" id="tab2-temp"/>
 				<label for="tab2-temp">In-depth View</label>
 
-				<input type="radio" name="tabs-temp" id="tab3-temp"/>
+				<input class="hidden" type="radio" name="tabs-temp" id="tab3-temp"/>
 				<label for="tab3-temp">Fortnightly Trend</label>
 
-				<input type="radio" name="tabs-temp" id="tab4-temp"/>
+				<input class="hidden" type="radio" name="tabs-temp" id="tab4-temp"/>
 				<label for="tab4-temp">Map View</label>
 
 
@@ -123,8 +147,21 @@
 				</div>
 
 				<div class="tab map-temp-view">
-					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/latest-temperature.png" 
-						style="width: 100%; margin: auto;">
+					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/0.png" 
+						style="width: 100%; margin: auto;" id="tempImg">
+					<div class="sliderDiv">
+						<h5>Select range:</h5>
+						<input type="range" min="-24" max="0" value="0"  class="tempSlider" id="tempSlider">
+						<h5 id="tempCurrent">0h</h5>
+						<script>
+							tempSlider.oninput = function() {
+								var value = 24 - -this.value;
+								document.getElementById("tempCurrent").innerHTML = this.value + "h";
+								var img = document.getElementById("tempImg");
+								img.src = temp_urls[value];
+							}
+						</script>
+					</div>
 				</div>
 			</div>
 
@@ -132,10 +169,10 @@
 				<h2>Precipitation</h2>
 				<hr>
 				
-				<input type="radio" name="tabs-precip" id="tab2-precip" checked/>
+				<input class="hidden" type="radio" name="tabs-precip" id="tab2-precip" checked/>
 				<label for="tab2-precip">Yearly</label>
 
-				<input type="radio" name="tabs-precip" id="tab1-precip"/>
+				<input class="hidden" type="radio" name="tabs-precip" id="tab1-precip"/>
 				<label for="tab1-precip">Weekly</label>
 
 				<div class="tab yearly-view">
@@ -153,10 +190,10 @@
 				<h2>Upstream Discharge</h2>
 				<hr>
 
-				<input type="radio" name="tabs-flow" id="tab2-flow" checked/>
+				<input class="hidden" type="radio" name="tabs-flow" id="tab2-flow" checked/>
 				<label for="tab2-flow">Yearly</label>
 
-				<input type="radio" name="tabs-flow" id="tab1-flow"/>
+				<input class="hidden" type="radio" name="tabs-flow" id="tab1-flow"/>
 				<label for="tab1-flow">Fortnightly</label>
 
 

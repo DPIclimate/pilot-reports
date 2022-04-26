@@ -37,7 +37,24 @@ body {
 	padding: 1rem;
 }
 
-input { display: none; }
+.sliderDiv {
+	display: inline-flex;
+	marign-left: auto;
+	width: 80%;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	flex-direction: row;
+	align-items: center;
+}
+
+.salinitySlider {
+	width: 100%;
+}
+.tempSlider {
+	width: 100%;
+}
+
+.hidden { display: none; }
 input + label { display: inline-block; }
 
 input ~ .tab { display: none; }
