@@ -1,4 +1,5 @@
 ## Pilot Reports for Climate Smart Pilots
+<img title="" src="https://github.com/DPIclimate/pilot-reports/actions/workflows/main.yml/badge.svg" alt="Build, Run & Deploy" width="186">
 
 Provides farmers and other stakeholders with up-to-date and historical data regarding environmental conditions. Currently supporting oyster farmers operating on the Clyde River (South Coast of NSW).
 
@@ -9,8 +10,6 @@ Provides farmers and other stakeholders with up-to-date and historical data rega
 [Website](https://dpiclimate.github.io/pilot-reports/) - Built using plain HTML and JS
 
 [PDF Report](https://dpiclimate.github.io/pilot-reports/pdf/src/report.pdf) -  Built using LaTeX
-
-<img title="" src="https://github.com/DPIclimate/pilot-reports/actions/workflows/main.yml/badge.svg" alt="Build, Run & Deploy" width="186">
 
 ### Install and Run
 
