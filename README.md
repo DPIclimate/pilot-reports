@@ -1,5 +1,5 @@
 ## Pilot Reports for Climate Smart Pilots
-<img title="" src="https://github.com/DPIclimate/pilot-reports/actions/workflows/main.yml/badge.svg" alt="Build, Run & Deploy" width="186">
+<a href="https://dpiclimate.github.io/pilot-reports/"><img title="" src="https://github.com/DPIclimate/pilot-reports/actions/workflows/main.yml/badge.svg" alt="Build, Run & Deploy" width="186"></a>
 
 Provides farmers and other stakeholders with up-to-date and historical data regarding environmental conditions. Currently supporting oyster farmers operating on the Clyde River (South Coast of NSW).
 
@@ -41,3 +41,6 @@ Build and run using cargo:
 cargo build
 cargo run
 ```
+
+## License
+Pilot-reports are MIT licensed, as found in the [LICENSE](https://github.com/DPIclimate/pilot-reports/blob/master/LICENSE) file.
