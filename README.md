@@ -3,7 +3,7 @@
 
 Provides farmers and other stakeholders with up-to-date and historical data regarding environmental conditions. Currently supporting oyster farmers operating on the Clyde River (South Coast of NSW).
 
-![pilot-reports](imgs/pilot-reports.png)
+![pilot-reports](imgs/clyde-reports.svg)
 
 ### Clyde River Water Quality Report
 
