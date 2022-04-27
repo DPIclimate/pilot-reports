@@ -10,6 +10,11 @@
 		<meta name="keywords" content="Water quality Clyde River NSW DPI Primary Industries">
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<script>
+			var salinityPlay = false;
+			var timer;
+			var temp_timer;
+			var i = 0;
+			var temp_i = 0;
 			var salinity_urls = [];
 			var temp_urls = [];
 			for (let i = 0; i < 25; i++) {
@@ -97,12 +102,34 @@
 
 				<div class="tab map-salinity-view" style="max-width: 1500px">
 					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/salinity/0.png" 
-						style="width: 100%; margin: auto;" id="salinityImg">
+						style="width: 100%; margin: auto; max-width: 1008px;" id="salinityImg">
 					<div class="sliderDiv">
-						<h5>Select range:</h5>
+						<a onclick="play_timer()"><img id="salinityControl" src="assets/play-circle.svg"></a>
 						<input type="range" min="-24" max="0" value="0"  class="salinitySlider" id="salinitySlider">
-						<h5 id="salinityCurrent">0h</h5>
+						<div class="salinityTime">
+							<h3 id="salinityCurrent" style="color: #002664;">0h</h3>
+						</div>
 						<script>
+							function salinity_play() {
+								var ts = -24 + i;
+								var img = document.getElementById("salinityImg");
+								img.src = salinity_urls[i];
+								document.getElementById("salinityCurrent").innerHTML = ts + "h";
+								document.getElementById("salinitySlider").value = ts;
+								i = (i + 1) % salinity_urls.length;
+							}
+
+							function play_timer(){
+								if (timer) {
+									clearInterval(timer);
+									timer = null;
+									document.getElementById("salinityControl").src = "assets/play-circle.svg";
+								} else {
+									timer = setInterval("salinity_play()", 300)
+									document.getElementById("salinityControl").src = "assets/pause-circle.svg";
+								}
+							}
+
 							salinitySlider.oninput = function() {
 								var value = 24 - -this.value;
 								document.getElementById("salinityCurrent").innerHTML = this.value + "h";
@@ -148,12 +175,34 @@
 
 				<div class="tab map-temp-view">
 					<img src="https://dpiclimate.github.io/iot-spatial-interpolation/clyde_river/temperature/0.png" 
-						style="width: 100%; margin: auto;" id="tempImg">
+						style="width: 100%; margin: auto; max-width: 1008px;" id="tempImg">
 					<div class="sliderDiv">
-						<h5>Select range:</h5>
+						<a onclick="temp_play_timer()"><img id="tempControl" src="assets/play-circle.svg"></a>
 						<input type="range" min="-24" max="0" value="0"  class="tempSlider" id="tempSlider">
-						<h5 id="tempCurrent">0h</h5>
+						<div class="tempTime">
+							<h3 id="tempCurrent" style="color: #002664;">0h</h3>
+						</div>
 						<script>
+							function temp_play() {
+								var ts = -24 + temp_i;
+								var img = document.getElementById("tempImg");
+								img.src = temp_urls[temp_i];
+								document.getElementById("tempCurrent").innerHTML = ts + "h";
+								document.getElementById("tempSlider").value = ts;
+								temp_i = (temp_i + 1) % temp_urls.length;
+							}
+
+							function temp_play_timer(){
+								if (temp_timer) {
+									clearInterval(temp_timer);
+									temp_timer = null;
+									document.getElementById("tempControl").src = "assets/play-circle.svg";
+								} else {
+									temp_timer = setInterval("temp_play()", 300)
+									document.getElementById("tempControl").src = "assets/pause-circle.svg";
+								}
+							}
+
 							tempSlider.oninput = function() {
 								var value = 24 - -this.value;
 								document.getElementById("tempCurrent").innerHTML = this.value + "h";
