@@ -188,6 +188,7 @@
 						<script>
 							function temp_play() {
 								var ts = -24 + temp_i;
+								var img = document.getElementById("tempImg");
 								img.src = temp_urls[temp_i];
 								document.getElementById("tempCurrent").innerHTML = ts + "h";
 								document.getElementById("tempSlider").value = ts;
