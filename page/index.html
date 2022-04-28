@@ -158,6 +158,9 @@
 				<input class="hidden" type="radio" name="tabs-temp" id="tab4-temp"/>
 				<label for="tab4-temp">Map View</label>
 
+				<input class="hidden" type="radio" name="tabs-temp" id="tab5-temp"/>
+				<label for="tab5-temp">Historical</label>
+
 
 				<div class="tab temp-chart-view">
 					<iframe title="7-Day Average Temperature Trend" aria-label="Interactive line chart" id="datawrapper-chart-3BIUb" src="https://datawrapper.dwcdn.net/3BIUb/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="583"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
@@ -185,7 +188,6 @@
 						<script>
 							function temp_play() {
 								var ts = -24 + temp_i;
-								var img = document.getElementById("tempImg");
 								img.src = temp_urls[temp_i];
 								document.getElementById("tempCurrent").innerHTML = ts + "h";
 								document.getElementById("tempSlider").value = ts;
@@ -210,6 +212,27 @@
 								img.src = temp_urls[value];
 							}
 						</script>
+					</div>
+				</div>
+
+				<div class="tab historical-temp-view">
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab1-temp-h" checked />
+					<label for="tab1-temp-h">Average</label>
+
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab2-temp-h"/>
+					<label for="tab2-temp-h">Minimum</label>
+
+					<input class="hidden" type="radio" name="tabs-temp-h" id="tab3-temp-h"/>
+					<label for="tab3-temp-h">Maxiumum</label>
+
+					<div class="tab h-temp-avg">
+						<iframe title="Historical and Current Average Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-P4JnS" src="https://datawrapper.dwcdn.net/P4JnS/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="573"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					</div>
+					<div class="tab h-temp-max">
+						<iframe title="Historical and Current Maximum Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-yKBPg" src="https://datawrapper.dwcdn.net/yKBPg/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="594"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
+					</div>
+					<div class="tab h-temp-min">
+						<iframe title="Historical and Current Minimum Monthly Water Temperature" aria-label="Interactive line chart" id="datawrapper-chart-wEbn0" src="https://datawrapper.dwcdn.net/wEbn0/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="594"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();</script>
 					</div>
 				</div>
 			</div>
