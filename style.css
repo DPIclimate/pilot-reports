@@ -171,6 +171,12 @@ input ~ .tab { display: none; }
 #tab2-temp:checked ~ .tab.temp-indepth-view { display: block; }
 #tab3-temp:checked ~ .tab.fortnightly-temp-view { display: block; }
 #tab4-temp:checked ~ .tab.map-temp-view { display: block; }
+#tab5-temp:checked ~ .tab.historical-temp-view { display: block; }
+
+
+#tab1-temp-h:checked ~ .tab.h-temp-avg,
+#tab2-temp-h:checked ~ .tab.h-temp-min { display: block; }
+#tab3-temp-h:checked ~ .tab.h-temp-max { display: block; }
 
 .variables-table {
 	padding: 1rem;
