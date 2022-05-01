@@ -92,13 +92,14 @@ impl Extremes {
                 };
 
                 if init {
-                    if min_value > 0.0 {
+                    // Slightly higher than zero as zero is a error value
+                    if min_value > 1.0 {
                         abs_min = min_value;
                         init = false;
                         continue;
                     }
                 }
-                if min_value < abs_min && min_value >= 0.0 {
+                if min_value < abs_min && min_value >= 1.0 {
                     abs_min = min_value;
                 }
             }

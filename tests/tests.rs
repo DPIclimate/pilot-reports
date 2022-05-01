@@ -15,6 +15,7 @@ fn time_range() {
 }
 
 #[test]
+#[ignore]
 fn create_line_chart() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let token = env::var("ORG_KEY").expect("Org key not found");
