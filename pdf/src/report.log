@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.1)  1 MAY 2022 23:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.1)  2 MAY 2022 02:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -466,7 +466,7 @@ e
 put line 45.
 LaTeX Font Info:    Font shape `T1/ClearSans-TLF/regular/n' will be
 (Font)              scaled to size 50.0pt on input line 45.
-<../imgs//DPI_logo.png, id=52, 697.10437pt x 165.61874pt>
+<../imgs//DPI_logo.png, id=56, 697.10437pt x 165.61874pt>
 File: ../imgs//DPI_logo.png Graphic file (type png)
 <use ../imgs//DPI_logo.png>
 Package pdftex.def Info: ../imgs//DPI_logo.png  used on input line 45.
@@ -540,25 +540,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout5 = `report.lof'.
 
  [2]
-<../imgs//weekly-salinity-extremes.png, id=115, 1626.075pt x 441.65pt>
+<../imgs//weekly-salinity-extremes.png, id=126, 1626.075pt x 441.65pt>
 File: ../imgs//weekly-salinity-extremes.png Graphic file (type png)
 <use ../imgs//weekly-salinity-extremes.png>
 Package pdftex.def Info: ../imgs//weekly-salinity-extremes.png  used on input l
 ine 85.
 (pdftex.def)             Requested size: 483.69687pt x 131.37059pt.
-<../imgs//weekly-salinity.png, id=116, 1626.075pt x 1314.9125pt>
+<../imgs//weekly-salinity.png, id=127, 1626.075pt x 1314.9125pt>
 File: ../imgs//weekly-salinity.png Graphic file (type png)
 <use ../imgs//weekly-salinity.png>
 Package pdftex.def Info: ../imgs//weekly-salinity.png  used on input line 91.
 (pdftex.def)             Requested size: 483.69687pt x 391.12611pt.
  [3 <../imgs//weekly-salinity-extremes.png> <../imgs//weekly-salinity.png>]
-<../imgs//fortnightly-salinity-chart.png, id=123, 1626.075pt x 1023.825pt>
+<../imgs//fortnightly-salinity-chart.png, id=134, 1626.075pt x 1023.825pt>
 File: ../imgs//fortnightly-salinity-chart.png Graphic file (type png)
 <use ../imgs//fortnightly-salinity-chart.png>
 Package pdftex.def Info: ../imgs//fortnightly-salinity-chart.png  used on input
  line 101.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
-<../imgs//fortnightly-salinity.png, id=124, 1626.075pt x 1037.8775pt>
+<../imgs//fortnightly-salinity.png, id=135, 1626.075pt x 1037.8775pt>
 File: ../imgs//fortnightly-salinity.png Graphic file (type png)
 <use ../imgs//fortnightly-salinity.png>
 Package pdftex.def Info: ../imgs//fortnightly-salinity.png  used on input line 
@@ -566,19 +566,19 @@ Package pdftex.def Info: ../imgs//fortnightly-salinity.png  used on input line
 (pdftex.def)             Requested size: 483.69687pt x 308.72092pt.
  [4 <../imgs//fortnightly-salinity-chart.png>] [5 <../imgs//fortnightly-salinit
 y.png>]
-<../imgs//weekly-temperature-extremes.png, id=135, 1626.075pt x 403.5075pt>
+<../imgs//weekly-temperature-extremes.png, id=146, 1626.075pt x 403.5075pt>
 File: ../imgs//weekly-temperature-extremes.png Graphic file (type png)
 <use ../imgs//weekly-temperature-extremes.png>
 Package pdftex.def Info: ../imgs//weekly-temperature-extremes.png  used on inpu
 t line 119.
 (pdftex.def)             Requested size: 483.69687pt x 120.02496pt.
-<../imgs//weekly-temperature.png, id=136, 1626.075pt x 1314.9125pt>
+<../imgs//weekly-temperature.png, id=147, 1626.075pt x 1314.9125pt>
 File: ../imgs//weekly-temperature.png Graphic file (type png)
 <use ../imgs//weekly-temperature.png>
 Package pdftex.def Info: ../imgs//weekly-temperature.png  used on input line 12
 5.
 (pdftex.def)             Requested size: 483.69687pt x 391.12611pt.
-<../imgs//fortnightly-temperature-chart.png, id=137, 1626.075pt x 1023.825pt>
+<../imgs//fortnightly-temperature-chart.png, id=148, 1626.075pt x 1023.825pt>
 File: ../imgs//fortnightly-temperature-chart.png Graphic file (type png)
 <use ../imgs//fortnightly-temperature-chart.png>
 Package pdftex.def Info: ../imgs//fortnightly-temperature-chart.png  used on in
@@ -586,57 +586,83 @@ put line 133.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
  [6 <../imgs//weekly-temperature-extremes.png> <../imgs//weekly-temperature.png
 >]
-<../imgs//fortnightly-temperature.png, id=145, 1626.075pt x 1003.75pt>
+<../imgs//fortnightly-temperature.png, id=156, 1626.075pt x 1003.75pt>
 File: ../imgs//fortnightly-temperature.png Graphic file (type png)
 <use ../imgs//fortnightly-temperature.png>
 Package pdftex.def Info: ../imgs//fortnightly-temperature.png  used on input li
 ne 139.
 (pdftex.def)             Requested size: 483.69687pt x 298.56955pt.
  [7 <../imgs//fortnightly-temperature-chart.png>]
-<../imgs//weekly-precipitation.png, id=151, 1626.075pt x 1023.825pt>
+<../imgs//combined-historical-temperature-mean.png, id=163, 1626.075pt x 1023.8
+25pt>
+File: ../imgs//combined-historical-temperature-mean.png Graphic file (type png)
+
+<use ../imgs//combined-historical-temperature-mean.png>
+Package pdftex.def Info: ../imgs//combined-historical-temperature-mean.png  use
+d on input line 147.
+(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
+ [8 <../imgs//fortnightly-temperature.png>]
+<../imgs//combined-historical-temperature-max.png, id=169, 1626.075pt x 1023.82
+5pt>
+File: ../imgs//combined-historical-temperature-max.png Graphic file (type png)
+<use ../imgs//combined-historical-temperature-max.png>
+Package pdftex.def Info: ../imgs//combined-historical-temperature-max.png  used
+ on input line 153.
+(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
+ [9 <../imgs//combined-historical-temperature-mean.png>]
+<../imgs//combined-historical-temperature-min.png, id=175, 1626.075pt x 1023.82
+5pt>
+File: ../imgs//combined-historical-temperature-min.png Graphic file (type png)
+<use ../imgs//combined-historical-temperature-min.png>
+Package pdftex.def Info: ../imgs//combined-historical-temperature-min.png  used
+ on input line 159.
+(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
+ [10 <../imgs//combined-historical-temperature-max.png>]
+<../imgs//weekly-precipitation.png, id=181, 1626.075pt x 1023.825pt>
 File: ../imgs//weekly-precipitation.png Graphic file (type png)
 <use ../imgs//weekly-precipitation.png>
 Package pdftex.def Info: ../imgs//weekly-precipitation.png  used on input line 
-148.
+168.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [8 <../imgs//fortnightly-temperature.png>]
-<../imgs//yearly-precipitation.png, id=157, 1626.075pt x 1023.825pt>
+ [11 <../imgs//combined-historical-temperature-min.png>]
+<../imgs//yearly-precipitation.png, id=187, 1626.075pt x 1023.825pt>
 File: ../imgs//yearly-precipitation.png Graphic file (type png)
 <use ../imgs//yearly-precipitation.png>
 Package pdftex.def Info: ../imgs//yearly-precipitation.png  used on input line 
-155.
+175.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [9 <../imgs//weekly-precipitation.png>]
-<../imgs//fortnightly-brooman.png, id=164, 1626.075pt x 1023.825pt>
+
+[12 <../imgs//weekly-precipitation.png>]
+<../imgs//fortnightly-brooman.png, id=194, 1626.075pt x 1023.825pt>
 File: ../imgs//fortnightly-brooman.png Graphic file (type png)
 <use ../imgs//fortnightly-brooman.png>
 Package pdftex.def Info: ../imgs//fortnightly-brooman.png  used on input line 1
-64.
+84.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [10 <../imgs//yearly-precipitation.png>]
-<../imgs//fortnightly-buckenbowra.png, id=170, 1626.075pt x 1023.825pt>
+ [13 <../imgs//yearly-precipitation.png>]
+<../imgs//fortnightly-buckenbowra.png, id=200, 1626.075pt x 1023.825pt>
 File: ../imgs//fortnightly-buckenbowra.png Graphic file (type png)
 <use ../imgs//fortnightly-buckenbowra.png>
 Package pdftex.def Info: ../imgs//fortnightly-buckenbowra.png  used on input li
-ne 170.
+ne 190.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [11 <../imgs//fortnightly-brooman.png>]
-<../imgs//combined-dischargerate.png, id=176, 1626.075pt x 1023.825pt>
+ [14 <../imgs//fortnightly-brooman.png>]
+<../imgs//combined-dischargerate.png, id=206, 1626.075pt x 1023.825pt>
 File: ../imgs//combined-dischargerate.png Graphic file (type png)
 <use ../imgs//combined-dischargerate.png>
 Package pdftex.def Info: ../imgs//combined-dischargerate.png  used on input lin
-e 177.
+e 197.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [12 <../imgs//fortnightly-buckenbowra.png>] [13 <../imgs//combined-dischargera
+ [15 <../imgs//fortnightly-buckenbowra.png>] [16 <../imgs//combined-dischargera
 te.png>] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 14AB30183C1BA253EBD4ADE83489978C;1278.
+(rerunfilecheck)             Checksum: 92B450827B1A6BB31374053AD5BBCC70;1386.
  ) 
 Here is how much of TeX's memory you used:
- 10615 strings out of 478305
- 172713 string characters out of 5847251
- 469788 words of memory out of 5000000
- 28567 multiletter control sequences out of 15000+600000
+ 10647 strings out of 478305
+ 174026 string characters out of 5847251
+ 471788 words of memory out of 5000000
+ 28589 multiletter control sequences out of 15000+600000
  509633 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,11n,63p,339b,368s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -645,10 +671,10 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (14 pages, 1469633 bytes).
+Output written on report.pdf (17 pages, 1810615 bytes).
 PDF statistics:
- 218 PDF objects out of 1000 (max. 8388607)
- 166 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
- 167 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 248 PDF objects out of 1000 (max. 8388607)
+ 187 compressed objects within 2 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 190 words of extra memory for PDF output out of 10000 (max. 10000000)
 
