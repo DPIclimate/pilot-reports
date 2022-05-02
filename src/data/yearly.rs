@@ -6,6 +6,88 @@ use serde::Serialize;
 use std::fs::File;
 
 #[derive(Serialize)]
+struct WaterTempRecord<'a> {
+    date: &'a String,
+    #[serde(rename(serialize = "2022"))]
+    water_temperature: &'a Option<f64>,
+}
+
+pub fn year_to_date_temperature_to_csv(token: &String) {
+    let (_start, end) = utils::time::this_year(true);
+
+    // Buoy 1 temperature, buoy 3 temperature, buoy 4 temperature
+    let variables = vec![
+        //String::from("61788ec5dc917002aa2562e2"), Has some bad data
+        String::from("616e4a88810cbd039c60af03"),
+        String::from("616e476e41ac9d03d99b67ed"),
+    ];
+
+    let agg = vec!["mean", "min", "max"];
+    for method in agg.iter() {
+        let file_path = format!("data/2022-temperature-{}.csv", method);
+        let mut wtr = csv::Writer::from_path(file_path).expect("Unable to find file to write to.");
+
+        let resampled = ubidots::device::data::Resample {
+            variables: variables.to_owned(),
+            aggregation: method.to_string(),
+            join_dataframes: true,
+            period: "M".to_string(),
+            start: 1640995200000, // 1st Jan 2022
+            end,
+        }
+        .resample(&token)
+        .map_err(|err| {
+            error!(
+                "Error requesting resampled data for historical chart value: {}",
+                err
+            )
+        })
+        .ok()
+        .expect("Error unwrapping values from historical chart view.");
+
+        for day in resampled.results.iter() {
+            let ts = match day[0] {
+                Some(t) => t,
+                None => continue,
+            };
+
+            let date = utils::time::unix_to_local(&(ts.round() as i64))
+                .format("%b")
+                .to_string();
+
+            let mut sum = 0.0;
+            let mut n = 0.0;
+            for value in &day[1..] {
+                let val = match value {
+                    Some(v) => v,
+                    None => continue,
+                };
+                if val < &30.0 && val > &10.0 {
+                    sum += val;
+                    n += 1.0;
+                }
+            }
+            if sum != 0.0 && n != 0.0 {
+                let res = WaterTempRecord {
+                    date: &date,
+                    water_temperature: &Some(sum / n),
+                };
+                wtr.serialize(res).expect("CSV writer error");
+            } else {
+                let res = WaterTempRecord {
+                    date: &date,
+                    water_temperature: &None,
+                };
+                wtr.serialize(res).expect("CSV writer error");
+                info!("Zero division error. Sum = {}, n = {}", sum, n);
+            }
+        }
+
+        wtr.flush().expect("Error flushing writer");
+    }
+}
+
+#[derive(Serialize)]
 struct Record<'a> {
     date: &'a String,
     #[serde(rename(serialize = "2022"))]
@@ -90,6 +172,49 @@ pub fn join_precipitation_datasets() {
         .with_delimiter(b',')
         .finish(&mut df)
         .unwrap();
+}
+
+pub fn historical_temperature_datasets() {
+    info!("Joining historical temperature datasets");
+
+    let agg = vec!["mean", "min", "max"];
+
+    for method in agg.iter() {
+        let files = vec![
+            format!("data/2022-temperature-{}.csv", method),
+            format!("data/historical-temperature-{}.csv", method),
+        ];
+
+        let mut df = DataFrame::default();
+
+        let mut init = true;
+        for file in &files {
+            let tmp_df = CsvReader::from_path(file)
+                .expect("Unable to open file")
+                .infer_schema(None)
+                .has_header(true)
+                .finish()
+                .unwrap();
+            if init {
+                df = tmp_df.clone();
+                init = false;
+            } else {
+                df = df
+                    .join(&tmp_df, ["date"], ["date"], JoinType::Outer, None)
+                    .expect("Unable to join dataframes");
+            }
+        }
+
+        let out_filename = format!("data/combined-historical-temperature-{}.csv", method);
+        let mut output_file = File::create(out_filename)
+            .expect("Unable to create combined water temperature dataset.");
+
+        CsvWriter::new(&mut output_file)
+            .has_header(true)
+            .with_delimiter(b',')
+            .finish(&mut df)
+            .unwrap();
+    }
 }
 
 pub fn join_flow_datasets() {

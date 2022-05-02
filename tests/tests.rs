@@ -8,6 +8,20 @@ use std::env;
 
 #[test]
 #[ignore]
+fn historical_data_build() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let config = utils::config::get_config()
+        .map_err(|err| error!("Error loading config: {}", err))
+        .ok()
+        .unwrap();
+    data::files::create_output_csv_files(&config);
+    let token = env::var("ORG_KEY").expect("Org key not found");
+    data::yearly::year_to_date_temperature_to_csv(&token);
+    data::yearly::historical_temperature_datasets();
+}
+
+#[test]
+#[ignore]
 fn time_range() {
     let (start, end) = utils::time::two_weeks();
     let ts = utils::time::unix_to_local(&(&end * 1000)).to_string();

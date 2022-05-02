@@ -78,6 +78,10 @@ fn main() {
     data::yearly::year_to_date_precipitation_to_csv(&aws_token);
     data::yearly::join_precipitation_datasets();
 
+    // Make year to date and historical water temperature datasets
+    data::yearly::year_to_date_temperature_to_csv(&token);
+    data::yearly::historical_temperature_datasets();
+
     // Write datasets to datawrapper
     datawrapper::export::all_files_to_datawrapper(&dw_key, &config);
 

@@ -240,6 +240,27 @@
 				"Minimum",
 				"Maximum"
 			]
+		},
+		{
+			"filepath": "data/combined-historical-temperature-mean.csv",
+			"name": "combined-historical-temperature-mean",
+			"chart_id": "P4JnS",
+			"dynamic": true,
+			"columns": []
+		},
+		{
+			"filepath": "data/combined-historical-temperature-min.csv",
+			"name": "combined-historical-temperature-min",
+			"chart_id": "wEbn0",
+			"dynamic": true,
+			"columns": []
+		},
+		{
+			"filepath": "data/combined-historical-temperature-max.csv",
+			"name": "combined-historical-temperature-max",
+			"chart_id": "yKBPg",
+			"dynamic": true,
+			"columns": []
 		}
 	],
 	"water_nsw": {
