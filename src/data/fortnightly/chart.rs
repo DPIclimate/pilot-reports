@@ -96,7 +96,7 @@ impl Chart {
                         Some(v) => v,
                         None => continue,
                     };
-                    if val < &40.0 && val >= &0.0 {
+                    if val < &40.0 && val > &0.0 {
                         sum += val;
                         n += 1.0;
                     }
