@@ -235,6 +235,11 @@ input ~ .tab { display: none; }
 	padding: 0.5rem;
 }
 
+#data-table {
+	min-width: 200px;
+	width: 100%;
+}
+
 .error-row {
 	background-color: #f79e9e;
 }
