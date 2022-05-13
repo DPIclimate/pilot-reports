@@ -137,6 +137,10 @@ body {
 input + label { display: inline-block; }
 
 input ~ .tab { display: none; }
+#cc-tab1:checked ~ .tab.current-water,
+#cc-tab2:checked ~ .tab.current-weather { display: block; }
+
+input ~ .tab { display: none; }
 #tab1:checked ~ .tab.chart-view,
 #tab2:checked ~ .tab.indepth-view { display: block; }
 #tab3:checked ~ .tab.fortnightly-salinity-view { display: block; }
@@ -165,7 +169,7 @@ label:hover {
 	cursor: pointer;
 	opacity: 80%;
 }
-	
+
 input ~ .tab { display: none; }
 #tab1-temp:checked ~ .tab.temp-chart-view,
 #tab2-temp:checked ~ .tab.temp-indepth-view { display: block; }
@@ -246,6 +250,111 @@ input ~ .tab { display: none; }
 
 .maintainance-row {
 	background-color: #a8e0b7;
+}
+
+.air-humid-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.air-humid-chart {
+	max-height: 800px;
+}
+
+.card-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.current-humidity {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 20px;
+	background-color: #1BA098;
+	color: white;
+	padding: 1rem;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin: 1rem;
+	text-shadow: 1px 1px 4px #000000;
+}
+
+.current-humidity img {
+	filter:invert(100%);
+	filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:invert(100%);
+}
+
+.current-temperature {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 20px;
+	background-color: rgb(255, 99, 132);
+	color: white;
+	padding: 1rem;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin: 1rem;
+	text-shadow: 1px 1px 4px #000000;
+}
+
+.current-temperature img {
+	filter:invert(100%);
+	filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:invert(100%);
+}
+
+.current-windspeed {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 20px;
+	background-color: #1D1D2C;
+	color: white;
+	padding: 1rem;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin: 1rem;
+	text-shadow: 1px 1px 4px #000000;
+}
+
+.current-windspeed img {
+	filter:invert(100%);
+	filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:drop-shadow(2px 2px 2px #000000);
+	-webkit-filter:invert(100%);
+}
+
+.name-value h1 {
+	font-size: 4vw;
+}
+
+.name-value h2 {
+	font-size: 1.5vw;
+}
+
+@media (max-width: 1315px) {
+	.card-container {
+		width: 100%;
+		flex-wrap: wrap;
+		flex-direction: row;
+		jusitfy-content: space-evenly;
+	}
 }
 
 .funding-source {
