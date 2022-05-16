@@ -79,10 +79,10 @@
 				<h2>Current Conditions</h2>
 				<hr>
 
-				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab1" checked />
+				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab1"  />
 				<label for="cc-tab1">Water</label>
 
-				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab2"/>
+				<input class="hidden" type="radio" name="cc-tabs" id="cc-tab2" checked/>
 				<label for="cc-tab2">Weather</label>
 
 				<div class="tab current-water">
@@ -94,35 +94,35 @@
 				</div>
 				<div class="tab current-weather">
 					<canvas class="air-humid-chart" id="air-humid-chart"></canvas>
-					<div class="card-container">
-						<div class="current-humidity">
-							<img src="https://img.icons8.com/ios-glyphs/60/000000/humidity.png" style="padding-right: 1rem;"/>
-							<div class="name-value">
-								<h3>Humidity</h3>
-								<h1 id="current-humid">- %</h1>
-							</div>
-						</div>
-						<div class="current-temperature">
-							<img src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/64/000000/external-thermometer-science-xnimrodx-lineal-xnimrodx.png"/>
-							<div class="name-value">
-								<h3>Temperature</h3>
-								<h1 id="current-temp">- &deg;C</h1>
-							</div>
-						</div>
-						<div class="current-windspeed">
-							<img src="https://img.icons8.com/ios-glyphs/60/000000/wind--v1.png"/>
-							<div class="name-value">
-								<h3>Wind Speed</h3>
-								<h1 id="current-wind-sp">- kn</h1>
-							</div>
-						</div>
+					<div class="values-table-container">
+						<table class="values-table">
+							<thead class="values-table-head">
+								<tr>
+									<th></th>
+									<th id="date-value">-</th>
+								</tr>
+							</thead>
+							<tbody class="values-table-body">
+								<tr class="temperature-row" style="color: rgb(255, 99, 132)">
+									<td>Air Temperature</td>
+									<td><h3 id="temperature-value">- &deg;C</h3></td>
+								</tr>
+								<tr class="humidity-row" style="color: #1BA098">
+									<td>Humidity</td>
+									<td><h3 id="humidity-value">- %</h3></td>
+								</tr>
+								<tr class="wind-row" style="color: #1D1D2C">
+									<td>Wind Speed/Direction</td>
+									<td><h3 id="wind-value">- kn WSW</h3></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<script>
 					getTempAndHumid().then(config => {
 						new Chart(document.getElementById('air-humid-chart'), config)
 					});
-					getWind();
 				</script>
 			</div>
 

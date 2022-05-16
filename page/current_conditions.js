@@ -15,6 +15,11 @@ async function getTempAndHumid() {
 			values: [],
 			colors: []
 		},
+		wind: {
+			speed: [],
+			direction: [],
+			colors: []
+		},
 	};
 	
 	// Temperature 
@@ -42,7 +47,6 @@ async function getTempAndHumid() {
 		.then(res => res.json());
 
 	const ts_options = {
-		hour: "numeric",
 		day: "numeric",
 		month: "short"
 	};
@@ -94,6 +98,108 @@ async function getTempAndHumid() {
 			})
 		}
 	});
+	
+	// Wind speed
+
+	const wind_speed_var = "61788e49dc917002e7774656";
+
+	body = {
+	  "variables": [wind_speed_var],
+	  "aggregation": "mean",
+	  "period": "1H",
+	  "join_dataframes": false,
+	  "start": new Date() - 604800000 // 7 days
+	};
+
+	options = {
+		method: "POST",
+		headers: {
+			"x-auth-token": "BBAU-5C7fdQtm2qlveEOSDc0gCk85e7a5Sa",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	};
+
+	response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
+		.then(res => res.json());
+
+	response.results.map(function(r, i) {
+		if(r.length != 0) {
+			r.slice(0).reverse().map(function(v, x) {
+				var value = v[1];
+				if (value < 60 && value >= 0) {
+					var ts = v[0];
+					var wind_knts = value * 1.9438445;
+					dataset.wind.speed.push({x: ts, y: wind_knts.toFixed(1)});
+				}
+			})
+		}
+	});
+
+	const wind_dir = [
+		{ direction: 0, value: "N" },
+		{ direction: 22.5, value: "NNE" },
+		{ direction: 45, value: "NE" },
+		{ direction: 67.5, value: "ENE" },
+		{ direction: 90, value: "E" },
+		{ direction: 112.5, value: "ESE" },
+		{ direction: 135, value: "SE" },
+		{ direction: 157.5, value: "SSE" },
+		{ direction: 180, value: "S" },
+		{ direction: 202.5, value: "SSW" },
+		{ direction: 225, value: "SW" },
+		{ direction: 247.5, value: "WSW" },
+		{ direction: 270, value: "W" },
+		{ direction: 292.5, value: "WNW" },
+		{ direction: 315, value: "NW" },
+		{ direction: 337.5, value: "NNW" },
+	];
+
+	const wind_dir_var = "61788e48852f0902cbf8756f";
+
+	body = {
+	  "variables": [wind_dir_var],
+	  "aggregation": "mean",
+	  "period": "1H",
+	  "join_dataframes": false,
+	  "start": new Date() - 604800000 // 7 days
+	};
+
+	options = {
+		method: "POST",
+		headers: {
+			"x-auth-token": "BBAU-5C7fdQtm2qlveEOSDc0gCk85e7a5Sa",
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(body)
+	};
+
+	response = await fetch("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/", options)
+		.then(res => res.json());
+
+	response.results.map(function(r, i) {
+		if(r.length != 0) {
+			r.slice(0).reverse().map(function(v, x) {
+				var min_diff = 0;
+				var direction = "N";
+				var init_diff = true;
+				wind_dir.map(function(d, _) {
+					var diff = Math.abs(d.direction - v[1]);
+					if(init_diff) {
+						min_diff = diff;
+						direction = d.value;
+						init_diff = false;
+					}
+					if(diff < min_diff) {
+						min_diff = diff;
+						direction = d.value;
+					}
+				});
+				dataset.wind.direction.push({x: v[0], y: direction});
+			})
+		}
+	});
+
 
 	const data = {
 		datasets: [
@@ -116,6 +222,27 @@ async function getTempAndHumid() {
 				tension: 0.4,
 				data: dataset.humidity.values,
 				yAxisID: 'y1'
+			},
+			{
+				label: 'Wind Speed',
+				backgroundColor: "#1D1D2C",
+				borderColor: "#1D1D2C",
+				showLine: true,
+				pointRadius: 0,
+				tension: 0.4,
+				data: dataset.wind.speed,
+				yAxisID: 'y'
+			},
+			{
+				label: 'Wind Direction',
+				hidden: true,
+				backgroundColor: "#1D1D2C",
+				borderColor: "#1D1D2C",
+				showLine: true,
+				pointRadius: 0,
+				tension: 0.4,
+				data: dataset.wind.direction,
+				yAxisID: 'y'
 			}
 		]
 	};
@@ -183,8 +310,8 @@ async function getTempAndHumid() {
 			responseive: true,
 			interaction: {
 				intersect: false,
-				axis: "xy",
-				mode: "nearest"
+				axis: "x",
+				mode: "index"
 			},
 			showLine: true,
 			scales: {
@@ -200,10 +327,10 @@ async function getTempAndHumid() {
 						major: {
 							enabled: true,
 						},
-						maxRotation: 30,
-						minRotation: 30,
-						maxTicksLimit: 8,
-						minTicksLimit: 8,
+						maxRotation: 0,
+						minRotation: 0,
+						maxTicksLimit: 7,
+						minTicksLimit: 7,
 						font: {
 							size: 14
 						}
@@ -211,7 +338,7 @@ async function getTempAndHumid() {
 				},
 				y: {
 					title: {
-						display: true,
+						display: false,
 						text: "Temperature (C)",
 						color: "rgb(255, 99, 132)",
 						font: {
@@ -230,7 +357,7 @@ async function getTempAndHumid() {
 				},
 				y1: {
 					title: {
-						display: true,
+						display: false,
 						text: "Humidity (%)",
 						color: "#1BA098",
 						font: {
@@ -251,32 +378,16 @@ async function getTempAndHumid() {
 			plugins: {
 				legend: {
 					labels: {
+						filter: function(v, _) {
+							return !v.text.includes("Wind Direction");
+						},
 						font: {
 							size: 14
 						}
 					}
 				},
 				tooltip: {
-					callbacks: {
-						label: function(v, i) {
-							var ts = new Date(v.parsed.x);
-							const ts_options = {
-								hour: "numeric",
-								day: "numeric",
-								month: "short"
-							};
-							ts = ts.toLocaleDateString("en-US", ts_options);
-
-							if(v.dataset.label == "Humidity") {
-								return ts + ": " + v.parsed.y + " %";
-							}
-
-							return ts + ": " + v.parsed.y + " C";
-						},
-						title: function(v, i) {
-							return v[0].dataset.label;
-						}
-					}
+					enabled: false
 				},
 				zoom: {
 					pan: {
@@ -301,99 +412,75 @@ async function getTempAndHumid() {
 				},
 				annotation: {
 					annotations: night_boxes
-				}
+				},
 			}
-		}
+		},
+		plugins: [{
+			afterDraw: function(chart) {
+				if (chart.tooltip?._active?.length) {
+					let x = chart.tooltip._active[0].element.x;
+					let idx = chart.tooltip._active[0].index;
+
+					const date_opts = {
+						hour: "numeric",
+						day: "numeric",
+						month: "short"
+					}
+					
+					var ts = new Date(dataset.temperature.values[idx].x);
+					ts = ts.toLocaleDateString("en-US", date_opts);
+					document.getElementById("date-value").innerHTML = ts 
+					document.getElementById("temperature-value").innerHTML = dataset.temperature
+						.values[idx].y + " &deg;C";
+					document.getElementById("humidity-value").innerHTML = dataset.humidity
+						.values[idx].y + " %";
+					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
+						" kn " + dataset.wind.direction[idx].y;
+
+					chart.ctx.save();
+					chart.ctx.beginPath();
+					chart.ctx.moveTo(x, chart.scales.y.top);
+					chart.ctx.lineTo(x, chart.scales.y.bottom);
+					chart.ctx.lineWidth = 2;
+					chart.ctx.strokeStyle = '#000000';
+					chart.ctx.stroke();
+					chart.ctx.restore();
+				}
+				else {
+					const idx = dataset.temperature.values.length - 1;
+					var ts = new Date(dataset.temperature.values[idx].x);
+					ts = ts.toLocaleDateString("en-US", date_opts);
+					document.getElementById("date-value").innerHTML = ts 
+					document.getElementById("temperature-value").innerHTML = dataset.temperature
+						.values[idx].y + " &deg;C";
+					document.getElementById("humidity-value").innerHTML = dataset.humidity
+						.values[idx].y + " %";
+					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
+						" kn " + dataset.wind.direction[idx].y;
+				}
+			},
+
+		}]
 	};
 
-	document.getElementById("current-humid").innerHTML = dataset.humidity.values[dataset.humidity.values.length - 1].y + " %";
-	document.getElementById("current-temp").innerHTML = dataset.temperature.values[dataset.temperature.values.length - 1].y + " &deg;C";
+	const date_opts = {
+		hour: "numeric",
+		day: "numeric",
+		month: "short"
+	}
+
+	const idx = dataset.temperature.values.length - 1;
+	var ts = new Date(dataset.temperature.values[idx].x);
+	ts = ts.toLocaleDateString("en-US", date_opts);
+	document.getElementById("date-value").innerHTML = ts 
+	document.getElementById("temperature-value").innerHTML = dataset.temperature
+		.values[idx].y + " &deg;C";
+	document.getElementById("humidity-value").innerHTML = dataset.humidity
+		.values[idx].y + " %";
+	document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
+		" kn " + dataset.wind.direction[idx].y;
 	document.getElementById("table-info").innerHTML = "&darr; decreasing, &#8212; stable, &uarr; increasing (based on data from the past hour)";
 
 	return config;
 }
 
-
-async function getWind() {
-	var dataset = {
-		wind: {
-			direction: {
-				raw_values: [],
-				values:[],
-				timestamps: []
-			},
-			speed: {
-				values: [],
-				timestamps: []
-			},
-		}
-	};
-
-	const aws_label = "00d646ad8b0c16d0";
-	const wind_dir_var = "winddirection";
-	const wind_speed_var = "windspeed";
-	const gustspeed = "gustspeed";
-
-	var options = {
-		method: "GET",
-		headers: {
-			"X-Auth-Token": "BBAU-5C7fdQtm2qlveEOSDc0gCk85e7a5Sa",
-		}
-	};
-
-	var url = "https://industrial.api.ubidots.com.au/api/v1.6/devices/"+ aws_label + "/" + wind_dir_var + "/lv";
-
-	var response = await fetch(url, options)
-		.then(res => res.json());
-
-	const ts_options = {
-		hour: "numeric",
-		day: "numeric",
-		month: "short"
-	};
-
-	const wind_dir = [
-		{ direction: 0, value: "N" },
-		{ direction: 22.5, value: "NNE" },
-		{ direction: 45, value: "NE" },
-		{ direction: 67.5, value: "ENE" },
-		{ direction: 90, value: "E" },
-		{ direction: 112.5, value: "ESE" },
-		{ direction: 135, value: "SE" },
-		{ direction: 157.5, value: "SSE" },
-		{ direction: 180, value: "S" },
-		{ direction: 202.5, value: "SSW" },
-		{ direction: 225, value: "SW" },
-		{ direction: 247.5, value: "WSW" },
-		{ direction: 270, value: "W" },
-		{ direction: 292.5, value: "WNW" },
-		{ direction: 315, value: "NW" },
-		{ direction: 337.5, value: "NNW" },
-	];
-
-	var min_diff = 0;
-	var direction = "N";
-	var init_diff = true;
-	wind_dir.map(function(v, _) {
-		var diff = Math.abs(v.direction - response);
-		if(init_diff) {
-			min_diff = diff;
-			direction = v.value;
-			init_diff = false;
-		}
-		if(diff < min_diff) {
-			min_diff = diff;
-			direction = v.value;
-		}
-	});
-
-	url = "https://industrial.api.ubidots.com.au/api/v1.6/devices/"+ aws_label + "/" + wind_speed_var + "/lv";
-
-	var response = await fetch(url, options)
-		.then(res => res.json());
-
-	var wind_knts = response * 1.9438445;
-
-	document.getElementById("current-wind-sp").innerHTML = wind_knts.toFixed(1) + " kn " + direction;
-	
-}
