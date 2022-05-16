@@ -307,6 +307,7 @@ async function getTempAndHumid() {
 		type: 'scatter',
 		data: data,
 		options: {
+			maintainAspectRatio: false,
 			responseive: true,
 			interaction: {
 				intersect: false,

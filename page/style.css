@@ -261,6 +261,7 @@ input ~ .tab { display: none; }
 }
 
 .air-humid-chart {
+	min-height: 300px;
 	max-height: 400px;
 }
 
@@ -278,8 +279,13 @@ input ~ .tab { display: none; }
 	background: #fff;
 	width: 400px;
 	border-radius: 5px;
+	padding-bottom: 0;
 }
 
+.values-table h3 {
+	padding: 0;
+	margin: 0;
+}
 
 .funding-source {
 	color: #002664;
