@@ -200,7 +200,6 @@ async function getTempAndHumid() {
 		}
 	});
 
-
 	const data = {
 		datasets: [
 			{
@@ -428,13 +427,22 @@ async function getTempAndHumid() {
 						month: "short"
 					}
 					
+					if(idx > dataset.temperature.values.length - 1) {
+						idx = dataset.temperature.values.length - 1;
+					}
 					var ts = new Date(dataset.temperature.values[idx].x);
 					ts = ts.toLocaleDateString("en-US", date_opts);
 					document.getElementById("date-value").innerHTML = ts 
 					document.getElementById("temperature-value").innerHTML = dataset.temperature
 						.values[idx].y + " &deg;C";
+					if(idx > dataset.humidity.values.length - 1) {
+						idx = dataset.humidity.values.length - 1;
+					}
 					document.getElementById("humidity-value").innerHTML = dataset.humidity
 						.values[idx].y + " %";
+					if(idx > dataset.wind.speed.length - 1) {
+						idx = dataset.wind.speed.length - 1;
+					}
 					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
 						" kn " + dataset.wind.direction[idx].y;
 
@@ -448,14 +456,16 @@ async function getTempAndHumid() {
 					chart.ctx.restore();
 				}
 				else {
-					const idx = dataset.temperature.values.length - 1;
+					var idx = dataset.temperature.values.length - 1;
 					var ts = new Date(dataset.temperature.values[idx].x);
 					ts = ts.toLocaleDateString("en-US", date_opts);
 					document.getElementById("date-value").innerHTML = ts 
 					document.getElementById("temperature-value").innerHTML = dataset.temperature
 						.values[idx].y + " &deg;C";
+					idx = dataset.humidity.values.length - 1;
 					document.getElementById("humidity-value").innerHTML = dataset.humidity
 						.values[idx].y + " %";
+					idx = dataset.wind.speed.length - 1;
 					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
 						" kn " + dataset.wind.direction[idx].y;
 				}
@@ -470,14 +480,17 @@ async function getTempAndHumid() {
 		month: "short"
 	}
 
-	const idx = dataset.temperature.values.length - 1;
+
+	var idx = dataset.temperature.values.length - 1;
 	var ts = new Date(dataset.temperature.values[idx].x);
 	ts = ts.toLocaleDateString("en-US", date_opts);
 	document.getElementById("date-value").innerHTML = ts 
 	document.getElementById("temperature-value").innerHTML = dataset.temperature
 		.values[idx].y + " &deg;C";
+	idx = dataset.humidity.values.length - 1;
 	document.getElementById("humidity-value").innerHTML = dataset.humidity
 		.values[idx].y + " %";
+	idx = dataset.wind.speed.length - 1;
 	document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
 		" kn " + dataset.wind.direction[idx].y;
 	document.getElementById("table-info").innerHTML = "&darr; decreasing, &#8212; stable, &uarr; increasing (based on data from the past hour)";
