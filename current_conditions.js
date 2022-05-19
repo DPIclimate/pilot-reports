@@ -54,10 +54,12 @@ async function getTempAndHumid() {
 	response.results.map(function(r, i) {
 		if(r.length != 0) {
 			r.slice(0).reverse().map(function(v, x) {
+				var ts = v[0];
 				var value = v[1];
 				if (value < 50 && value >= -10) {
-					var ts = v[0];
 					dataset.temperature.values.push({x: ts, y: value.toFixed(1)});
+				} else {
+					dataset.temperature.values.push({x: ts, y: null});
 				}
 			})
 		}
@@ -90,10 +92,12 @@ async function getTempAndHumid() {
 	response.results.map(function(r, i) {
 		if(r.length != 0) {
 			r.slice(0).reverse().map(function(v, x) {
+				var ts = v[0];
 				var value = v[1];
 				if (value < 100.1 && value >= 0) {
-					var ts = v[0];
 					dataset.humidity.values.push({x: ts, y: value.toFixed(1)});
+				} else {
+					dataset.humidity.values.push({x: ts, y: null});
 				}
 			})
 		}
@@ -126,11 +130,12 @@ async function getTempAndHumid() {
 	response.results.map(function(r, i) {
 		if(r.length != 0) {
 			r.slice(0).reverse().map(function(v, x) {
-				var value = v[1];
-				if (value < 60 && value >= 0) {
-					var ts = v[0];
-					var wind_knts = value * 1.9438445;
+				var ts = v[0];
+				var wind_knts = v[1] * 1.9438445;
+				if (wind_knts < 60 && wind_knts >= 0) {
 					dataset.wind.speed.push({x: ts, y: wind_knts.toFixed(1)});
+				} else {
+					dataset.wind.speed.push({x: ts, y: null});
 				}
 			})
 		}
@@ -432,19 +437,37 @@ async function getTempAndHumid() {
 					}
 					var ts = new Date(dataset.temperature.values[idx].x);
 					ts = ts.toLocaleDateString("en-US", date_opts);
-					document.getElementById("date-value").innerHTML = ts 
-					document.getElementById("temperature-value").innerHTML = dataset.temperature
-						.values[idx].y + " &deg;C";
+					document.getElementById("date-value").innerHTML = ts;
+
+					// Temperature
+					if(dataset.temperature.values[idx].y != null){
+						document.getElementById("temperature-value").innerHTML = dataset.temperature
+							.values[idx].y + " &deg;C";
+					} else {
+						document.getElementById("temperature-value").innerHTML = "No Data.";
+					}
+
+					// Humidity
 					if(idx > dataset.humidity.values.length - 1) {
 						idx = dataset.humidity.values.length - 1;
 					}
-					document.getElementById("humidity-value").innerHTML = dataset.humidity
-						.values[idx].y + " %";
+					if(dataset.humidity.values[idx].y != null) {
+						document.getElementById("humidity-value").innerHTML = dataset.humidity
+							.values[idx].y + " %";
+					} else {
+						document.getElementById("humidity-value").innerHTML = "No Data.";
+					}
+
+					// Wind speed
 					if(idx > dataset.wind.speed.length - 1) {
 						idx = dataset.wind.speed.length - 1;
 					}
-					document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
-						" kn " + dataset.wind.direction[idx].y;
+					if(dataset.wind.speed[idx].y != null){
+						document.getElementById("wind-value").innerHTML = dataset.wind.speed[idx].y + 
+							" kn " + dataset.wind.direction[idx].y;
+					} else {
+						document.getElementById("wind-value").innerHTML = "No Data.";
+					}
 
 					chart.ctx.save();
 					chart.ctx.beginPath();
