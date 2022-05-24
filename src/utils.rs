@@ -10,6 +10,13 @@ pub mod time {
         DateTime::<Local>::from(datetime_ts)
     }
 
+    pub fn next_10_days() -> (i64, i64) {
+        return (
+            Utc::today().pred().and_hms(0, 0, 0).timestamp() * 1000,
+            (Utc::today().and_hms(0, 0, 0).timestamp() + 864000) * 1000,
+        );
+    }
+
     /// Gets a tuple containing the unix time (in ms) from the start of this year
     /// to the current date
     pub fn this_year(millis: bool) -> (i64, i64) {

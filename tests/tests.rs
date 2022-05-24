@@ -1,10 +1,50 @@
 // use cargo run -- --nocapture to see println! statements
 extern crate pilot_reports;
-pub use pilot_reports::{cli, data, datawrapper, ubidots, utils, waternsw};
+pub use pilot_reports::{cli, data, datawrapper, ibm, ubidots, utils, waternsw};
 
 extern crate dotenv;
 use log::{error, info};
 use std::env;
+
+#[test]
+fn ibm_precipitation() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+    let ibm_key = env::var("IBM_KEY").expect("IBM Key not found.");
+    let ibm_handle = match ibm::authenticate::AccessHandler::new(&ibm_key) {
+        Ok(handle) => handle,
+        Err(e) => panic!("Error: {}", e),
+    };
+
+    let (start, end) = utils::time::next_10_days();
+    println!("Start: {}, End: {}", start, end);
+    let precip = match ibm::timeseries::precipitation::Dataset::new(
+        &ibm_handle.access_token,
+        16700,
+        -35.7042749,
+        150.1832627,
+        &start,
+        &end,
+    ) {
+        Ok(ds) => ds,
+        Err(e) => panic!("Error: {}", e),
+    };
+
+    precip.aggregate_to_csv();
+}
+
+#[test]
+#[ignore]
+fn ibm_authenticate() {
+    dotenv::dotenv().expect("Failed to read .env file.");
+
+    let ibm_key = env::var("IBM_KEY").expect("IBM Key not found.");
+    let ibm_handle = match ibm::authenticate::AccessHandler::new(&ibm_key) {
+        Ok(handle) => handle,
+        Err(e) => panic!("Error: {}", e),
+    };
+
+    println!("Access_token: {}", ibm_handle.access_token);
+}
 
 #[test]
 #[ignore]
