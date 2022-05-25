@@ -38,7 +38,7 @@ pub struct Devices {
 pub async fn get_all_devices(token: &String) -> Result<Devices, Box<dyn Error>> {
     info!("Getting device list from Ubidots");
 
-    let url = String::from("https://industrial.api.ubidots.com.au/api/v2.0/devices/");
+    let url = String::from("https://industrial.api.ubidots.com/api/v2.0/devices/");
 
     let client = reqwest::Client::new();
     let response = client

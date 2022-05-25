@@ -39,7 +39,7 @@ pub async fn list_variables(
     info!("Getting variables list from Ubidots.");
 
     let url = format!(
-        "https://industrial.api.ubidots.com.au/api/v2.0/devices/{}/variables/",
+        "https://industrial.api.ubidots.com/api/v2.0/devices/{}/variables/",
         device_id
     );
 
