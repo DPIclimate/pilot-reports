@@ -51,7 +51,7 @@ impl RawSeries {
         &self,
         aws_token: &String,
     ) -> Result<Precipitation, Box<dyn Error>> {
-        let url = "https://industrial.api.ubidots.com/api/v1.6/data/raw/series";
+        let url = "https://industrial.api.ubidots.com.au/api/v1.6/data/raw/series";
 
         info!("Getting precipitation");
 

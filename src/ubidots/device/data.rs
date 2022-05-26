@@ -26,7 +26,7 @@ impl Aggregation {
     pub async fn aggregate(&self, token: &String) -> Result<Response, Box<dyn Error>> {
         info!("Getting aggregate data from ubidots.");
         let url =
-            String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/aggregation/");
+            String::from("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/aggregation/");
 
         let client = reqwest::Client::new();
         let response = client
@@ -88,7 +88,8 @@ impl Resample {
     #[tokio::main]
     pub async fn resample(&self, token: &String) -> Result<ResampleResult, Box<dyn Error>> {
         info!("Getting resampled data from ubidots.");
-        let url = String::from("https://industrial.api.ubidots.com/api/v1.6/data/stats/resample/");
+        let url =
+            String::from("https://industrial.api.ubidots.com.au/api/v1.6/data/stats/resample/");
 
         let client = reqwest::Client::new();
         let response = client
