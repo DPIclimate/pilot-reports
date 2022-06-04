@@ -62,7 +62,7 @@ impl Chart {
                 variables: ha.to_owned(),
                 aggregation: "mean".to_string(),
                 join_dataframes: true,
-                period: "1D".to_string(),
+                period: "24H".to_string(),
                 start: start * 1000,
                 end: end * 1000,
             }
