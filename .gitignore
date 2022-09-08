@@ -1,3 +1,4 @@
+## User defined
 /target
 *.lock
 .DS_Store
@@ -9,6 +10,21 @@ clientsecret.json
 tokencache.json
 *.ipynb
 precis.json
+.idea/
+
+
+## Typescript
+/node_modules
+/coverage
+/build
+.eslintcache
+.node_modules/
+package-lock.json
+npm-debug.log*
+*.log
+/logs
+**/*.backup.*
+**/*.back.*
 
 ## Latex stuff below
 ## Core latex/pdflatex auxiliary files:
