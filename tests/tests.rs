@@ -7,6 +7,7 @@ use log::{error, info};
 use std::env;
 
 #[test]
+#[ignore]
 fn ibm_precipitation() {
     dotenv::dotenv().expect("Failed to read .env file.");
     let ibm_key = env::var("IBM_KEY").expect("IBM Key not found.");
