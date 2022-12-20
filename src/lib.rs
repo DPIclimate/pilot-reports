@@ -2,7 +2,6 @@
 pub mod cli;
 pub mod data;
 pub mod datawrapper;
-pub mod ibm;
 pub mod ubidots;
 pub mod utils;
 pub mod waternsw;
