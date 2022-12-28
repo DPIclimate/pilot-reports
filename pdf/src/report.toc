@@ -8,6 +8,6 @@
 \contentsline {section}{\numberline {3}Precipitation}{12}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Weekly}{12}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Yearly}{13}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Flow Rate from Tributaries}{13}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Fortnightly}{13}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Yearly}{14}{subsection.4.2}%
+\contentsline {section}{\numberline {4}Flow Rate from Tributaries}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Fortnightly}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Yearly}{16}{subsection.4.2}%
