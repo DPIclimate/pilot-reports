@@ -141,6 +141,7 @@ pub fn join_precipitation_datasets() {
     let files = vec![
         "data/2020-precipitation.csv".to_string(),
         "data/2021-precipitation.csv".to_string(),
+        "data/2022-precipitation.csv".to_string(),
         "data/yearly-precipitation.csv".to_string(),
     ];
 
