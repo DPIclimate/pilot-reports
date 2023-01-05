@@ -8,7 +8,7 @@ use std::fs::File;
 #[derive(Serialize)]
 struct WaterTempRecord<'a> {
     date: &'a String,
-    #[serde(rename(serialize = "2022"))]
+    #[serde(rename(serialize = "2023"))]
     water_temperature: &'a Option<f64>,
 }
 
@@ -90,7 +90,7 @@ pub fn year_to_date_temperature_to_csv(token: &String) {
 #[derive(Serialize)]
 struct Record<'a> {
     date: &'a String,
-    #[serde(rename(serialize = "2022"))]
+    #[serde(rename(serialize = "2023"))]
     precipitation: &'a f64,
 }
 
