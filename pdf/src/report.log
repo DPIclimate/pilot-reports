@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.1)  6 JAN 2023 05:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.1)  6 JAN 2023 11:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -463,10 +463,10 @@ e
 put line 45.
 LaTeX Font Info:    Font shape `T1/ClearSans-TLF/regular/n' will be
 (Font)              scaled to size 50.0pt on input line 45.
-<../imgs//DPI_logo.png, id=56, 697.10437pt x 165.61874pt>
-File: ../imgs//DPI_logo.png Graphic file (type png)
-<use ../imgs//DPI_logo.png>
-Package pdftex.def Info: ../imgs//DPI_logo.png  used on input line 45.
+<../imgs/DPI_logo.png, id=56, 697.10437pt x 165.61874pt>
+File: ../imgs/DPI_logo.png Graphic file (type png)
+<use ../imgs/DPI_logo.png>
+Package pdftex.def Info: ../imgs/DPI_logo.png  used on input line 45.
 (pdftex.def)             Requested size: 241.84843pt x 57.45694pt.
 LaTeX Font Info:    Font shape `T1/ClearSans-TLF/m/n' in size <12> not availabl
 e
@@ -487,8 +487,8 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 5
 File: t1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 ) [1
 
-{/opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../imgs//DP
-I_logo.png>]
+{/opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../imgs/DPI
+_logo.png>]
 LaTeX Font Info:    Font shape `T1/ClearSans-TLF/b/n' in size <14.4> not availa
 ble
 (Font)              Font shape `T1/ClearSans-TLF/bold/n' tried instead on input
@@ -537,127 +537,124 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout5 = `report.lof'.
 
  [2]
-<../imgs//weekly-salinity-extremes.png, id=126, 1626.075pt x 445.665pt>
-File: ../imgs//weekly-salinity-extremes.png Graphic file (type png)
-<use ../imgs//weekly-salinity-extremes.png>
-Package pdftex.def Info: ../imgs//weekly-salinity-extremes.png  used on input l
-ine 85.
+<../imgs/weekly-salinity-extremes.png, id=126, 1626.075pt x 445.665pt>
+File: ../imgs/weekly-salinity-extremes.png Graphic file (type png)
+<use ../imgs/weekly-salinity-extremes.png>
+Package pdftex.def Info: ../imgs/weekly-salinity-extremes.png  used on input li
+ne 85.
 (pdftex.def)             Requested size: 483.69687pt x 132.56488pt.
-<../imgs//weekly-salinity.png, id=127, 1626.075pt x 1316.92pt>
-File: ../imgs//weekly-salinity.png Graphic file (type png)
-<use ../imgs//weekly-salinity.png>
-Package pdftex.def Info: ../imgs//weekly-salinity.png  used on input line 91.
+<../imgs/weekly-salinity.png, id=127, 1626.075pt x 1316.92pt>
+File: ../imgs/weekly-salinity.png Graphic file (type png)
+<use ../imgs/weekly-salinity.png>
+Package pdftex.def Info: ../imgs/weekly-salinity.png  used on input line 91.
 (pdftex.def)             Requested size: 483.69687pt x 391.72325pt.
- [3 <../imgs//weekly-salinity-extremes.png> <../imgs//weekly-salinity.png>]
-<../imgs//fortnightly-salinity-chart.png, id=134, 1626.075pt x 1023.825pt>
-File: ../imgs//fortnightly-salinity-chart.png Graphic file (type png)
-<use ../imgs//fortnightly-salinity-chart.png>
-Package pdftex.def Info: ../imgs//fortnightly-salinity-chart.png  used on input
- line 101.
+ [3 <../imgs/weekly-salinity-extremes.png> <../imgs/weekly-salinity.png>]
+<../imgs/fortnightly-salinity-chart.png, id=134, 1626.075pt x 1023.825pt>
+File: ../imgs/fortnightly-salinity-chart.png Graphic file (type png)
+<use ../imgs/fortnightly-salinity-chart.png>
+Package pdftex.def Info: ../imgs/fortnightly-salinity-chart.png  used on input 
+line 101.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
-<../imgs//fortnightly-salinity.png, id=135, 1626.075pt x 1047.915pt>
-File: ../imgs//fortnightly-salinity.png Graphic file (type png)
-<use ../imgs//fortnightly-salinity.png>
-Package pdftex.def Info: ../imgs//fortnightly-salinity.png  used on input line 
-107.
+<../imgs/fortnightly-salinity.png, id=135, 1626.075pt x 1047.915pt>
+File: ../imgs/fortnightly-salinity.png Graphic file (type png)
+<use ../imgs/fortnightly-salinity.png>
+Package pdftex.def Info: ../imgs/fortnightly-salinity.png  used on input line 1
+07.
 (pdftex.def)             Requested size: 483.69687pt x 311.7066pt.
- [4 <../imgs//fortnightly-salinity-chart.png>] [5 <../imgs//fortnightly-salinit
-y.png>]
-<../imgs//weekly-temperature-extremes.png, id=146, 1626.075pt x 407.5225pt>
-File: ../imgs//weekly-temperature-extremes.png Graphic file (type png)
-<use ../imgs//weekly-temperature-extremes.png>
-Package pdftex.def Info: ../imgs//weekly-temperature-extremes.png  used on inpu
-t line 119.
+ [4 <../imgs/fortnightly-salinity-chart.png>] [5 <../imgs/fortnightly-salinity.
+png>]
+<../imgs/weekly-temperature-extremes.png, id=146, 1626.075pt x 407.5225pt>
+File: ../imgs/weekly-temperature-extremes.png Graphic file (type png)
+<use ../imgs/weekly-temperature-extremes.png>
+Package pdftex.def Info: ../imgs/weekly-temperature-extremes.png  used on input
+ line 119.
 (pdftex.def)             Requested size: 483.69687pt x 121.21924pt.
-<../imgs//weekly-temperature.png, id=147, 1626.075pt x 1316.92pt>
-File: ../imgs//weekly-temperature.png Graphic file (type png)
-<use ../imgs//weekly-temperature.png>
-Package pdftex.def Info: ../imgs//weekly-temperature.png  used on input line 12
-5.
+<../imgs/weekly-temperature.png, id=147, 1626.075pt x 1316.92pt>
+File: ../imgs/weekly-temperature.png Graphic file (type png)
+<use ../imgs/weekly-temperature.png>
+Package pdftex.def Info: ../imgs/weekly-temperature.png  used on input line 125
+.
 (pdftex.def)             Requested size: 483.69687pt x 391.72325pt.
-<../imgs//fortnightly-temperature-chart.png, id=148, 1626.075pt x 1023.825pt>
-File: ../imgs//fortnightly-temperature-chart.png Graphic file (type png)
-<use ../imgs//fortnightly-temperature-chart.png>
-Package pdftex.def Info: ../imgs//fortnightly-temperature-chart.png  used on in
-put line 133.
+<../imgs/fortnightly-temperature-chart.png, id=148, 1626.075pt x 1023.825pt>
+File: ../imgs/fortnightly-temperature-chart.png Graphic file (type png)
+<use ../imgs/fortnightly-temperature-chart.png>
+Package pdftex.def Info: ../imgs/fortnightly-temperature-chart.png  used on inp
+ut line 133.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [6 <../imgs//weekly-temperature-extremes.png> <../imgs//weekly-temperature.png
->]
-<../imgs//fortnightly-temperature.png, id=156, 1626.075pt x 1013.7875pt>
-File: ../imgs//fortnightly-temperature.png Graphic file (type png)
-<use ../imgs//fortnightly-temperature.png>
-Package pdftex.def Info: ../imgs//fortnightly-temperature.png  used on input li
-ne 139.
+ [6 <../imgs/weekly-temperature-extremes.png> <../imgs/weekly-temperature.png>]
+<../imgs/fortnightly-temperature.png, id=156, 1626.075pt x 1013.7875pt>
+File: ../imgs/fortnightly-temperature.png Graphic file (type png)
+<use ../imgs/fortnightly-temperature.png>
+Package pdftex.def Info: ../imgs/fortnightly-temperature.png  used on input lin
+e 139.
 (pdftex.def)             Requested size: 483.69687pt x 301.55525pt.
- [7 <../imgs//fortnightly-temperature-chart.png>]
-<../imgs//combined-historical-temperature-mean.png, id=163, 1626.075pt x 1023.8
-25pt>
-File: ../imgs//combined-historical-temperature-mean.png Graphic file (type png)
-
-<use ../imgs//combined-historical-temperature-mean.png>
-Package pdftex.def Info: ../imgs//combined-historical-temperature-mean.png  use
-d on input line 147.
-(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [8 <../imgs//fortnightly-temperature.png>]
-<../imgs//combined-historical-temperature-max.png, id=169, 1626.075pt x 1023.82
+ [7 <../imgs/fortnightly-temperature-chart.png>]
+<../imgs/combined-historical-temperature-mean.png, id=163, 1626.075pt x 1023.82
 5pt>
-File: ../imgs//combined-historical-temperature-max.png Graphic file (type png)
-<use ../imgs//combined-historical-temperature-max.png>
-Package pdftex.def Info: ../imgs//combined-historical-temperature-max.png  used
- on input line 153.
+File: ../imgs/combined-historical-temperature-mean.png Graphic file (type png)
+<use ../imgs/combined-historical-temperature-mean.png>
+Package pdftex.def Info: ../imgs/combined-historical-temperature-mean.png  used
+ on input line 147.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [9 <../imgs//combined-historical-temperature-mean.png>]
-<../imgs//combined-historical-temperature-min.png, id=175, 1626.075pt x 1023.82
-5pt>
-File: ../imgs//combined-historical-temperature-min.png Graphic file (type png)
-<use ../imgs//combined-historical-temperature-min.png>
-Package pdftex.def Info: ../imgs//combined-historical-temperature-min.png  used
- on input line 159.
+ [8 <../imgs/fortnightly-temperature.png>]
+<../imgs/combined-historical-temperature-max.png, id=169, 1626.075pt x 1023.825
+pt>
+File: ../imgs/combined-historical-temperature-max.png Graphic file (type png)
+<use ../imgs/combined-historical-temperature-max.png>
+Package pdftex.def Info: ../imgs/combined-historical-temperature-max.png  used 
+on input line 153.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [10 <../imgs//combined-historical-temperature-max.png>]
-<../imgs//weekly-precipitation.png, id=181, 1626.075pt x 1023.825pt>
-File: ../imgs//weekly-precipitation.png Graphic file (type png)
-<use ../imgs//weekly-precipitation.png>
-Package pdftex.def Info: ../imgs//weekly-precipitation.png  used on input line 
-168.
+ [9 <../imgs/combined-historical-temperature-mean.png>]
+<../imgs/combined-historical-temperature-min.png, id=175, 1626.075pt x 1023.825
+pt>
+File: ../imgs/combined-historical-temperature-min.png Graphic file (type png)
+<use ../imgs/combined-historical-temperature-min.png>
+Package pdftex.def Info: ../imgs/combined-historical-temperature-min.png  used 
+on input line 159.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [11 <../imgs//combined-historical-temperature-min.png>]
-<../imgs//yearly-precipitation.png, id=187, 1626.075pt x 1023.825pt>
-File: ../imgs//yearly-precipitation.png Graphic file (type png)
-<use ../imgs//yearly-precipitation.png>
-Package pdftex.def Info: ../imgs//yearly-precipitation.png  used on input line 
-175.
+ [10 <../imgs/combined-historical-temperature-max.png>]
+<../imgs/weekly-precipitation.png, id=181, 1626.075pt x 1023.825pt>
+File: ../imgs/weekly-precipitation.png Graphic file (type png)
+<use ../imgs/weekly-precipitation.png>
+Package pdftex.def Info: ../imgs/weekly-precipitation.png  used on input line 1
+68.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
-
-[12 <../imgs//weekly-precipitation.png>]
-<../imgs//fortnightly-brooman.png, id=194, 1626.075pt x 1023.825pt>
-File: ../imgs//fortnightly-brooman.png Graphic file (type png)
-<use ../imgs//fortnightly-brooman.png>
-Package pdftex.def Info: ../imgs//fortnightly-brooman.png  used on input line 1
-84.
+ [11 <../imgs/combined-historical-temperature-min.png>]
+<../imgs/yearly-precipitation.png, id=187, 1626.075pt x 1023.825pt>
+File: ../imgs/yearly-precipitation.png Graphic file (type png)
+<use ../imgs/yearly-precipitation.png>
+Package pdftex.def Info: ../imgs/yearly-precipitation.png  used on input line 1
+75.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [13 <../imgs//yearly-precipitation.png>]
-<../imgs//fortnightly-buckenbowra.png, id=200, 1626.075pt x 1023.825pt>
-File: ../imgs//fortnightly-buckenbowra.png Graphic file (type png)
-<use ../imgs//fortnightly-buckenbowra.png>
-Package pdftex.def Info: ../imgs//fortnightly-buckenbowra.png  used on input li
-ne 190.
+ [12 <../imgs/weekly-precipitation.png>]
+<../imgs/fortnightly-brooman.png, id=194, 1626.075pt x 1023.825pt>
+File: ../imgs/fortnightly-brooman.png Graphic file (type png)
+<use ../imgs/fortnightly-brooman.png>
+Package pdftex.def Info: ../imgs/fortnightly-brooman.png  used on input line 18
+4.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [14 <../imgs//fortnightly-brooman.png>]
-<../imgs//combined-dischargerate.png, id=206, 1626.075pt x 1023.825pt>
-File: ../imgs//combined-dischargerate.png Graphic file (type png)
-<use ../imgs//combined-dischargerate.png>
-Package pdftex.def Info: ../imgs//combined-dischargerate.png  used on input lin
-e 197.
+ [13 <../imgs/yearly-precipitation.png>]
+<../imgs/fortnightly-buckenbowra.png, id=200, 1626.075pt x 1023.825pt>
+File: ../imgs/fortnightly-buckenbowra.png Graphic file (type png)
+<use ../imgs/fortnightly-buckenbowra.png>
+Package pdftex.def Info: ../imgs/fortnightly-buckenbowra.png  used on input lin
+e 190.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [15 <../imgs//fortnightly-buckenbowra.png>] [16 <../imgs//combined-dischargera
-te.png>] (./report.aux)
+ [14 <../imgs/fortnightly-brooman.png>]
+<../imgs/combined-dischargerate.png, id=206, 1626.075pt x 1023.825pt>
+File: ../imgs/combined-dischargerate.png Graphic file (type png)
+<use ../imgs/combined-dischargerate.png>
+Package pdftex.def Info: ../imgs/combined-dischargerate.png  used on input line
+ 197.
+(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
+ [15 <../imgs/fortnightly-buckenbowra.png>] [16 <../imgs/combined-dischargerate
+.png>] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 92B450827B1A6BB31374053AD5BBCC70;1386.
  ) 
 Here is how much of TeX's memory you used:
  10711 strings out of 476093
- 175837 string characters out of 5793588
+ 175734 string characters out of 5793588
  1863793 words of memory out of 5000000
  30858 multiletter control sequences out of 15000+600000
  552661 words of font info for 48 fonts, out of 8000000 for 9000
@@ -668,7 +665,7 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1861403 bytes).
+Output written on report.pdf (17 pages, 1859932 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
