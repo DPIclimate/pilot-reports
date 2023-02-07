@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  7 FEB 2023 05:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  7 FEB 2023 11:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -605,13 +605,13 @@ Package pdftex.def Info: ../imgs/combined-historical-temperature-max.png  used
 on input line 153.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
  [9 <../imgs/combined-historical-temperature-mean.png>]
-<../imgs/combined-historical-temperature-min.png, id=175, 1626.075pt x 1021.817
-5pt>
+<../imgs/combined-historical-temperature-min.png, id=175, 1626.075pt x 1023.825
+pt>
 File: ../imgs/combined-historical-temperature-min.png Graphic file (type png)
 <use ../imgs/combined-historical-temperature-min.png>
 Package pdftex.def Info: ../imgs/combined-historical-temperature-min.png  used 
 on input line 159.
-(pdftex.def)             Requested size: 483.69687pt x 303.9438pt.
+(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
  [10 <../imgs/combined-historical-temperature-max.png>]
 <../imgs/weekly-precipitation.png, id=181, 1626.075pt x 1023.825pt>
 File: ../imgs/weekly-precipitation.png Graphic file (type png)
@@ -665,7 +665,7 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1877886 bytes).
+Output written on report.pdf (17 pages, 1876036 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
