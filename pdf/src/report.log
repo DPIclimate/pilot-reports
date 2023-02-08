@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  8 FEB 2023 11:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  8 FEB 2023 17:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -537,12 +537,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout5 = `report.lof'.
 
  [2]
-<../imgs/weekly-salinity-extremes.png, id=126, 1626.075pt x 445.665pt>
+<../imgs/weekly-salinity-extremes.png, id=126, 1626.075pt x 437.635pt>
 File: ../imgs/weekly-salinity-extremes.png Graphic file (type png)
 <use ../imgs/weekly-salinity-extremes.png>
 Package pdftex.def Info: ../imgs/weekly-salinity-extremes.png  used on input li
 ne 85.
-(pdftex.def)             Requested size: 483.69687pt x 132.56488pt.
+(pdftex.def)             Requested size: 483.69687pt x 130.17632pt.
 <../imgs/weekly-salinity.png, id=127, 1626.075pt x 1316.92pt>
 File: ../imgs/weekly-salinity.png Graphic file (type png)
 <use ../imgs/weekly-salinity.png>
@@ -563,12 +563,12 @@ Package pdftex.def Info: ../imgs/fortnightly-salinity.png  used on input line 1
 (pdftex.def)             Requested size: 483.69687pt x 311.7066pt.
  [4 <../imgs/fortnightly-salinity-chart.png>] [5 <../imgs/fortnightly-salinity.
 png>]
-<../imgs/weekly-temperature-extremes.png, id=146, 1626.075pt x 407.5225pt>
+<../imgs/weekly-temperature-extremes.png, id=146, 1626.075pt x 399.4925pt>
 File: ../imgs/weekly-temperature-extremes.png Graphic file (type png)
 <use ../imgs/weekly-temperature-extremes.png>
 Package pdftex.def Info: ../imgs/weekly-temperature-extremes.png  used on input
  line 119.
-(pdftex.def)             Requested size: 483.69687pt x 121.21924pt.
+(pdftex.def)             Requested size: 483.69687pt x 118.83067pt.
 <../imgs/weekly-temperature.png, id=147, 1626.075pt x 1316.92pt>
 File: ../imgs/weekly-temperature.png Graphic file (type png)
 <use ../imgs/weekly-temperature.png>
@@ -665,7 +665,7 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1871508 bytes).
+Output written on report.pdf (17 pages, 1870205 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
