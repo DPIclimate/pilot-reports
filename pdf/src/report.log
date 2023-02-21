@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  21 FEB 2023 11:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.1)  21 FEB 2023 17:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -543,11 +543,11 @@ File: ../imgs/weekly-salinity-extremes.png Graphic file (type png)
 Package pdftex.def Info: ../imgs/weekly-salinity-extremes.png  used on input li
 ne 85.
 (pdftex.def)             Requested size: 483.69687pt x 130.17632pt.
-<../imgs/weekly-salinity.png, id=127, 1626.075pt x 1316.92pt>
+<../imgs/weekly-salinity.png, id=127, 1626.075pt x 1256.695pt>
 File: ../imgs/weekly-salinity.png Graphic file (type png)
 <use ../imgs/weekly-salinity.png>
 Package pdftex.def Info: ../imgs/weekly-salinity.png  used on input line 91.
-(pdftex.def)             Requested size: 483.69687pt x 391.72325pt.
+(pdftex.def)             Requested size: 483.69687pt x 373.80908pt.
  [3 <../imgs/weekly-salinity-extremes.png> <../imgs/weekly-salinity.png>]
 <../imgs/fortnightly-salinity-chart.png, id=134, 1626.075pt x 1023.825pt>
 File: ../imgs/fortnightly-salinity-chart.png Graphic file (type png)
@@ -555,12 +555,12 @@ File: ../imgs/fortnightly-salinity-chart.png Graphic file (type png)
 Package pdftex.def Info: ../imgs/fortnightly-salinity-chart.png  used on input 
 line 101.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
-<../imgs/fortnightly-salinity.png, id=135, 1626.075pt x 1047.915pt>
+<../imgs/fortnightly-salinity.png, id=135, 1626.075pt x 1027.84pt>
 File: ../imgs/fortnightly-salinity.png Graphic file (type png)
 <use ../imgs/fortnightly-salinity.png>
 Package pdftex.def Info: ../imgs/fortnightly-salinity.png  used on input line 1
 07.
-(pdftex.def)             Requested size: 483.69687pt x 311.7066pt.
+(pdftex.def)             Requested size: 483.69687pt x 305.73523pt.
  [4 <../imgs/fortnightly-salinity-chart.png>] [5 <../imgs/fortnightly-salinity.
 png>]
 <../imgs/weekly-temperature-extremes.png, id=146, 1626.075pt x 399.4925pt>
@@ -569,12 +569,12 @@ File: ../imgs/weekly-temperature-extremes.png Graphic file (type png)
 Package pdftex.def Info: ../imgs/weekly-temperature-extremes.png  used on input
  line 119.
 (pdftex.def)             Requested size: 483.69687pt x 118.83067pt.
-<../imgs/weekly-temperature.png, id=147, 1626.075pt x 1316.92pt>
+<../imgs/weekly-temperature.png, id=147, 1626.075pt x 1256.695pt>
 File: ../imgs/weekly-temperature.png Graphic file (type png)
 <use ../imgs/weekly-temperature.png>
 Package pdftex.def Info: ../imgs/weekly-temperature.png  used on input line 125
 .
-(pdftex.def)             Requested size: 483.69687pt x 391.72325pt.
+(pdftex.def)             Requested size: 483.69687pt x 373.80908pt.
 <../imgs/fortnightly-temperature-chart.png, id=148, 1626.075pt x 1023.825pt>
 File: ../imgs/fortnightly-temperature-chart.png Graphic file (type png)
 <use ../imgs/fortnightly-temperature-chart.png>
@@ -582,12 +582,12 @@ Package pdftex.def Info: ../imgs/fortnightly-temperature-chart.png  used on inp
 ut line 133.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
  [6 <../imgs/weekly-temperature-extremes.png> <../imgs/weekly-temperature.png>]
-<../imgs/fortnightly-temperature.png, id=156, 1626.075pt x 1013.7875pt>
+<../imgs/fortnightly-temperature.png, id=156, 1626.075pt x 993.7125pt>
 File: ../imgs/fortnightly-temperature.png Graphic file (type png)
 <use ../imgs/fortnightly-temperature.png>
 Package pdftex.def Info: ../imgs/fortnightly-temperature.png  used on input lin
 e 139.
-(pdftex.def)             Requested size: 483.69687pt x 301.55525pt.
+(pdftex.def)             Requested size: 483.69687pt x 295.58386pt.
  [7 <../imgs/fortnightly-temperature-chart.png>]
 <../imgs/combined-historical-temperature-mean.png, id=163, 1626.075pt x 1023.82
 5pt>
@@ -665,7 +665,7 @@ t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
 ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
 exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1867598 bytes).
+Output written on report.pdf (17 pages, 1866509 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
