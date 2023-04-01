@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.1)  31 MAR 2023 23:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.4.1)  1 APR 2023 05:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -6,7 +6,7 @@ entering extended mode
 **report.tex
 (./report.tex
 LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2023-02-22>
+L3 programming layer <2023-03-30>
 (/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
 (/opt/texlive/texdir/texmf-dist/tex/latex/base/size10.clo
@@ -367,7 +367,7 @@ LaTeX Font Info:    Font shape `T1/ClearSans-TLF/regular/n' will be
 (Font)              scaled to size 10.0pt on input line 30.
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2023-03-30 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count294
 \l__pdf_internal_box=\box53
 )
@@ -487,8 +487,9 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 5
 File: t1cmtt.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 ) [1
 
-{/opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../imgs/DPI
-_logo.png>]
+{/opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/opt/texlive
+/texdir/texmf-dist/fonts/enc/dvips/clearsans/clr_zxbkm4.enc}{/opt/texlive/texdi
+r/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <../imgs/DPI_logo.png>]
 LaTeX Font Info:    Font shape `T1/ClearSans-TLF/b/n' in size <14.4> not availa
 ble
 (Font)              Font shape `T1/ClearSans-TLF/bold/n' tried instead on input
@@ -653,19 +654,17 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 92B450827B1A6BB31374053AD5BBCC70;1386.
  ) 
 Here is how much of TeX's memory you used:
- 10713 strings out of 476024
- 175898 string characters out of 5792021
- 1864388 words of memory out of 5000000
- 30929 multiletter control sequences out of 15000+600000
+ 10713 strings out of 476017
+ 175879 string characters out of 5791771
+ 1864666 words of memory out of 5000000
+ 30938 multiletter control sequences out of 15000+600000
  552661 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,11n,76p,343b,478s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/opt/texlive/texdir/texmf-dist/fonts/enc/dvips/clearsans/clr_zxbkm4.enc}{/op
-t/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</opt/texl
-ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb></opt/texl
-ive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb></opt/t
-exlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1880765 bytes).
+</opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pf
+b></opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular
+.pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on report.pdf (17 pages, 1887682 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams

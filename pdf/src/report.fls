@@ -684,10 +684,12 @@ INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT /opt/texlive/texdir/texmf-dist/fonts/vf/intel/clearsans/ClearSans-tlf-t1.vf
 INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/intel/clearsans/ClearSans-tlf-t1--base.tfm
 INPUT /opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT /opt/texlive/texdir/texmf-dist/fonts/enc/dvips/clearsans/clr_zxbkm4.enc
 INPUT /opt/texlive/texdir/texmf-dist/fonts/vf/intel/clearsans/ClearSans-tlf-t1.vf
 INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/intel/clearsans/ClearSans-tlf-t1--base.tfm
 INPUT /opt/texlive/texdir/texmf-dist/fonts/vf/intel/clearsans/ClearSans-tlf-t1.vf
 INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/intel/clearsans/ClearSans-tlf-t1--base.tfm
+INPUT /opt/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc
 INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/intel/clearsans/ClearSans-Bold-tlf-t1.tfm
 INPUT /opt/texlive/texdir/texmf-dist/fonts/tfm/intel/clearsans/ClearSans-Bold-tlf-t1.tfm
 INPUT /opt/texlive/texdir/texmf-dist/fonts/vf/intel/clearsans/ClearSans-tlf-t1.vf
@@ -774,8 +776,6 @@ INPUT ../imgs/combined-dischargerate.png
 INPUT report.aux
 INPUT ./report.out
 INPUT ./report.out
-INPUT /opt/texlive/texdir/texmf-dist/fonts/enc/dvips/clearsans/clr_zxbkm4.enc
-INPUT /opt/texlive/texdir/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc
 INPUT /opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pfb
 INPUT /opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular.pfb
 INPUT /opt/texlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb
