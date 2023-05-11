@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.1)  9 MAY 2023 23:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.1)  11 MAY 2023 17:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -629,34 +629,33 @@ Package pdftex.def Info: ../imgs/yearly-precipitation.png  used on input line 1
 75.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
  [12 <../imgs/weekly-precipitation.png>]
-<../imgs/fortnightly-brooman.png, id=194, 1626.075pt x 1023.825pt>
+<../imgs/fortnightly-brooman.png, id=194, 1626.075pt x 277.035pt>
 File: ../imgs/fortnightly-brooman.png Graphic file (type png)
 <use ../imgs/fortnightly-brooman.png>
 Package pdftex.def Info: ../imgs/fortnightly-brooman.png  used on input line 18
 4.
-(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [13 <../imgs/yearly-precipitation.png>]
-<../imgs/fortnightly-buckenbowra.png, id=200, 1626.075pt x 1023.825pt>
+(pdftex.def)             Requested size: 483.69687pt x 82.40518pt.
+<../imgs/fortnightly-buckenbowra.png, id=195, 1626.075pt x 277.035pt>
 File: ../imgs/fortnightly-buckenbowra.png Graphic file (type png)
 <use ../imgs/fortnightly-buckenbowra.png>
 Package pdftex.def Info: ../imgs/fortnightly-buckenbowra.png  used on input lin
 e 190.
-(pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [14 <../imgs/fortnightly-brooman.png>]
-<../imgs/combined-dischargerate.png, id=206, 1626.075pt x 1023.825pt>
+(pdftex.def)             Requested size: 483.69687pt x 82.40518pt.
+<../imgs/combined-dischargerate.png, id=196, 1626.075pt x 1023.825pt>
 File: ../imgs/combined-dischargerate.png Graphic file (type png)
 <use ../imgs/combined-dischargerate.png>
 Package pdftex.def Info: ../imgs/combined-dischargerate.png  used on input line
  197.
 (pdftex.def)             Requested size: 483.69687pt x 304.54094pt.
- [15 <../imgs/fortnightly-buckenbowra.png>] [16 <../imgs/combined-dischargerate
-.png>] (./report.aux)
+ [13 <../imgs/yearly-precipitation.png> <../imgs/fortnightly-brooman.png> <../i
+mgs/fortnightly-buckenbowra.png>] [14 <../imgs/combined-dischargerate.png>] (./
+report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 92B450827B1A6BB31374053AD5BBCC70;1386.
  ) 
 Here is how much of TeX's memory you used:
- 10998 strings out of 476001
- 178932 string characters out of 5791202
+ 10996 strings out of 476001
+ 178918 string characters out of 5791202
  1865074 words of memory out of 5000000
  31239 multiletter control sequences out of 15000+600000
  552661 words of font info for 48 fonts, out of 8000000 for 9000
@@ -665,10 +664,10 @@ Here is how much of TeX's memory you used:
 </opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pf
 b></opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular
 .pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1866135 bytes).
+Output written on report.pdf (15 pages, 1783048 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 187 compressed objects within 2 object streams
- 52 named destinations out of 1000 (max. 500000)
+ 240 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
+ 50 named destinations out of 1000 (max. 500000)
  190 words of extra memory for PDF output out of 10000 (max. 10000000)
 
