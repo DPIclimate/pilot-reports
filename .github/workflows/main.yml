@@ -23,7 +23,7 @@ jobs:
     - run: sudo timedatectl set-timezone Australia/Sydney
     - run: cargo run
     - name: Make PDF Report
-      uses: xu-cheng/latex-action@fe73b0e83ef68763ea43155f0cbc51e5e9146a28
+      uses: xu-cheng/latex-action@2.7.1
       with:
         working_directory: page/pdf/src
         root_file: report.tex
