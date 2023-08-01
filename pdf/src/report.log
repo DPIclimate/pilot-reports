@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.1)  31 JUL 2023 23:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.1)  1 AUG 2023 11:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -6,7 +6,7 @@ entering extended mode
 **report.tex
 (./report.tex
 LaTeX2e <2023-06-01> patch level 1
-L3 programming layer <2023-06-16>
+L3 programming layer <2023-06-30>
 (/opt/texlive/texdir/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (/opt/texlive/texdir/texmf-dist/tex/latex/base/size10.clo
@@ -148,7 +148,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 )
 (/opt/texlive/texdir/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2023-06-25 v7.01a Hypertext links for LaTeX
+Package: hyperref 2023-07-08 v7.01b Hypertext links for LaTeX
 
 (/opt/texlive/texdir/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
@@ -183,7 +183,7 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 (/opt/texlive/texdir/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2023-06-18 v2.52 Cross-referencing by name of section
+Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
@@ -205,7 +205,7 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \Hy@pagecounter=\count285
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2023-06-25 v7.01a Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
@@ -215,7 +215,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 \Hy@SavedSpaceFactor=\count286
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2023-06-25 v7.01a Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
@@ -265,7 +265,7 @@ package with kernel methods
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2023-06-25 v7.01a Hyperref driver for pdfTeX
+File: hpdftex.def 2023-07-08 v7.01b Hyperref driver for pdfTeX
 
 (/opt/texlive/texdir/texmf-dist/tex/latex/base/atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
@@ -653,23 +653,23 @@ Package pdftex.def Info: ../imgs/combined-dischargerate.png  used on input line
 .png>] (./report.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
-L3 programming layer <2023-06-16>
+L3 programming layer <2023-06-30>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 92B450827B1A6BB31374053AD5BBCC70;1386.
  ) 
 Here is how much of TeX's memory you used:
- 10890 strings out of 475723
- 174367 string characters out of 5783846
- 1866769 words of memory out of 5000000
- 31432 multiletter control sequences out of 15000+600000
- 553761 words of font info for 50 fonts, out of 8000000 for 9000
+ 10890 strings out of 475237
+ 174367 string characters out of 5766555
+ 1931244 words of memory out of 5000000
+ 31918 multiletter control sequences out of 15000+600000
+ 598443 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,11n,79p,343b,480s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Bold.pf
 b></opt/texlive/texdir/texmf-dist/fonts/type1/intel/clearsans/ClearSans-Regular
 .pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 1836145 bytes).
+Output written on report.pdf (17 pages, 1845226 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
